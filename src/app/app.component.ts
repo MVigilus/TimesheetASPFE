@@ -1,13 +1,35 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Event, Router, NavigationStart, NavigationEnd, RouterModule } from '@angular/router';
+
+import {PageLoaderComponent} from "./layout/page-loader/page-loader.component";
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [
+    CommonModule,
+    RouterModule,
+    PageLoaderComponent,
+
+  ],
+  providers: [],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'TimeSheetASPFE';
+  currentUrl!: string;
+  constructor(public _router: Router) {
+    this._router.events.subscribe((routerEvent: Event) => {
+      if (routerEvent instanceof NavigationStart) {
+        this.currentUrl = routerEvent.url.substring(
+          routerEvent.url.lastIndexOf('/') + 1
+        );
+      }
+      if (routerEvent instanceof NavigationEnd) {
+        /* empty */
+      }
+      window.scrollTo(0, 0);
+    });
+  }
 }

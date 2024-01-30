@@ -5,7 +5,11 @@
   "projects": {
     "TimeSheetASPFE": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -13,29 +17,61 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/time-sheet-aspfe",
+            "outputPath": "dist/TimeSheetApp",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
+            "allowedCommonJsDependencies": [
+              "svg-gauge",
+              "echarts",
+              "chart.js",
+              "zrender/lib/svg/svg",
+              "zrender/lib/vml/vml",
+              "dragula",
+              "contra/emitter",
+              "crossvent",
+              "apexcharts",
+              "clone-deep",
+              "xlsx/dist/xlsx.mini.min",
+              "bezier-easing",
+              "@ckeditor/ckeditor5-build-classic",
+              "sweetalert2",
+              "fast-deep-equal",
+              "rfdc",
+              "moment",
+              "xlsx"
+            ],
+            "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "@angular/material/prebuilt-themes/indigo-pink.css",
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "./node_modules/@swimlane/ngx-datatable/index.css",
+              "./node_modules/@swimlane/ngx-datatable/themes/material.css",
+              "./node_modules/@swimlane/ngx-datatable/assets/icons.css",
+              "src/assets/scss/style.scss",
+              "src/assets/scss/theme/all-themes.scss",
+              "src/styles.scss"
             ],
-            "scripts": []
+
+            "scripts": [
+              "./node_modules/moment/min/moment.min.js",
+              "./node_modules/apexcharts/dist/apexcharts.min.js"
+            ]
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "4mb",
+                  "maximumError": "6mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -46,10 +82,20 @@
               "outputHashing": "all"
             },
             "development": {
+              "buildOptimizer": false,
               "optimization": false,
+              "vendorChunk": true,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ]
             }
+
           },
           "defaultConfiguration": "production"
         },
@@ -73,6 +119,7 @@
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
+          "inlineStyleLanguage": "scss",
           "options": {
             "polyfills": [
               "zone.js",
@@ -84,12 +131,28 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.scss"
             ],
             "scripts": []
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
+
       }
     }
+  },
+  "cli": {
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ],
+    "analytics": false
   }
 }

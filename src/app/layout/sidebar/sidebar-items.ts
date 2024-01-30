@@ -1,0 +1,103 @@
+import { RouteInfo } from './sidebar.metadata';
+export const ROUTES: RouteInfo[] = [
+  {
+    path: 'admin/home',
+    title: 'MENUITEMS.DASHBOARD.TEXT',
+    iconType: 'feather',
+    icon: 'home',
+    class: '',
+    groupTitle: false,
+    badge: '',
+    badgeClass: '',
+    submenu: [],
+    role:["ADMIN"]
+  },
+  {
+    path: 'impiegato/home',
+    title: 'MENUITEMS.DASHBOARD.TEXT',
+    iconType: 'feather',
+    icon: 'home',
+    class: '',
+    groupTitle: false,
+    badge: '',
+    badgeClass: '',
+    submenu: [],
+    role:["USER"]
+  },
+
+  {
+    path: 'admin/timesheet',
+    title: 'MENUITEMS.CALENDAR.TEXT',
+    iconType: 'feather',
+    icon: 'calendar',
+    class: '',
+    groupTitle: false,
+    badge: 'New',
+    badgeClass: 'badge bg-blue sidebar-badge float-end',
+    submenu: [],
+    role:["ADMIN"]
+  },
+
+  {
+    path: 'impiegato/timesheet',
+    title: 'MENUITEMS.CALENDAR.TEXT',
+    iconType: 'feather',
+    icon: 'calendar',
+    class: '',
+    groupTitle: false,
+    badge: 'New',
+    badgeClass: 'badge bg-blue sidebar-badge float-end',
+    submenu: [],
+    role:["USER"]
+  },
+
+  {
+    path: '',
+    title: 'MENUITEMS.EMAIL.TEXT',
+    iconType: 'feather',
+    icon: 'mail',
+    class: 'menu-toggle',
+    groupTitle: false,
+    badge: '',
+    badgeClass: '',
+    role:["USER","ADMIN"],
+    submenu: [
+      {
+        path: '/email/inbox',
+        title: 'MENUITEMS.EMAIL.LIST.INBOX',
+        iconType: '',
+        icon: '',
+        class: 'ml-menu',
+        groupTitle: false,
+        badge: '',
+        badgeClass: '',
+        submenu: [],
+        role:["USER","ADMIN"],
+      },
+      {
+        path: '/email/compose',
+        title: 'MENUITEMS.EMAIL.LIST.COMPOSE',
+        iconType: '',
+        icon: '',
+        class: 'ml-menu',
+        groupTitle: false,
+        badge: '',
+        badgeClass: '',
+        role:["USER","ADMIN"],
+        submenu: [],
+      },
+      {
+        path: '/email/read-mail',
+        title: 'MENUITEMS.EMAIL.LIST.READ',
+        iconType: '',
+        icon: '',
+        class: 'ml-menu',
+        groupTitle: false,
+        badge: '',
+        badgeClass: '',
+        role:["ADMIN"],
+        submenu: [],
+      },
+    ],
+  },
+];
