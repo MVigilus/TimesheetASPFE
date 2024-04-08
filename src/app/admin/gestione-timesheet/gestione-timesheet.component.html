@@ -1,1 +1,134 @@
-<p>gestione-timesheet works!</p>
+<section class="content">
+  <div class="content-block">
+    <div class="header">
+      <div class="container-fluid">
+        <div class="row">
+          <app-breadcrumb [title]="'Gestione Timesheet'" [items]="['Home']" [active_item]="'Ricerca Timesheet'"></app-breadcrumb>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <!-- Ricerca Timesheet -->
+      <div class="row">
+        <div class="col-xl col-lg col-md"></div>
+        <div [class]="(true)?'col-xl-10 col-lg-10 col-md-10 col-sm-10 justify-content-center':'col-xl-12 col-lg-12 col-md-12 col-sm-12'">
+          <div class="card">
+            <div class="header">
+              <div class="container-fluid " >
+                <div class="row">
+                  <div class="col-xl-4 col-lg-4 col-md-4">
+                    <h3>Form Ricerca Timesheet</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="body">
+              <div class="container-fluid">
+                <form [formGroup]="adminFormSearch">
+                  <div class="row">
+                    <div class="col-xl col-lg col-md"></div>
+                    <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
+                      <h6>Seleziona Impiegato</h6>
+                      <mat-form-field class="example-full-width" appearance="outline" >
+                        <mat-label>Impiegato</mat-label>
+                        <mat-select formControlName="impiegato">
+                          <mat-option [value]="' '">Seleziona Impiegato</mat-option>
+                          @for (option of optionImpiegato ; track optionImpiegato){
+                            <mat-option [value]="option.id">
+                              {{ option.option }}
+                            </mat-option>
+                          }
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
+                      <h6>Seleziona Timesheet Impiegato</h6>
+                      <mat-form-field class="example-full-width" appearance="outline"  >
+                        <mat-label>Periodo</mat-label>
+                        <mat-select formControlName="period" [disabled]="optionPeriod.length==0">
+                          <mat-option [value]="' '">Seleziona periodo</mat-option>
+                          @for (option of optionPeriod ; track optionPeriod){
+                            <mat-option [value]="option.id">
+                              {{ option.option }}
+                            </mat-option>
+                          }
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-xl col-lg col-md"></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xl col-lg col-md"></div>
+                    <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
+                      <h6>Seleziona nuovo periodo Timesheet Da</h6>
+                      <mat-form-field style="width: 100%" >
+                        <mat-label>Mese e anno</mat-label>
+                        <input matInput [matDatepicker]="dp" formControlName="periodStart">
+                        <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
+                        <mat-datepicker #dp
+                                        startView="multi-year"
+                                        (monthSelected)="setMonthAndYear($event, dp,'periodStart')"
+                                        panelClass="example-month-picker">
+                        </mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5">
+                      <h6>A</h6>
+                      <mat-form-field style="width: 100%" >
+                        <mat-label>Mese e anno</mat-label>
+                        <input matInput [matDatepicker]="dp1" formControlName="periodEnd">
+                        <mat-datepicker-toggle matIconSuffix [for]="dp1"></mat-datepicker-toggle>
+                        <mat-datepicker #dp1
+                                        startView="multi-year"
+                                        (monthSelected)="setMonthAndYear($event, dp1,'periodEnd')"
+                                        panelClass="example-month-picker">
+                        </mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-xl col-lg col-md"></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-4">
+                      <button mat-flat-button color="primary" style="width: 100%;height: 5vh"  type="submit" (click)="onSubmit()"
+                              [disabled]="!adminFormSearch.valid"> Inoltra Ricerca Timesheet
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl col-lg col-md"></div>
+      </div>
+      <!-- END Ricerca Timesheet -->
+      <!-- Ricerca Timesheet RESULTS -->
+      <div class="row">
+        <div class="col-xl col-lg col-md"></div>
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+          @if (results && results.length!=0){
+            <app-timesheet-ricerca-dettaglio (eventIdTimesheet)="ViewTimesheet($event.data)" [data]="results" [checks]="[(this.adminFormSearch.get('impiegato')?.value!=' ' || this.adminFormSearch.get('impiegato')?.value!=0),!!(this.adminFormSearch.get('periodStart')?.value),!!(this.adminFormSearch.get('periodEnd')?.value)]"></app-timesheet-ricerca-dettaglio>
+
+            <!--<div class="card">
+              <div class="header">
+                <div class="container-fluid " >
+                  <div class="row">
+                    <div class="col-xl-4 col-lg-4 col-md-4">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="body">
+                <div class="container-fluid">
+
+                </div>
+              </div>
+            </div>-->
+          }
+        </div>
+        <div class="col-xl col-lg col-md"></div>
+      </div>
+      <!-- END Ricerca Timesheet RESULTS -->
+    </div>
+  </div>
+</section>

@@ -18,7 +18,7 @@
                   <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>face</mat-icon>
                   @if (authForm.get('username')?.hasError('required')) {
                     <mat-error>
-                      Username is required
+                      l'username è richiesto
                     </mat-error>
                   }
                 </mat-form-field>
@@ -36,34 +36,34 @@
                     </a>
                     @if (authForm.get('password')?.hasError('required')) {
                       <mat-error>
-                        Password is required
+                        La password è richiesta
                       </mat-error>
                     }
                   </mat-form-field>
                 </div>
               </div>
-              <div class="d-flex justify-content-between align-items-center mb-5">
-                <div class="form-check">
+              <div class="d-flex justify-content-between align-items-center align-right mb-5">
+                <!--<div class="form-check">
                   <label class="form-check-label">
                     <input class="form-check-input" type="checkbox" value=""> Remember me
                       <span class="form-check-sign">
                         <span class="check"></span>
                       </span>
                     </label>
-                  </div>
-                  <a class="txt1" routerLink="/authentication/forgot-password">Forgot Password?</a>
+                </div>-->
+                  <a class="txt1" routerLink="/authentication/forgot-password">Password dimenticata?</a>
                 </div>
                 @if (error) {
                   <div class="alert alert-danger mt-3 mb-0">{{error}}</div>
                 }
                 <div class="container-auth-form-btn">
                   <div style="text-align:center">
-                    <button mat-raised-button color="primary" [class.auth-spinner]="loading" [disabled]="loading"
-                    class="auth-form-btn" [disabled]="!authForm.valid " type="submit">Login</button>
+                    <button mat-raised-button color="primary" [class.auth-spinner]="loading"
+                    class="auth-form-btn" [disabled]="!authForm.valid || loading " type="submit">Login</button>
                   </div>
                 </div>
               </form>
-              <h6 class="social-login-title">OR</h6>
+              <!--<h6 class="social-login-title">OR</h6>
               <ul class="list-unstyled social-icon mb-0 mt-3">
                 <li class="list-inline-item"><a href="javascript:void(0)" class="rounded">
                   <i class="fab fa-google"></i>
@@ -77,7 +77,7 @@
                 <li class="list-inline-item"><a href="javascript:void(0)" class="rounded">
                   <i class="fab fa-linkedin-in"></i>
                 </a></li>
-              </ul>
+              </ul>-->
             </div>
           </div>
         </div>

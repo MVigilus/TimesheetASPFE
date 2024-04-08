@@ -1,0 +1,239 @@
+<div class="addContainer">
+  <div class="modalHeader">
+    <div class="editRowModal">
+      <div class="modalHeader clearfix">
+        <div class="modal-about">
+          {{dialogTitle}}
+        </div>
+      </div>
+    </div>
+    <button mat-icon-button (click)="dialogRef.close()" class="modal-close-button" aria-label="Close dialog">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div mat-dialog-content>
+    <form class="register-form m-4" [formGroup]="advanceTableForm" (ngSubmit)="submit">
+      <!-- Nominativo -->
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-4">
+          <mat-form-field class="example-full-width" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Nominativo</mat-label>
+            <input matInput formControlName="nominativo">
+            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>face</mat-icon>
+            @if (advanceTableForm.get('nominativo')?.hasError('required')) {
+              <mat-error>
+                Nominativo Richiesto
+              </mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <!-- Codice Fiscale -->
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-4">
+          <mat-form-field class="example-full-width" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Codice Fiscale</mat-label>
+            <input matInput formControlName="codiceFisc">
+            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>face</mat-icon>
+            @if (advanceTableForm.get('codiceFisc')?.hasError('required')) {
+              <mat-error>
+                Codice fiscale Richiesto
+              </mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-4">
+          <mat-form-field class="example-full-width" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Data Assunzione</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="dataAss">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            @if (advanceTableForm.get('dataAss')?.hasError('required')) {
+              <mat-error>
+                Seleziona Data
+              </mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-4">
+          <mat-form-field class="example-full-width" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Ore Lavorative</mat-label>
+            <input matInput formControlName="oreLavorative" type="number">
+            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>phone</mat-icon>
+            @if (advanceTableForm.get('oreLavorative')?.hasError('required')) {
+              <mat-error>
+                Inserire Ore lavorative
+              </mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-4">
+          <mat-form-field class="example-full-width" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Username</mat-label>
+            <input matInput formControlName="username" type="text">
+            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>phone</mat-icon>
+            @if (advanceTableForm.get('username')?.hasError('required')) {
+              <mat-error>
+                Inserire Username
+              </mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-4">
+          <mat-form-field class="example-full-width" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="text">
+            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>phone</mat-icon>
+            @if (advanceTableForm.get('email')?.hasError('required')) {
+              <mat-error>
+                Inserire email
+              </mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xl-7 col-lg-7 col-md-12 col-sm-12 mb-4">
+          <mat-form-field class="example-full-width" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Telefono</mat-label>
+            <input matInput formControlName="telefono" type="text">
+            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>phone</mat-icon>
+            @if (advanceTableForm.get('telefono')?.hasError('required')) {
+              <mat-error>
+                Inserire email
+              </mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 mb-4">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Ruolo</mat-label>
+            <mat-select formControlName="role">
+              @for (ruolo of ruoli ; track ruolo){
+                <mat-option [value]="ruolo">
+                  {{ ruolo }}
+                </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-4">
+          <mat-form-field class="example-full-width" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Giorni permesso</mat-label>
+            <input matInput formControlName="giorni_permesso" type="number">
+            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>phone</mat-icon>
+            @if (advanceTableForm.get('giorni_permesso')?.hasError('required')) {
+              <mat-error>
+                Inserire Ore lavorative
+              </mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-4">
+          <mat-form-field class="example-full-width" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Giorni Ferie</mat-label>
+            <input matInput formControlName="giorni_ferie" type="number">
+            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>phone</mat-icon>
+            @if (advanceTableForm.get('giorni_ferie')?.hasError('required')) {
+              <mat-error>
+                Inserire Ore lavorative
+              </mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-4">
+          <mat-form-field class="example-full-width" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Giorni Permesso prec</mat-label>
+            <input matInput formControlName="giorni_permesso_pr" type="number">
+            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>phone</mat-icon>
+            @if (advanceTableForm.get('giorni_permesso_pr')?.hasError('required')) {
+              <mat-error>
+                Inserire Ore lavorative
+              </mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-4">
+          <mat-form-field class="example-full-width" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Giorni ferie prec</mat-label>
+            <input matInput formControlName="giorni_ferie_pr" type="number">
+            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>phone</mat-icon>
+            @if (advanceTableForm.get('giorni_ferie_pr')?.hasError('required')) {
+              <mat-error>
+                Inserire Ore lavorative
+              </mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <label id="example-radio-group-label">Rimborso :</label>
+          <mat-radio-group formControlName="rimborso" aria-labelledby="example-radio-group-label" class="example-radio-group">
+              <mat-radio-button class="example-radio-button ms-0" [value]="true">
+                Si
+              </mat-radio-button>
+              <mat-radio-button class="example-radio-button ms-0" [value]="false">
+                No
+              </mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+
+      @if(advanceTableForm.get('rimborso')?.value){
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+            <mat-form-field class="example-full-width" appearance="outline" subscriptSizing="dynamic">
+              <mat-label>Rimborso Km</mat-label>
+              <input matInput formControlName="rimborsoKm" type="number">
+              <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>phone</mat-icon>
+              @if (advanceTableForm.get('rimborsoKm')?.hasError('required')) {
+                <mat-error>
+                  Inserire rimborso km
+                </mat-error>
+              }
+            </mat-form-field>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+            <mat-form-field class="example-full-width" appearance="outline" subscriptSizing="dynamic">
+              <mat-label>Modello Auto</mat-label>
+              <input matInput formControlName="modello_auto">
+              <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>face</mat-icon>
+              @if (advanceTableForm.get('modello_auto')?.hasError('required')) {
+                <mat-error>
+                  Ninserire modello auto
+                </mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </div>
+      }
+
+
+
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <div class="example-button-row">
+            <button mat-raised-button color="primary" [disabled]="!advanceTableForm.valid"
+                    (click)="confirmAdd()">Save</button>
+
+            <button mat-raised-button color="warn" (click)="onNoClick()" tabindex="-1">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

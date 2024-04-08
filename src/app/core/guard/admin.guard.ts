@@ -10,7 +10,7 @@ export class AdminGuard  {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (this.authService.currentUserValue.role === "ADMIN") {
+    if (this.authService.currentUserValue.role === "ROLE_ADMIN") {
       return true;
     }
     this.router.navigate(['/authentication/signin']);

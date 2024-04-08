@@ -1,0 +1,26 @@
+.columnStyle {
+  width: 10%;
+  max-width: 10%;
+  min-width: 10%;
+  overflow: auto;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.table {
+  &.custom-table {
+    tr {
+      td {
+        border: 0.5px solid #000; // change '#000' to desired border color
+      }
+
+      td.large-cell {
+        width: 70%; // change '70%' to desired width percentage
+      }
+
+      td:not(.large-cell) {
+        width: 30%; // this width plus the width for .large-cell should add up to 100%
+      }
+    }
+  }
+}

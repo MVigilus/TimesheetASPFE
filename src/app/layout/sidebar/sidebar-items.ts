@@ -10,7 +10,7 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     submenu: [],
-    role:["ADMIN"]
+    role:["ROLE_ADMIN"]
   },
   {
     path: 'impiegato/home',
@@ -22,33 +22,71 @@ export const ROUTES: RouteInfo[] = [
     badge: '',
     badgeClass: '',
     submenu: [],
-    role:["USER"]
+    role:["ROLE_USER"]
   },
 
   {
-    path: 'admin/timesheet',
-    title: 'MENUITEMS.CALENDAR.TEXT',
+    path: 'admin/gestioneImpiegato',
+    title: 'MENUITEMS.ADMIN.GESTIONE',
     iconType: 'feather',
     icon: 'calendar',
     class: '',
     groupTitle: false,
-    badge: 'New',
-    badgeClass: 'badge bg-blue sidebar-badge float-end',
+    badge: '',
+    badgeClass: '',
     submenu: [],
-    role:["ADMIN"]
+    role:["ROLE_ADMIN"]
   },
 
   {
-    path: 'impiegato/timesheet',
-    title: 'MENUITEMS.CALENDAR.TEXT',
+    path: 'admin/gestionetimesheet',
+    title: 'MENUITEMS.ADMIN.GESTIONET',
     iconType: 'feather',
     icon: 'calendar',
     class: '',
     groupTitle: false,
-    badge: 'New',
-    badgeClass: 'badge bg-blue sidebar-badge float-end',
+    badge: '',
+    badgeClass: '',
     submenu: [],
-    role:["USER"]
+    role:["ROLE_ADMIN"]
+  },
+
+  {
+    path: '',
+    title: 'MENUITEMS.USER.TIMESHEET_MENU.TITLE',
+    iconType: 'feather',
+    icon: 'calendar',
+    class: '',
+    groupTitle: false,
+    badge: '',
+    badgeClass: '',
+    submenu: [
+      {
+        path: 'impiegato/timesheet',
+        title: 'MENUITEMS.USER.TIMESHEET_MENU.OPT1',
+        iconType: 'feather',
+        icon: 'calendar',
+        class: '',
+        groupTitle: false,
+        badge: 'New',
+        badgeClass: 'badge bg-blue sidebar-badge float-end',
+        submenu: [],
+        role:["ROLE_USER"]
+      },
+      {
+        path: 'impiegato/riepilogoTimesheet',
+        title: 'MENUITEMS.USER.TIMESHEET_MENU.OPT2',
+        iconType: 'feather',
+        icon: 'calendar',
+        class: '',
+        groupTitle: false,
+        badge: 'New',
+        badgeClass: 'badge bg-blue sidebar-badge float-end',
+        submenu: [],
+        role:["ROLE_USER"]
+      },
+    ],
+    role:["ROLE_USER"]
   },
 
   {
@@ -60,7 +98,7 @@ export const ROUTES: RouteInfo[] = [
     groupTitle: false,
     badge: '',
     badgeClass: '',
-    role:["USER","ADMIN"],
+    role:["ROLE_USER","ROLE_ADMIN"],
     submenu: [
       {
         path: '/email/inbox',
@@ -72,7 +110,7 @@ export const ROUTES: RouteInfo[] = [
         badge: '',
         badgeClass: '',
         submenu: [],
-        role:["USER","ADMIN"],
+        role:["ROLE_USER","ROLE_ADMIN"],
       },
       {
         path: '/email/compose',
@@ -83,7 +121,7 @@ export const ROUTES: RouteInfo[] = [
         groupTitle: false,
         badge: '',
         badgeClass: '',
-        role:["USER","ADMIN"],
+        role:["ROLE_USER","ROLE_ADMIN"],
         submenu: [],
       },
       {
@@ -95,7 +133,7 @@ export const ROUTES: RouteInfo[] = [
         groupTitle: false,
         badge: '',
         badgeClass: '',
-        role:["ADMIN"],
+        role:["ROLE_ADMIN"],
         submenu: [],
       },
     ],

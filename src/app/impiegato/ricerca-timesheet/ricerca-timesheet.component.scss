@@ -1,0 +1,32 @@
+.example-month-picker .mat-calendar-body-cell-content {
+  display: none;
+}
+
+.table {
+  &.custom-table {
+    tr {
+      td {
+        border: 0.5px solid #000; // change '#000' to desired border color
+      }
+
+      td.large-cell {
+        width: 70%; // change '70%' to desired width percentage
+      }
+
+      td:not(.large-cell) {
+        width: 30%; // this width plus the width for .large-cell should add up to 100%
+      }
+    }
+  }
+}
+.inputHid {
+  border: none;
+  outline: none;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 2px 5px;
+  background: inherit;
+  position: relative;
+  z-index: 1;
+}

@@ -1,0 +1,118 @@
+<div class="container-fluid">
+  <div class="row">
+      <mat-table [dataSource]="dataSource" style="width: 100%" stickyHeader>
+
+        <ng-container matColumnDef="ngiorno">
+          <mat-header-cell *matHeaderCellDef> Giorno </mat-header-cell>
+          <mat-cell *matCellDef="let element; let i=index" [style]="(disableMargin)?'border-right: solid 1px #e0e0e0;':''">
+            {{element.get('ngiorno').value}}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="sede">
+          <mat-header-cell *matHeaderCellDef mat-sticky> Sede </mat-header-cell>
+          <mat-cell *matCellDef="let element; let i=index" [style]="(disableMargin)?'border-right: solid 1px #e0e0e0;':''">
+            @if (element.get('altro').value=='FES'){
+              {{element.get('sede').value}}
+            } @else {
+              <input type="number" min="0" [formControl]="element.get('sede')" (change)="updateField(i, 'sede')" >
+            }
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="clienteOre">
+          <mat-header-cell *matHeaderCellDef mat-sticky> Clienti </mat-header-cell>
+          <mat-cell *matCellDef="let element; let i=index" [style]="(disableMargin)?'border-right: solid 1px #e0e0e0;':''">
+            <input type="number" min="0" [formControl]="element.get('clienteOre')"  (change)="updateField(i, 'clienteOre')">
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="straordinari">
+          <mat-header-cell *matHeaderCellDef mat-sticky> Straordinari </mat-header-cell>
+          <mat-cell *matCellDef="let element; let i=index" [style]="(disableMargin)?'border-right: solid 1px #e0e0e0;':''">
+            <input type="number" min="0" [formControl]="element.get('straordinari')" (change)="updateField(i, 'straordinari')">
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="ferie">
+          <mat-header-cell *matHeaderCellDef mat-sticky> Ferie </mat-header-cell>
+          <mat-cell *matCellDef="let element; let i=index" [style]="(disableMargin)?'border-right: solid 1px #e0e0e0;':''">
+            @if (element.get('altro').value=='FES'){
+              {{element.get('ferie').value}}
+            } @else {
+              <input type="number" min="0" [formControl]="element.get('ferie')"  (change)="updateField(i, 'ferie')">
+            }
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="permessi">
+          <mat-header-cell *matHeaderCellDef mat-sticky> Permessi </mat-header-cell>
+          <mat-cell *matCellDef="let element; let i=index" [style]="(disableMargin)?'border-right: solid 1px #e0e0e0;':''">
+            @if (element.get('altro').value=='FES'){
+              {{element.get('permessi').value}}
+            } @else {
+              <input type="number" min="0" [formControl]="element.get('permessi')"  (change)="updateField(i, 'permessi')">
+            }
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="altro">
+          <mat-header-cell *matHeaderCellDef mat-sticky> Altro </mat-header-cell>
+          <mat-cell *matCellDef="let element; let i=index" class="cell" [style]="(disableMargin)?'border-right: solid 1px #e0e0e0;':''">
+            <div class="form-group select-container">
+              @if (element.get('altro').value!='FES'){
+                <select class="custom-select" (change)="updateField(i, 'altro')" [formControl]="element.get('altro')" >
+                  <option value=" " >Seleziona Periodo</option>
+                  @for (option of optionsAltro;track optionsAltro){
+                    <option [value]="option.id">
+                      {{ option.option }}
+                    </option>
+                  }
+                </select>
+              }
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="tot">
+          <mat-header-cell *matHeaderCellDef mat-sticky> Totale ore </mat-header-cell>
+          <mat-cell *matCellDef="let element; let i=index" [class]="(element.get('tot').value<8 && (element.get('altro').value!='FES' && element.get('altro').value!='2'))?'blinkingYellowBackground':''" [style]="(disableMargin)?'border-right: solid 1px #e0e0e0;':''">
+            {{element.get('tot').value}}
+          </mat-cell>
+        </ng-container>
+        @if(currentUser.rimborso){
+          <ng-container matColumnDef="clienteDest">
+            <mat-header-cell *matHeaderCellDef mat-sticky> Cliente </mat-header-cell>
+            <mat-cell *matCellDef="let element; let i=index" [style]="(disableMargin)?'border-right: solid 1px #e0e0e0;':''">
+              <input [formControl]="element.get('clienteDest')"  (change)="updateField(i, 'clienteDest')">
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="destinazione">
+            <mat-header-cell *matHeaderCellDef mat-sticky> Destinazione </mat-header-cell>
+            <mat-cell *matCellDef="let element; let i=index" [style]="(disableMargin)?'border-right: solid 1px #e0e0e0;':''">
+              @if (element.get('altro').value=='FES'){
+                {{element.get('destinazione').value}}
+              } @else {
+                <input  [formControl]="element.get('destinazione')"  (change)="updateField(i, 'destinazione')">
+              }
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="kmP">
+            <mat-header-cell *matHeaderCellDef mat-sticky> Km Percorsi </mat-header-cell>
+            <mat-cell *matCellDef="let element; let i=index" [style]="(disableMargin)?'border-right: solid 1px #e0e0e0;':''">
+              @if (element.get('altro').value=='FES'){
+                {{element.get('destinazione').value}}
+              } @else {
+                <input step="0.01" min="0" type="number" [formControl]="element.get('kmP')"  (change)="updateField(i, 'kmP')">
+              }
+            </mat-cell>
+          </ng-container>
+        }
+
+        <mat-header-row *matHeaderRowDef="displayedColumns;sticky:true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" [style]="(row.get('altro').value==='FES' || row.get('altro').value==='2')?{'background-color': 'red'}:{}" ></mat-row>
+      </mat-table>
+  </div>
+</div>

@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { User } from '../models/user';
-import { HttpResponse } from '@angular/common/http';
+import {HttpClient, HttpResponse} from '@angular/common/http';
+import {environment} from "../../../environments/environment";
+import {map} from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root',
@@ -10,30 +13,7 @@ export class AuthService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
 
-  private users = [
-    {
-      id: 1,
-      username: 'vigilus',
-      password: 'admin',
-      firstName: 'John',
-      lastName: 'Doe',
-      img: 'user1.jpg',
-      token: 'token_user1',
-      role:'USER'
-    },
-    {
-      id: 1,
-      username: 'admin',
-      password: 'admin',
-      firstName: 'John',
-      lastName: 'Doe',
-      img: 'user1.jpg',
-      token: 'token_user2',
-      role:'ADMIN'
-    },
-  ];
-
-  constructor() {
+  constructor(private http:HttpClient) {
     this.currentUserSubject = new BehaviorSubject<User>(
       JSON.parse(localStorage.getItem('currentUser') || '{}')
     );
@@ -44,47 +24,52 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
+  public retriveAllNotification(){
+    return this.http.get<any>(`${environment.apiUrl}/${environment.servizi.auth.getAllNotification}`);
+  }
+
   login(username: string, password: string) {
-
-    const user = this.users.find((u) => u.username === username && u.password === password);
-
-    if (!user) {
-      return this.error('Username or password is incorrect');
-    } else {
-      localStorage.setItem('currentUser', JSON.stringify(user));
-      this.currentUserSubject.next(user);
-      return this.ok({
-        id: user.id,
-        img: user.img,
-        username: user.username,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        token: user.token,
-        role: user.role
-      });
-    }
-
-
+    return this.http
+      .post<User>(`${environment.apiUrl}/${environment.servizi.auth.login}`, {
+        username,
+        password,
+      })
+      .pipe(
+        map((user) => {
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          this.currentUserSubject.next(user);
+          return user;
+        })
+      );
   }
-  ok(body?: {
-    id: number;
-    img: string;
-    username: string;
-    firstName: string;
-    lastName: string;
-    token: string;
-    role:string
-  }) {
-    return of(new HttpResponse({ status: 200, body }));
+
+  resetPassword(email:string) {
+    this.currentUserSubject.next(this.currentUserValue);
+    return this.http.get<boolean>(`${environment.apiUrl}/${environment.servizi.auth.resetPassword}/`+email).pipe(
+      map((res) => {
+        return res;
+      })
+    );
   }
-  error(message: string) {
-    return throwError(message);
+
+  CheckJwt() {
+    return this.http.get<boolean>(`${environment.apiUrl}/${environment.servizi.auth.checkJWT}`).pipe(
+      map((res) => {
+        return res;
+      })
+    );
+    // Use RxJS interval operator to execute the HTTP request every minute
+
   }
 
   logout() {
     // remove user from local storage to log user out
-    localStorage.removeItem('currentUser');
+    localStorage.clear();
     this.currentUserSubject.next(this.currentUserValue);
-    return of({ success: false });
+    return this.http.get<string>(`${environment.apiUrl}/${environment.servizi.auth.logout}`).pipe(
+      map((res) => {
+        return res;
+      })
+    );
   }
 }

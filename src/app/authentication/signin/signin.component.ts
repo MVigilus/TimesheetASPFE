@@ -41,8 +41,8 @@ export class SigninComponent
 
   ngOnInit() {
     this.authForm = this.formBuilder.group({
-      username: ['admin@software.com', Validators.required],
-      password: ['admin@123', Validators.required],
+      username: ['', Validators.required],
+      password: ['', Validators.required],
     });
   }
   get f() {
@@ -52,40 +52,34 @@ export class SigninComponent
     this.submitted = true;
     this.loading = true;
     this.error = '';
-    if (this.authForm.invalid) {
-      this.error = 'Username and Password not valid !';
-      return;
-    } else {
-      this.subs.sink = this.authService
-        .login(this.f['username'].value, this.f['password'].value)
-        .subscribe({
-          next: (res) => {
-            if (res) {
-              if (res) {
-                const token = this.authService.currentUserValue.token;
-                if (token) {
-                  switch (res.body?.role){
-                    case "ADMIN":
-                      this.router.navigate(['/admin/']);
-                      break
-                    case "USER":
-                      this.router.navigate(['/impiegato/']);
-                      break
-                  }
-                }
-              } else {
-                this.error = 'Invalid Login';
+    this.subs.sink = this.authService
+      .login(this.f['username'].value, this.f['password'].value)
+      .subscribe({
+        next: (res) => {
+          if (res) {
+            const token = this.authService.currentUserValue.token;
+            if (token) {
+              switch (res.role){
+                case "ROLE_ADMIN":
+                  this.router.navigate(['/admin/']);
+                  break
+                case "ROLE_USER":
+                  this.router.navigate(['/impiegato/']);
+                  break
               }
-            } else {
-              this.error = 'Invalid Login';
             }
-          },
-          error: (error) => {
-            this.error = error;
-            this.submitted = false;
-            this.loading = false;
-          },
-        });
-    }
+          } else {
+            this.error = 'Username o Password Errati!';
+          }
+        },
+        error: (error) => {
+          this.error = error;
+          this.submitted = false;
+          this.loading = false;
+        },
+      });
+    this.submitted = false;
+    this.loading = false;
+
   }
 }

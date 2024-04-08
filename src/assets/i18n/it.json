@@ -1,0 +1,93 @@
+{
+  "HEADER": {
+    "SEARCH": {
+      "TEXT": "Cerca.."
+    }
+  },
+  "MENUITEMS": {
+    "USER": {
+      "POST": "Manager",
+      "TIMESHEET_MENU": {
+        "TITLE": "Gestione Timesheet",
+        "OPT1": "Aggiungi/Modifica Timesheet",
+        "OPT2": "Riepilogo Timesheet"
+      }
+    },
+    "ADMIN": {
+      "GESTIONE": "Gestione Impiegato",
+      "GESTIONET": "Gestione Timesheet"
+    },
+    "MAIN": {
+      "TEXT": "Principale"
+    },
+    "DASHBOARD": {
+      "TEXT": "Cruscotto",
+      "LIST": {
+        "DASHBOARD1": "Cruscotto 1",
+        "DASHBOARD2": "Cruscotto 2",
+        "DASHBOARD3": "Cruscotto 3"
+      }
+    },
+    "ADVANCE-TABLE": {
+      "TEXT": "Tabella Avanzata"
+    },
+    "APPS": {
+      "TEXT": "App"
+    },
+    "CALENDAR": {
+      "TEXT": "Calendario"
+    },
+    "TASK": {
+      "TEXT": "Compito"
+    },
+    "CONTACTS": {
+      "TEXT": "Contatti"
+    },
+    "EMAIL": {
+      "TEXT": "Email",
+      "LIST": {
+        "INBOX": "Posta in arrivo",
+        "COMPOSE": "Comporre",
+        "READ": "Leggi Email"
+      }
+    },
+    "MORE-APPS": {
+      "TEXT": "Più App",
+      "LIST": {
+        "CHAT": "Chat",
+        "SUPPORT": "Supporto",
+        "DRAG-DROP": "Trascina e Rilascia",
+        "CONTACT-GRID": "Griglia Contatti"
+      }
+    },
+    "COMPONENTS": {
+      "TEXT": "Componenti"
+    },
+    "WIDGETS": {
+      "TEXT": "Widget",
+      "LIST": {
+        "CHART-WIDGET": "Widget-Grafico",
+        "DATA-WIDGET": "Widget-Dati"
+      }
+    },
+    "FORMS": {
+      "TEXT": "Moduli",
+      "LIST": {
+        "CONTROLS": "Controlli del modulo",
+        "ADVANCE": "Controllo Avanzato",
+        "EXAMPLE": "Esempi di Moduli",
+        "VALIDATION": "Validazione del Modulo",
+        "WIZARD": "Procedura guidata",
+        "EDITORS": "Editor"
+      }
+    },
+    "TABLES": {
+      "TEXT": "Tavoli",
+      "LIST": {
+        "BASIC": "Tavoli di Base",
+        "MATERIAL": "Tavoli di Materiali",
+        "NGX-DATATABLE": "NGX-Datatable"
+      }
+    }
+  }
+}

@@ -4,7 +4,40 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:4200',
+  apiUrl: 'http://localhost:8080',
+  servizi:{
+    auth:{
+      login:'auth/login',
+      logout:'auth/logout',
+      resetPassword:'auth/resetPassword',
+      editProfile:'auth/editImpiegato/',
+      checkJWT: "auth/checkJWT",
+      getAllNotification:'auth/notificationList',
+    },
+    impiegato:{
+      getAllTimesheetOption:'operator/getTimesheetOptionList',
+      getAllTimesheetLogged:'operator/getTimesheetElenco',
+      submitPeriodTimesheet:'operator/insertNewTimesheetP',
+      submitOptionTimesheet:'operator/getTimesheet/',
+      submitDatoTimesheet:'operator/InsertDatoTimesheet',
+      submitTimesheet:'operator/sendTimesheet',
+      submitTimesheetNoSave:'operator/sendTimesheet/',
+      updateNgiustificativo:'operator/updateNumeroGiustificativo/',
+
+    },
+    admin:{
+      getAllImpiegato:'admin/allImpiegato',
+      getTImesheetById:'admin/getTimesheet/',
+      approvaTimesheet:'admin/updateStatusApproved/',
+      rifiutaTimesheet:'admin/updateStatusRejected/',
+      getAllTimesheetOption:'admin/getAdminOptionList/imp',
+      getAllImpiegatoFR:'admin/allImpiegatoFR',
+      editImpiegato:'admin/editImpiegato',
+      insertImpiegato:'admin/insertImpiegato',
+      getAllRole:'admin/getAllRoles',
+      submitSearchTImesheet:'admin/getTimesheetResultList'
+    }
+  }
 };
 
 /*

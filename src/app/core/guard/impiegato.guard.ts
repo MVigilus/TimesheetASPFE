@@ -10,7 +10,7 @@ export class ImpiegatoGuard  {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (this.authService.currentUserValue.role === "USER") {
+    if (this.authService.currentUserValue.role === "ROLE_USER") {
       return true;
     }
     this.router.navigate(['/authentication/signin']);

@@ -1,0 +1,119 @@
+<div class="row clearfix">
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="card">
+      <div class="body">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="ngxTableHeader">
+              <ul class="header-buttons-left ms-0 mb-0">
+                <li class="dropdown">
+                  <h2>Risultati Ricerca IMP {{checks[0]}}, PERIOD1 {{checks[1]}}, PERIOD2 {{checks[2]}}</h2>
+                </li>
+                <li class="dropdown m-l-20">
+                  <label for="search-input"><i class="material-icons search-icon">search</i></label>
+                  <input placeholder="Cerca Nominativo o Mese" type="text" class="browser-default search-field"
+                         (keyup)='filterDatatable($event)' >
+
+                </li>
+              </ul>
+              <ul class="header-buttons">
+                <li>
+                  <button mat-mini-fab color="primary">
+                    EX
+                  </button>
+                </li>
+              </ul>
+            </div>
+            <ngx-datatable #table class="material" [rows]="data" [columns]="columns" [sortType]="SortType.multi"
+                           [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="60" [limit]="10">
+
+              <!--@if (!checks[0]){
+                <ngx-datatable-column name="Nominativo" [width]="130"></ngx-datatable-column>
+
+              }-->
+
+              <!--<ngx-datatable-column name="Periodo Timesheet" [width]="130"></ngx-datatable-column>
+              <ngx-datatable-column prop="" name="Stato" [width]="120"></ngx-datatable-column>
+              <ngx-datatable-column name="Busta Paga" [width]="200"></ngx-datatable-column>
+              <ngx-datatable-column name="Giustificativo" [width]="200"></ngx-datatable-column>-->
+              @for(col of columns;track columns){
+                @if (col.prop!='nominativo' ){
+                  @if(col.prop==='status'){
+                    <ngx-datatable-column [name]="col.name" [prop]="col.prop" [sortable]="false" [flexGrow]="3">
+                      <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                        @switch (value){
+                          @case ('SENDED'){
+                            <div class="badge badge-solid-orange">Attesa Revisione</div>
+                          }
+                          @case ('APPROVED'){
+                            <div class="badge badge-solid-green">Approvato</div>
+                          }
+                          @case ('REJECTED'){
+                            <div class="badge badge-solid-red">Rifiutato</div>
+                          }
+                        }
+                      </ng-template>
+                    </ngx-datatable-column>
+                  } @else if (col.prop!='periodo') {
+                    @if (col.prop!='idBustaPaga'){
+                      <ngx-datatable-column [prop]="col.prop" [name]="col.name" [flexGrow]="3">
+                        <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                          @if (value=='' && row.status==='REJECTED'){
+                            In Attesa di revisione
+                          } @else if (value==''){
+                            Non Allegati
+                          } @else {
+                            {{value}}
+                          }
+                        </ng-template>
+                      </ngx-datatable-column>
+                    } @else {
+                      <ngx-datatable-column [prop]="col.prop" [name]="col.name" [flexGrow]="3">
+                        <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                          @if(value=='' && row.status==='SENDED'){
+                            In Attesa di Approvazione
+                          } @else if (value=='' && row.status==='REJECTED'){
+                            In Attesa di revisione
+                          } @else if (value==''){
+                            Non Presente
+                          } @else {
+                            {{value}}
+                          }
+                        </ng-template>
+                      </ngx-datatable-column>
+                    }
+
+                  } @else {
+                    <ngx-datatable-column [prop]="col.prop" [name]="col.name" [flexGrow]="3">
+                    </ngx-datatable-column>
+                  }
+                } @else if (!checks[0]){
+                  <ngx-datatable-column [prop]="col.prop" [name]="col.name" [flexGrow]="3">
+                  </ngx-datatable-column>
+                }
+
+              }
+
+              <!-- action buttons -->
+              <ngx-datatable-column name="Azioni" [sortable]="false" [flexGrow]="1">
+                <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                      <span>
+                        <button class="btn tblActnBtn h-auto" (click)="openTimesheet(row.idTimesheet)">
+                          <i class="material-icons">remove_red_eye</i>
+                        </button>
+                        <button class="btn tblActnBtn h-auto">
+                          <i class="material-icons">attach_file</i>
+                        </button>
+                        <button class="btn tblActnBtn h-auto" >
+                          <i class="material-icons">delete</i>
+                        </button>
+                      </span>
+                </ng-template>
+              </ngx-datatable-column>
+            </ngx-datatable>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -9,7 +9,7 @@
         </li>
       </ul>
       <ul class="float-start navbar-nav navbar-left">
-        <li class="nav-item btnAppList" ngbDropdown>
+        <!--<li class="nav-item btnAppList" ngbDropdown>
           <button mat-icon-button [matMenuTriggerFor]="appDropdownMenu" class="nav-notification-icons">
             <app-feather-icons [icon]="'grid'" [class]="'header-icon'"></app-feather-icons>
           </button>
@@ -60,7 +60,7 @@
                               </ul>
                             </div>
                           </mat-menu>
-                        </li>
+                        </li>-->
                       </ul>
                     </div>
                     <div class="collapse navbar-collapse" [ngClass]="isNavbarCollapsed ? '' : 'show'">
@@ -140,8 +140,7 @@
                             <li class="nav-item user_profile">
                               <button mat-button [matMenuTriggerFor]="profilemenu">
                                 <div class="chip dropdown-toggle" ngbDropdownToggle class="">
-                                  <span>Ella Jones</span>
-                                  <img src="{{userImg}}" class="user_img" width="25" height="25" alt="User">
+                                  <span>{{this.authService.currentUserValue.username}}</span>
                                   </div>
                                 </button>
                                 <mat-menu #profilemenu="matMenu" class="profile-menu">
@@ -150,12 +149,6 @@
                                       <div class="user_dw_menu">
                                         <button mat-menu-item class="user-item-list">
                                           <app-feather-icons [icon]="'user'" [class]="'user-menu-icons'"></app-feather-icons>Account
-                                        </button>
-                                        <button mat-menu-item class="user-item-list">
-                                          <app-feather-icons [icon]="'mail'" [class]="'user-menu-icons'"></app-feather-icons>Inbox
-                                        </button>
-                                        <button mat-menu-item class="user-item-list">
-                                          <app-feather-icons [icon]="'settings'" [class]="'user-menu-icons'"></app-feather-icons>Settings
                                         </button>
                                         <button mat-menu-item (click)="logout()" class="user-item-list">
                                           <app-feather-icons [icon]="'log-out'" [class]="'user-menu-icons'"></app-feather-icons>Logout
@@ -170,4 +163,3 @@
                           </div>
                         </div>
                       </nav>
-                      

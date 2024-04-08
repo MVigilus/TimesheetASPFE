@@ -14,6 +14,9 @@ import { NgScrollbar } from 'ngx-scrollbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { FeatherIconsComponent } from '../../shared/components/feather-icons/feather-icons.component';
 import { MatButtonModule } from '@angular/material/button';
+import {interval} from "rxjs";
+import {AdminService} from "@core/service/admin.service";
+import {ImpiegatoService} from "@core/service/impiegato.service";
 
 interface Notifications {
   message: string;
@@ -42,7 +45,6 @@ export class HeaderComponent
   extends UnsubscribeOnDestroyAdapter
   implements OnInit {
   public config!: InConfiguration;
-  userImg?: string;
   homePage?: string;
   isNavbarCollapsed = true;
   flagvalue: string | string[] | undefined;
@@ -58,13 +60,14 @@ export class HeaderComponent
     private renderer: Renderer2,
     public elementRef: ElementRef,
     private configService: ConfigService,
-    private authService: AuthService,
+    protected authService: AuthService,
     private router: Router,
-    public languageService: LanguageService
+    public languageService: LanguageService,
   ) {
     super();
   }
   listLang = [
+    { text: 'Italiano', flag: 'assets/images/flags/italy.jpg', lang: 'it' },
     { text: 'English', flag: 'assets/images/flags/us.jpg', lang: 'en' },
     { text: 'Spanish', flag: 'assets/images/flags/spain.jpg', lang: 'es' },
     { text: 'German', flag: 'assets/images/flags/germany.jpg', lang: 'de' },
@@ -76,53 +79,11 @@ export class HeaderComponent
       icon: 'mail',
       color: 'nfc-green',
       status: 'msg-unread',
-    },
-    {
-      message: 'New Employee Added..',
-      time: '22 mins ago',
-      icon: 'person_add',
-      color: 'nfc-blue',
-      status: 'msg-read',
-    },
-    {
-      message: 'Your leave is approved!! ',
-      time: '3 hours ago',
-      icon: 'event_available',
-      color: 'nfc-orange',
-      status: 'msg-read',
-    },
-    {
-      message: 'Lets break for lunch...',
-      time: '5 hours ago',
-      icon: 'lunch_dining',
-      color: 'nfc-blue',
-      status: 'msg-read',
-    },
-    {
-      message: 'Employee report generated',
-      time: '14 mins ago',
-      icon: 'description',
-      color: 'nfc-green',
-      status: 'msg-read',
-    },
-    {
-      message: 'Please check your mail',
-      time: '22 mins ago',
-      icon: 'mail',
-      color: 'nfc-red',
-      status: 'msg-read',
-    },
-    {
-      message: 'Salary credited...',
-      time: '3 hours ago',
-      icon: 'paid',
-      color: 'nfc-purple',
-      status: 'msg-read',
-    },
+    }
   ];
+
   ngOnInit() {
     this.config = this.configService.configData;
-    this.userImg = 'assets/images/user/' + this.authService.currentUserValue.img;
     this.docElement = document.documentElement;
 
     this.homePage = 'dashboard/dashboard1';
@@ -132,11 +93,25 @@ export class HeaderComponent
     this.countryName = val.map((element) => element.text);
     if (val.length === 0) {
       if (this.flagvalue === undefined) {
-        this.defaultFlag = 'assets/images/flags/us.jpg';
+        this.defaultFlag = 'assets/images/flags/italy.jpg';
       }
     } else {
       this.flagvalue = val.map((element) => element.flag);
     }
+
+    this.subs.sink = interval(15000).subscribe(() => {
+      this.authService.retriveAllNotification().subscribe({
+        next: res => {
+          console.log(JSON.stringify(res))
+        },
+        error: res => {
+
+        }
+      })
+
+
+    });
+
   }
 
   callFullscreen() {
@@ -187,10 +162,11 @@ export class HeaderComponent
     }
   }
   logout() {
-    this.subs.sink = this.authService.logout().subscribe((res) => {
-      if (!res.success) {
-        this.router.navigate(['/authentication/signin']);
-      }
+    this.subs.sink = this.authService.logout().subscribe({
+      next: (res:any) => {
+    }
     });
+    this.router.navigate(['/authentication/signin']);
+
   }
 }

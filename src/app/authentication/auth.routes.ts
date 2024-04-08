@@ -1,6 +1,5 @@
 import { Route } from "@angular/router";
 import { SigninComponent } from "./signin/signin.component";
-import { SignupComponent } from "./signup/signup.component";
 import { ForgotPasswordComponent } from "./forgot-password/forgot-password.component";
 import { LockedComponent } from "./locked/locked.component";
 import { Page404Component } from "@config/wildcard/page404/page404.component";
@@ -14,10 +13,6 @@ export const AUTH_ROUTE: Route[] = [
   {
     path: "signin",
     component: SigninComponent,
-  },
-  {
-    path: "signup",
-    component: SignupComponent,
   },
   {
     path: "forgot-password",

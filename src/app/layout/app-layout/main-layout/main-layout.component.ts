@@ -1,12 +1,18 @@
 import { Direction, BidiModule } from '@angular/cdk/bidi';
 import { AfterViewInit, Component, Inject, Renderer2 } from '@angular/core';
-import { DirectionService, InConfiguration, RightSidebarService } from '@core';
+import {AuthService, DirectionService, InConfiguration, RightSidebarService} from '@core';
 import { ConfigService } from '@config';
 import { DOCUMENT } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import {Router, RouterOutlet} from '@angular/router';
 import { RightSidebarComponent } from '../../right-sidebar/right-sidebar.component';
 import { SidebarComponent } from '../../sidebar/sidebar.component';
 import { HeaderComponent } from '../../header/header.component';
+import {UnsubscribeOnDestroyAdapter} from "@shared";
+import {interval} from "rxjs";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {JwtInterceptor} from "@core/interceptor/jwt.interceptor";
+import {ErrorInterceptor} from "@core/interceptor/error.interceptor";
+
 
 @Component({
   selector: 'app-main-layout',
@@ -20,17 +26,21 @@ import { HeaderComponent } from '../../header/header.component';
     BidiModule,
     RouterOutlet,
   ],
-  providers: [RightSidebarService]
+  providers: [RightSidebarService,{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },]
 })
-export class MainLayoutComponent implements AfterViewInit {
+export class MainLayoutComponent extends UnsubscribeOnDestroyAdapter implements AfterViewInit {
   direction!: Direction;
   public config!: InConfiguration;
   constructor(
     private directoryService: DirectionService,
     private configService: ConfigService,
     @Inject(DOCUMENT) private document: Document,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private router: Router,
+    private authService:AuthService
   ) {
+    super();
     this.config = this.configService.configData;
     this.directoryService.currentData.subscribe((currentData) => {
       if (currentData) {
@@ -56,7 +66,32 @@ export class MainLayoutComponent implements AfterViewInit {
       }
     });
   }
+
+  executeHttpRequestEveryMinute() {
+
+    this.subs.sink = interval(60000).subscribe(() => {
+      this.authService.CheckJwt().subscribe({
+        next: res => {
+          if (!res) {
+            this.authService.logout().subscribe((res) => {
+            });
+          }
+        },
+        error: res => {
+          this.authService.logout().subscribe((res) => {
+            this.router.navigate(['/authentication/signin']);
+          });
+        }
+      })
+
+
+    });
+
+  }
+
+
   ngAfterViewInit(): void {
+    this.executeHttpRequestEveryMinute();
     //------------ set varient start----------------
     if (localStorage.getItem('theme')) {
       this.renderer.removeClass(this.document.body, this.config.layout.variant);

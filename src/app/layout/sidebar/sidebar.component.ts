@@ -89,11 +89,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
   ngOnInit() {
     if (this.authService.currentUserValue) {
       this.userFullName =
-        this.authService.currentUserValue.firstName +
-        ' ' +
-        this.authService.currentUserValue.lastName;
-      this.userImg = this.authService.currentUserValue.img;
-      this.userType = 'Admin';
+        this.authService.currentUserValue.nominativo;
+      this.userType = 'CIAO';
       this.sidebarItems = ROUTES.filter((sidebarItem) => sidebarItem);
     }
 
@@ -171,9 +168,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
   logout() {
     this.authService.logout().subscribe((res) => {
-      if (!res.success) {
-        this.router.navigate(['/authentication/signin']);
-      }
+      this.router.navigate(['/authentication/signin']);
     });
   }
 }

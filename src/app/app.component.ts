@@ -3,6 +3,9 @@ import { Event, Router, NavigationStart, NavigationEnd, RouterModule } from '@an
 
 import {PageLoaderComponent} from "./layout/page-loader/page-loader.component";
 import {CommonModule} from "@angular/common";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {JwtInterceptor} from "@core/interceptor/jwt.interceptor";
+import {ErrorInterceptor} from "@core/interceptor/error.interceptor";
 
 @Component({
   selector: 'app-root',
@@ -13,7 +16,7 @@ import {CommonModule} from "@angular/common";
     PageLoaderComponent,
 
   ],
-  providers: [],
+  providers: [ ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
