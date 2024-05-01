@@ -187,7 +187,7 @@ export class RiepilogoTimesheetComponent extends UnsubscribeOnDestroyAdapter imp
     this.loading=true;
     this.subs.sink = this.impiegatoService.submitTimesheet(this.timesheet).subscribe({
       next: (res) => {
-        Swal.fire('Timesheet inviato con successo!', 'timesheet spedito ed in attesa di revisione', 'success');
+        Swal.fire('Timesheet inviato con successo!', 'timesheet spedito ed in attesa di revisione, le arriverà una mail contenente in dettaglio per la tracciabilità', 'success');
         this.timesheet=null
         this.loadTable()
         this.loading=false
