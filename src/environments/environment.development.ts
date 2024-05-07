@@ -34,6 +34,8 @@ export const environment = {
       getAllImpiegatoFR:'admin/allImpiegatoFR',
       editImpiegato:'admin/editImpiegato',
       insertImpiegato:'admin/insertImpiegato',
+      setFR:'admin/setFR',
+      deleteImp:'admin/deleteImpiegato',
       getAllRole:'admin/getAllRoles',
       submitSearchTImesheet:'admin/getTimesheetResultList'
     }

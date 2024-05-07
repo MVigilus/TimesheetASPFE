@@ -89,5 +89,14 @@
         "NGX-DATATABLE": "NGX-Datatable"
       }
     }
+  },
+  "TABLES": {
+    "ADMIN": {
+      "GESTIONEIMP": {
+        "DELETEFORM": "Impiegato eliminato con successo",
+        "SETFR": "Impiegato spostato in fine rapporto",
+        "SETFRR": "Impiegato spostato da fine rapporto"
+      }
+    }
   }
 }

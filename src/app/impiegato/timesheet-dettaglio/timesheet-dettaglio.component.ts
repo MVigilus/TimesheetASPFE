@@ -92,7 +92,7 @@ export class TimesheetDettaglioComponent extends UnsubscribeOnDestroyAdapter imp
     this.timesheetEvent.emit(data);
   }
 
-  displayedColumns: string[] = ['ngiorno', 'sede', 'clienteOre', 'straordinari', 'ferie', 'permessi', 'altro','tot', 'clienteDest', 'destinazione', 'kmP'];
+  displayedColumns: string[] = ['ngiorno', 'sede', 'clienteOre', 'straordinari', 'ferie', 'permessi', 'altro','tot'];
   dataSource!: MatTableDataSource<any>;
   timesheetForm:FormGroup;
 
@@ -184,6 +184,9 @@ export class TimesheetDettaglioComponent extends UnsubscribeOnDestroyAdapter imp
   private kmPholder:number[]=[]
 
   ngOnInit(): void {
+    if(this.currentUser.rimborso){
+      this.displayedColumns.push(...['clienteDest', 'destinazione', 'kmP'])
+    }
     const rowFormArray = this.timesheetForm.controls['rows'] as FormArray;
     let totR=this.rimanenzaFerie
     let totP= this.rimanenzaPermesso
@@ -194,7 +197,7 @@ export class TimesheetDettaglioComponent extends UnsubscribeOnDestroyAdapter imp
 
       Object.keys(rowData).forEach(fieldName => {
         const control = this.fb.control(rowData[fieldName], [(fieldName!='straordinari')?this.timeValidator(fieldName):this.maxWorkHoursValidator(this.authService.currentUserValue.oreLavorative)]);
-        control.addValidators((fieldName==='permessi')?[this.validatorPermessi()]:(fieldName==='ferie')?[this.validatorFerie()]:[])
+        //control.addValidators((fieldName==='permessi')?[this.validatorPermessi()]:(fieldName==='ferie')?[this.validatorFerie()]:[])
         rowFormGroup.addControl(fieldName, control);
         if(['sede','clienteOre','straordinari','ferie','permessi','altro'].includes(fieldName)){
           if(fieldName==='altro'){
@@ -281,7 +284,6 @@ export class TimesheetDettaglioComponent extends UnsubscribeOnDestroyAdapter imp
           case 'permessi':
             if (control && control.value !== null && control.value !== '' && !isNaN(+control.value)) {
               this.rimanenzaPermesso-=control.value
-              total += Number(control.value);
             }else{
               this.rimanenzaPermesso=this.authService.currentUserValue.anagraficaLavorativa[0].giorniPermesso
               this.timesheetForm.controls['rows'].value.forEach((value:any)=>{
@@ -293,7 +295,6 @@ export class TimesheetDettaglioComponent extends UnsubscribeOnDestroyAdapter imp
           case 'ferie':
             if (control && control.value !== null && control.value !== '' && !isNaN(+control.value)) {
               this.rimanenzaFerie-=control.value
-              total += Number(control.value);
             }else {
               this.rimanenzaFerie=this.authService.currentUserValue.anagraficaLavorativa[0].giorniFerie
               this.timesheetForm.controls['rows'].value.forEach((value:any)=>{
@@ -302,26 +303,24 @@ export class TimesheetDettaglioComponent extends UnsubscribeOnDestroyAdapter imp
             }
             this.oreFerie.emit({"action":this.rimanenzaFerie})
             break;
-          default:
-            ['sede','clienteOre','straordinari','altro'].forEach(name => {
-
-              const control = rowFormGroup.controls[name];
-              if(name=='straordinari'){
-                strd=true;
-                if (control && control.value !== null && control.value !== '' && !isNaN(+control.value)) {
-                  total += Number(control.value);
-                }
-              }else if(name!='altro'){
-                if (control && control.value !== null && control.value !== '' && !isNaN(+control.value)) {
-                  total += Number(control.value);
-                }
-              }else if (control.value !== ''){
-                total+=this.authService.currentUserValue.oreLavorative
-              }
-
-            });
-            break
         }
+        ['sede','clienteOre','straordinari','permessi','ferie','altro'].forEach(name => {
+
+          const control = rowFormGroup.controls[name];
+          if(name=='straordinari'){
+            strd=true;
+            if (control && control.value !== null && control.value !== '' && !isNaN(+control.value)) {
+              total += Number(control.value);
+            }
+          }else if(name!='altro'){
+            if (control && control.value !== null && control.value !== '' && !isNaN(+control.value)) {
+              total += Number(control.value);
+            }
+          }else if (control.value !== ''){
+            total+=this.authService.currentUserValue.oreLavorative
+          }
+
+        });
 
       }
 

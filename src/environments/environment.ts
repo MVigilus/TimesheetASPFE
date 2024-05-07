@@ -29,6 +29,8 @@ export const environment = {
       getAllTimesheetOption:'admin/getAdminOptionList/imp',
       getAllImpiegatoFR:'admin/allImpiegatoFR',
       editImpiegato:'admin/editImpiegato',
+      setFR:'admin/setFR',
+      deleteImp:'admin/deleteImpiegato',
       insertImpiegato:'admin/insertImpiegato',
       getAllRole:'admin/getAllRoles',
       submitSearchTImesheet:'admin/getTimesheetResultList'

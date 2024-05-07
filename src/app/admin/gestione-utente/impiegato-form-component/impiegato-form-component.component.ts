@@ -26,6 +26,7 @@ import {AdminService} from "@core/service/admin.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import Swal from "sweetalert2";
 import {UnsubscribeOnDestroyAdapter} from "@shared";
+import {RoleFormatPipe} from "@core/utils/pipes/RoleFormatPipe.pipe";
 
 @Component({
   selector: 'app-impiegato-form-component',
@@ -45,7 +46,8 @@ import {UnsubscribeOnDestroyAdapter} from "@shared";
     MatDialogClose,
     MatNativeDateModule,
     MatMomentDateModule,
-    AsyncPipe
+    AsyncPipe,
+    RoleFormatPipe
   ],
   templateUrl: './impiegato-form-component.component.html',
   styleUrl: './impiegato-form-component.component.scss'
@@ -106,7 +108,7 @@ export class ImpiegatoFormComponent extends UnsubscribeOnDestroyAdapter implemen
   createContactForm(): UntypedFormGroup {
     return this.fb.group({
       id:[this.advanceTable.id],
-      username: [this.advanceTable.username, [Validators.required]],
+      username: [this.advanceTable.username, []],
       email: [
         this.advanceTable.email,
         [Validators.required, Validators.email, Validators.minLength(5)],

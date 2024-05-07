@@ -1,5 +1,6 @@
 import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from "@angular/material/snack-bar";
 import {FormGroup} from "@angular/forms";
+import Swal from "sweetalert2";
 
 export function showNotification(
   colorName: string,
@@ -14,6 +15,18 @@ export function showNotification(
     horizontalPosition: placementAlign,
     panelClass: colorName,
   });
+}
+
+export function confirmModal(title:string, text:string){
+    return Swal.fire({
+      title: title,
+      text: text,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Conferma',
+    })
 }
 
 export function dateLessThan(from: string, to: string) {

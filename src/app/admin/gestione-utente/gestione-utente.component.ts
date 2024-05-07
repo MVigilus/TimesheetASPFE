@@ -19,9 +19,9 @@ import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition}
 import {Direction} from "@angular/cdk/bidi";
 import {Impiegatolist} from "@core/models/admin/impiegatolist.model";
 import {AdvanceTableService} from "@core/service/advance-table.service";
-import { BehaviorSubject, fromEvent, merge, Observable } from 'rxjs';
+import {BehaviorSubject, fromEvent, merge, Observable, Subscription} from 'rxjs';
 import {map} from "rxjs/operators";
-import {HTTP_INTERCEPTORS, HttpClient} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {ImpiegatoFormComponent} from "./impiegato-form-component/impiegato-form-component.component";
 import {JwtInterceptor} from "@core/interceptor/jwt.interceptor";
 import {ErrorInterceptor} from "@core/interceptor/error.interceptor";
@@ -30,6 +30,7 @@ import {MatSlideToggle, MatSlideToggleChange} from "@angular/material/slide-togg
 import {
   DeleteImpiegatoFormComponentComponent
 } from "./delete-impiegato-form-component/delete-impiegato-form-component.component";
+import {confirmModal} from "@core/utils/functions";
 
 @Component({
   selector: 'app-gestione-utente',
@@ -169,7 +170,34 @@ export class GestioneUtenteComponent extends UnsubscribeOnDestroyAdapter
       }
     });
   }
-  deleteItem(row: Impiegatolist) {
+
+  resetImp(row:Impiegatolist){
+    let title=""
+      confirmModal('Sei sicuro di voler ripristinare il seguente Impiegato?',row.nominativo)
+        .then((res)=>{
+        if (res.value) {
+          this.advanceTableService.deleteAdvanceTable(row.id).subscribe({
+            next:(res)=>{
+              title='TABLES.ADMIN.GESTIONEIMP.SETFRR'
+            },
+            error:(res)=>{
+              title='QUALCOSA è ANdato storto'
+            },
+            complete:()=>{
+              this.loadData()
+              this.showNotification(
+                'snackbar-danger',
+                title,
+                'bottom',
+                'center'
+              );
+            }
+          })
+        }
+    });
+  }
+
+  deleteItem(row: any) {
     this.id = row.id;
     let tempDirection: Direction;
     if (localStorage.getItem('isRtl') === 'true') {
@@ -177,25 +205,56 @@ export class GestioneUtenteComponent extends UnsubscribeOnDestroyAdapter
     } else {
       tempDirection = 'ltr';
     }
+    row.checkedFR=this.checkedFR
     const dialogRef = this.dialog.open(DeleteImpiegatoFormComponentComponent, {
       data: row,
       direction: tempDirection,
     });
+    console.log("ok")
     this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-      if (result === 1) {
+      if (result) {
         const foundIndex = this.exampleDatabase?.dataChange.value.findIndex(
           (x) => x.id === this.id
         );
-        // for delete we use splice in order to remove single object from DataService
+        let title="";
         if (foundIndex != null && this.exampleDatabase) {
+          let sub:Subscription;
+          if(!this.checkedFR){this.advanceTableService.deleteAdvanceTable(row.id).subscribe({
+              next: (data) => {
+                title="TABLES.ADMIN.GESTIONEIMP.SETFR"
+              },
+              error:(error: HttpErrorResponse) => {
+                title='QUALCOSA è ANdato storto'
+              },
+              complete:()=>{
+                this.refreshTable();
+                this.showNotification(
+                  'snackbar-danger',
+                  title,
+                  'bottom',
+                  'center'
+                );
+              }
+            });
+          }else{this.advanceTableService.deleteAdvanceTableImp(row.id).subscribe({
+              next: (data) => {
+                title="TABLES.ADMIN.GESTIONEIMP.DELETEFORM"
+              },
+              error:(error: HttpErrorResponse) => {
+                title='QUALCOSA è ANdato storto'
+              },
+            complete:()=>{
+              this.refreshTable();
+              this.showNotification(
+                'snackbar-danger',
+                title,
+                'bottom',
+                'center'
+              );
+            }
+            });
+          }
           this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
-          this.refreshTable();
-          this.showNotification(
-            'snackbar-danger',
-            'Delete Record Successfully...!!!',
-            'bottom',
-            'center'
-          );
         }
       }
     });
@@ -220,18 +279,30 @@ export class GestioneUtenteComponent extends UnsubscribeOnDestroyAdapter
   }
   removeSelectedRows() {
     const totalSelect = this.selection.selected.length;
-    this.selection.selected.forEach((item) => {
-      const index: number = this.dataSource.renderedData.findIndex(
-        (d) => d === item
-      );
-      // console.log(this.dataSource.renderedData.findIndex((d) => d === item));
-      this.exampleDatabase?.dataChange.value.splice(index, 1);
-      this.refreshTable();
-      this.selection = new SelectionModel<Impiegatolist>(true, []);
-    });
+    if(this.checkedFR){
+      this.selection.selected.forEach((item) => {
+        const index: number = this.dataSource.renderedData.findIndex(
+          (d) => d === item
+        );
+        this.exampleDatabase?.dataChange.value.splice(index, 1);
+        this.advanceTableService.deleteAdvanceTable(item.id)
+        this.selection = new SelectionModel<Impiegatolist>(true, []);
+      });
+    }else{
+      this.selection.selected.forEach((item) => {
+        const index: number = this.dataSource.renderedData.findIndex(
+          (d) => d === item
+        );
+        this.exampleDatabase?.dataChange.value.splice(index, 1);
+        this.advanceTableService.deleteAdvanceTableImp(item.id)
+        this.selection = new SelectionModel<Impiegatolist>(true, []);
+      });
+    }
+
+    this.refreshTable();
     this.showNotification(
       'snackbar-danger',
-      totalSelect + ' Record Delete Successfully...!!!',
+      totalSelect + ' TABLES.ADMIN.GESTIONEIMP.DELETEFORM',
       'bottom',
       'center'
     );

@@ -27,14 +27,13 @@ export class DeleteImpiegatoFormComponentComponent {
   constructor(
     public dialogRef: MatDialogRef<DeleteImpiegatoFormComponentComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public advanceTableService: AdvanceTableService
   ) {
     console.log(JSON.stringify(data))
   }
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
   confirmDelete(): void {
-    this.advanceTableService.deleteAdvanceTable(this.data.id);
+    this.dialogRef.close(true);
   }
 }

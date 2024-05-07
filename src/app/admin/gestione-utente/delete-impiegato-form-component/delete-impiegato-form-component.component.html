@@ -1,5 +1,9 @@
 <div class="container">
-  <h3 mat-dialog-title>Sei Sicuro di voler spostare in fine Rapporto?</h3>
+  @if(!this.data.checkedFR){
+    <h3 mat-dialog-title>Sei Sicuro di voler spostare in fine Rapporto?</h3>
+  }@else{
+    <h3 mat-dialog-title>Sei Sicuro di voler Eliminare definitivamente l'impiegato?</h3>
+  }
   <div mat-dialog-content>
     <ul class="clearfix">
       <li>

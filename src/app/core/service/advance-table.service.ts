@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { UnsubscribeOnDestroyAdapter } from '@shared';
 import {Impiegatolist} from "@core/models/admin/impiegatolist.model";
@@ -21,6 +21,8 @@ export class AdvanceTableService extends UnsubscribeOnDestroyAdapter {
   private readonly API_URL_FR = `${environment.apiUrl}/${environment.servizi.admin.getAllImpiegatoFR}`;
   private readonly API_URL_INSERT = `${environment.apiUrl}/${environment.servizi.admin.insertImpiegato}`;
   private readonly API_URL_EDIT = `${environment.apiUrl}/${environment.servizi.admin.editImpiegato}/`;
+  private readonly API_URL_SETFR = `${environment.apiUrl}/${environment.servizi.admin.setFR}`;
+  private readonly API_URL_DELETE = `${environment.apiUrl}/${environment.servizi.admin.deleteImp}`;
   isTblLoading = true;
   dataChange: BehaviorSubject<Impiegatolist[]> = new BehaviorSubject<
     Impiegatolist[]
@@ -82,20 +84,28 @@ export class AdvanceTableService extends UnsubscribeOnDestroyAdapter {
   updateAdvanceTable(advanceTable: Impiegatolist) {
     this.dialogData = convertImpiegatolistToImpiegatoDto(advanceTable);
 
-    return this.httpClient.post(this.API_URL_EDIT + advanceTable.id, advanceTable);
+    return this.httpClient.post(this.API_URL_EDIT + advanceTable.id, advanceTable).pipe(
+      map((result) => {
+        return result
+      })
+    );
 
   }
-  deleteAdvanceTable(id: number): void {
-    console.log(id);
+  deleteAdvanceTable(id: number): Observable<any> {
 
-    // this.httpClient.delete(this.API_URL + id)
-    //     .subscribe({
-    //       next: (data) => {
-    //         console.log(id);
-    //       },
-    //       error: (error: HttpErrorResponse) => {
-    //          // error code here
-    //       },
-    //     });
+    return this.httpClient.put(this.API_URL_SETFR,id).pipe(
+      map((result) => {
+        return result
+      })
+    );
+  }
+
+  deleteAdvanceTableImp(id: number): Observable<any> {
+
+    return this.httpClient.delete(this.API_URL_DELETE+'/'+id).pipe(
+      map((result) => {
+        return result
+      })
+    );
   }
 }
