@@ -45,7 +45,7 @@ export class AuthService {
 
   resetPassword(email:string) {
     this.currentUserSubject.next(this.currentUserValue);
-    return this.http.get<boolean>(`${environment.apiUrl}/${environment.servizi.auth.resetPassword}/`+email).pipe(
+    return this.http.get<any>(`${environment.apiUrl}/${environment.servizi.auth.resetPassword}/`+email).pipe(
       map((res) => {
         return res;
       })

@@ -8,25 +8,28 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {AuthService} from "@core";
 import {UnsubscribeOnDestroyAdapter} from "@shared";
 import Swal from "sweetalert2";
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
 @Component({
     selector: 'app-forgot-password',
     templateUrl: './forgot-password.component.html',
     styleUrls: ['./forgot-password.component.scss'],
     standalone: true,
-    imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatIconModule,
-        MatButtonModule,
-        RouterLink,
-    ],
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule,
+    RouterLink,
+    MatProgressSpinner,
+  ],
 })
 export class ForgotPasswordComponent extends UnsubscribeOnDestroyAdapter implements OnInit {
   authForm!: UntypedFormGroup;
   submitted = false;
   returnUrl!: string;
+  loading=false;
   constructor(
     private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
@@ -40,7 +43,7 @@ export class ForgotPasswordComponent extends UnsubscribeOnDestroyAdapter impleme
     this.authForm = this.formBuilder.group({
       email: [
         '',
-        [Validators.required, Validators.minLength(5)],
+        [Validators.required, /*Validators.minLength(5)*/],
       ],
     });
     // get return url from route parameters or default to '/'
@@ -55,6 +58,7 @@ export class ForgotPasswordComponent extends UnsubscribeOnDestroyAdapter impleme
     if (this.authForm.invalid) {
       return;
     } else {
+      this.loading=true;
       this.subs.sink=this.authService.resetPassword(this.f["email"].value).subscribe({
         next:res=>{
           if(res){
@@ -68,7 +72,8 @@ export class ForgotPasswordComponent extends UnsubscribeOnDestroyAdapter impleme
                 '',
             });
           }
-          this.router.navigate(['/authentication/signin']);
+          this.loading=false;
+          //this.router.navigate(['/authentication/signin']);
         },
         error: res => {
           Swal.fire({
@@ -78,6 +83,8 @@ export class ForgotPasswordComponent extends UnsubscribeOnDestroyAdapter impleme
             footer: '' +
               '',
           });
+          this.loading=false;
+
           this.router.navigate(['/authentication/signin']);
         }
       })
