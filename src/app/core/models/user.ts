@@ -6,6 +6,7 @@ export class User {
   token!: string;
   role!:string;
   rimborso!:boolean;
+  telefono!:string;
   oreLavorative!:number;
   anagraficaLavorativa!:AnagraficaLavorativa[];
   modello_auto!:string;

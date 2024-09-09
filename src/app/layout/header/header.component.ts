@@ -161,6 +161,10 @@ export class HeaderComponent
       localStorage.setItem('collapsed_menu', 'true');
     }
   }
+  gotToAccountPage(){
+    console.log('/'+this.router.url.split('/')[1]+'/account')
+    this.router.navigate(['/'+this.router.url.split('/')[1]+'/account']);
+  }
   logout() {
     this.subs.sink = this.authService.logout().subscribe({
       next: (res:any) => {

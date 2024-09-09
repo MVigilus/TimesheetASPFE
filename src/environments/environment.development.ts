@@ -10,6 +10,7 @@ export const environment = {
       login:'auth/login',
       logout:'auth/logout',
       resetPassword:'auth/resetPassword',
+      setPassword:'auth/setPassword',
       editProfile:'auth/editImpiegato/',
       checkJWT: "auth/checkJWT",
       getAllNotification:'auth/notificationList',

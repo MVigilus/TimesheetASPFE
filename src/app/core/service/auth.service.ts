@@ -52,6 +52,14 @@ export class AuthService {
     );
   }
 
+  setPassword(newPassword:any){
+    return this.http.post<any>(`${environment.apiUrl}/${environment.servizi.auth.setPassword}`,newPassword).pipe(
+      map((res) => {
+        return res;
+      })
+    );
+  }
+
   CheckJwt() {
     return this.http.get<boolean>(`${environment.apiUrl}/${environment.servizi.auth.checkJWT}`).pipe(
       map((res) => {

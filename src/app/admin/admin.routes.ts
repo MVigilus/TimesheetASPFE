@@ -4,6 +4,7 @@ import {GestioneTimesheetComponent} from "./gestione-timesheet/gestione-timeshee
 import {GestioneUtenteComponent} from "./gestione-utente/gestione-utente.component";
 import {TimesheetDettaglioComponent} from "./gestione-timesheet/timesheet-dettaglio/timesheet-dettaglio.component";
 import {TimesheetViewComponent} from "./timesheet-view/timesheet-view.component";
+import {UserProfileComponent} from "../user-profile/user-profile.component";
 
 export const AdminRoutes : Routes = [
   {path:'', component:DashboardComponent},
@@ -11,5 +12,6 @@ export const AdminRoutes : Routes = [
   {path:'gestionetimesheet', component:GestioneTimesheetComponent},
   {path:'timesheet/:id', component:TimesheetViewComponent},
   {path:'gestioneImpiegato', component:GestioneUtenteComponent},
-  {path:'**', redirectTo:'/page404',pathMatch:"full"}
+  { path: 'account', component:UserProfileComponent},
+  {path:'**', redirectTo:'/page404',pathMatch:"full"},
 ]

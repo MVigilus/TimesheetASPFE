@@ -5,6 +5,7 @@ import {RicercaTimesheetComponent} from "./ricerca-timesheet/ricerca-timesheet.c
 import {
   TimesheetDettaglioComponent
 } from "./timesheet-dettaglio/timesheet-dettaglio.component";
+import {UserProfileComponent} from "../user-profile/user-profile.component";
 
 
 export const ImpiegatoRoutes : Routes = [
@@ -12,5 +13,6 @@ export const ImpiegatoRoutes : Routes = [
   {path:'home', component:DashboardComponent},
   {path:'timesheet', component:RicercaTimesheetComponent},
   {path:'riepilogoTimesheet', component:RiepilogoTimesheetComponent},
+  { path: 'account', component:UserProfileComponent},
   {path:'**', redirectTo:'/page404',pathMatch:"full"}
 ]
