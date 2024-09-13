@@ -1,6 +1,7 @@
 import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from "@angular/material/snack-bar";
 import {FormGroup} from "@angular/forms";
 import Swal from "sweetalert2";
+import {TipoNotifica} from "@core/models/Notifications";
 
 export function showNotification(
   colorName: string,
@@ -40,4 +41,56 @@ export function dateLessThan(from: string, to: string) {
     }
     return {};
   };
+}
+
+export function timeDifferenceInMinutes(givenDate: Date): string {
+  const currentDate = new Date();
+  const differenceInMilliseconds = currentDate.getTime() - givenDate.getTime();
+  const differenceInMinutes = Math.floor(differenceInMilliseconds / (1000 * 60));
+
+  return `${differenceInMinutes} minuti fa`;
+}
+
+// Function to get icon based on notification type
+export function iconForNotificationConverte(tipo: TipoNotifica): string {
+  switch (tipo) {
+    case TipoNotifica.INSERT_TIMESHEET:
+      return 'insert_chart';
+    case TipoNotifica.SEND_TIMESHEET:
+      return 'send';
+    case TipoNotifica.INSERT_GIUSTIFICATIVO:
+      return 'insert_drive_file';
+    case TipoNotifica.INSERT_BUSTA_PAGA:
+      return 'attach_money';
+    case TipoNotifica.TIMESHEET_APPROVED:
+      return 'check_circle';
+    case TipoNotifica.TIMESHEET_REJECTED:
+      return 'cancel';
+    case TipoNotifica.RESETTED_PASSWORD:
+      return 'lock_reset';
+    default:
+      return 'notifications';
+  }
+}
+
+// Function to get color based on notification type
+export function colorForNotificationConverte(tipo: TipoNotifica): string {
+  switch (tipo) {
+    case TipoNotifica.INSERT_TIMESHEET:
+      return 'blue';
+    case TipoNotifica.SEND_TIMESHEET:
+      return 'purple';
+    case TipoNotifica.INSERT_GIUSTIFICATIVO:
+      return 'orange';
+    case TipoNotifica.INSERT_BUSTA_PAGA:
+      return 'green';
+    case TipoNotifica.TIMESHEET_APPROVED:
+      return 'green';
+    case TipoNotifica.TIMESHEET_REJECTED:
+      return 'red';
+    case TipoNotifica.RESETTED_PASSWORD:
+      return 'yellow';
+    default:
+      return 'grey';
+  }
 }

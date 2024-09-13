@@ -14,17 +14,12 @@ import { NgScrollbar } from 'ngx-scrollbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { FeatherIconsComponent } from '../../shared/components/feather-icons/feather-icons.component';
 import { MatButtonModule } from '@angular/material/button';
-import {interval} from "rxjs";
-import {AdminService} from "@core/service/admin.service";
-import {ImpiegatoService} from "@core/service/impiegato.service";
+import {interval, Subscription} from "rxjs";
+import {NotificationService} from "@core/service/notification.service";
+import {NotificationPlaceHolder, Notifications} from "@core/models/Notifications";
+import {HttpErrorResponse} from "@angular/common/http";
+import {MatBadge} from "@angular/material/badge";
 
-interface Notifications {
-  message: string;
-  time: string;
-  icon: string;
-  color: string;
-  status: string;
-}
 
 @Component({
   selector: 'app-header',
@@ -38,6 +33,7 @@ interface Notifications {
     RouterLink,
     NgClass,
     NgScrollbar,
+    MatBadge,
   ],
   providers: [LanguageService],
 })
@@ -63,24 +59,21 @@ export class HeaderComponent
     protected authService: AuthService,
     private router: Router,
     public languageService: LanguageService,
+    private notificationService: NotificationService,
   ) {
     super();
   }
   listLang = [
     { text: 'Italiano', flag: 'assets/images/flags/italy.jpg', lang: 'it' },
-    { text: 'English', flag: 'assets/images/flags/us.jpg', lang: 'en' },
+    /*{ text: 'English', flag: 'assets/images/flags/us.jpg', lang: 'en' },
     { text: 'Spanish', flag: 'assets/images/flags/spain.jpg', lang: 'es' },
-    { text: 'German', flag: 'assets/images/flags/germany.jpg', lang: 'de' },
+    { text: 'German', flag: 'assets/images/flags/germany.jpg', lang: 'de' },*/
   ];
-  notifications: Notifications[] = [
-    {
-      message: 'Please check your mail',
-      time: '14 mins ago',
-      icon: 'mail',
-      color: 'nfc-green',
-      status: 'msg-unread',
-    }
+
+  notifications: NotificationPlaceHolder[] = [
+
   ];
+  unreaded:number=0;
 
   ngOnInit() {
     this.config = this.configService.configData;
@@ -99,18 +92,22 @@ export class HeaderComponent
       this.flagvalue = val.map((element) => element.flag);
     }
 
-    this.subs.sink = interval(15000).subscribe(() => {
-      this.authService.retriveAllNotification().subscribe({
-        next: res => {
-          console.log(JSON.stringify(res))
-        },
-        error: res => {
+    this.subs.sink=this.notificationService.getNotifications().subscribe(
+      (newNotifications ) => {
+        this.notifications = newNotifications;
+        this.unreaded=0
+        this.notifications.forEach((el)=>{
+          if(el.status==='msg-unread'){
+            this.unreaded++
+          }
+        })
+      },
+      (error) => {
+        console.error('Error loading notifications:', error);
+      }
+    );;
 
-        }
-      })
-
-
-    });
+    this.notificationService.fetchInitialNotifications();
 
   }
 
@@ -173,4 +170,12 @@ export class HeaderComponent
     this.router.navigate(['/authentication/signin']);
 
   }
+
+  markAllAsReaded() {
+    this.notificationService.markAsRead()
+    this.notifications=[]
+    this.unreaded=0
+    this.notificationService.fetchInitialNotifications()
+  }
+
 }
