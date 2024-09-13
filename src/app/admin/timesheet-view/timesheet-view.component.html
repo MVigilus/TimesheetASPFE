@@ -1,0 +1,190 @@
+<section class="content">
+  <div class="content-block">
+    <div class="header">
+      <div class="container-fluid">
+        <div class="row">
+          <app-breadcrumb [title]="'Gestione Timesheet'" [items]="['Home']" [active_item]="'Ricerca Timesheet'"></app-breadcrumb>
+        </div>
+      </div>
+    </div>
+    @if (!loading){
+      <div class="container-fluid">
+        <div class="row align-content-center justify-content-center align-center">
+          <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2"></div>
+          <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
+            <h1>Timesheet - {{ monthsInItalian[impiegatoTimesheet.meseT]+" "+ impiegatoTimesheet.annoT }} </h1>
+            <br>
+            <h1>{{impiegatoTimesheet.nominativo+" - "+impiegatoTimesheet.codice_fiscale}}</h1>
+          </div>
+          <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2"></div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+            <button mat-flat-button color="primary" style="width: 100%;height: 5vh"   type="submit" (click)="StampaTimesheet()"> Stampa Timesheet</button>
+          </div>
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12"></div>
+        </div>
+        <div class="row">
+          <mat-table [dataSource]="displayData"
+                     class="mat-elevation-z8" style="width: 100%">
+            @for(column of displayColumns;let idx=$index;track displayColumns){
+              <ng-container matColumnDef="{{displayColumns[idx]}}">
+                <mat-header-cell style="border-right: solid 1px #e0e0e0;" *matHeaderCellDef [class]="(idx==0)?'columnStyle':''" > {{displayColumns[idx]}} </mat-header-cell>
+                <!--[style]="(disableMargin)?'border-right: solid 1px #e0e0e0;':''"-->
+                <mat-cell style="border-right: solid 1px #e0e0e0;" [style]="assingColor(element,idx)" [class]="(idx==0)?'columnStyle':''" *matCellDef="let element; let i=index" >
+                  {{(element['#']==='Altro' && element[displayColumns[idx]]!='FES')?element[displayColumns[idx]].substring(0,3).toString():((element[displayColumns[idx]]=='FES')?'':element[displayColumns[idx]])}}
+                </mat-cell>
+              </ng-container>
+            }
+
+            <mat-header-row *matHeaderRowDef="displayColumns;"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayColumns;"  ></mat-row>
+          </mat-table>
+        </div>
+        @if(impiegatoTimesheet.rimborso){
+          <div class="row mt-5">
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+              <button mat-flat-button color="primary" style="width: 100%;height: 5vh"   type="submit" (click)="StampaRimborso()"> Stampa Rimborso </button>
+            </div>
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12"></div>
+          </div>
+          <div class="row body mt-3 overflow-auto">
+            <div class="responsive_table">
+              <mat-table [dataSource]="datiRimborso"
+                         class="mat-cell advance-table" style="width: 100%">
+                <ng-container matColumnDef="ngiorno">
+                  <mat-header-cell style="border-right: solid 1px #e0e0e0;" *matHeaderCellDef > Giorno </mat-header-cell>
+                  <!--[style]="(disableMargin)?'border-right: solid 1px #e0e0e0;':''"-->
+                  <mat-cell style="border-right: solid 1px #e0e0e0;" *matCellDef="let element; let i=index" >
+                    {{element.ngiorno}}
+                  </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="clienteDest">
+                  <mat-header-cell style="border-right: solid 1px #e0e0e0;" *matHeaderCellDef > Cliente </mat-header-cell>
+                  <!--[style]="(disableMargin)?'border-right: solid 1px #e0e0e0;':''"-->
+                  <mat-cell style="border-right: solid 1px #e0e0e0;" *matCellDef="let element; let i=index" >
+                    {{element.clienteDest}}
+                  </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="destinazione">
+                  <mat-header-cell style="border-right: solid 1px #e0e0e0;" *matHeaderCellDef > Destinazione </mat-header-cell>
+                  <mat-cell style="border-right: solid 1px #e0e0e0;" *matCellDef="let element; let i=index" >
+                    {{element.destinazione}}
+                  </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="kmP">
+                  <mat-header-cell style="border-right: solid 1px #e0e0e0;" *matHeaderCellDef > Km percorsi </mat-header-cell>
+                  <!--[style]="(disableMargin)?'border-right: solid 1px #e0e0e0;':''"-->
+                  <mat-cell style="border-right: solid 1px #e0e0e0;" *matCellDef="let element; let i=index" >
+                    {{element.kmP}}
+                  </mat-cell>
+                </ng-container>
+
+
+
+                <mat-header-row *matHeaderRowDef="headerRimborso;sticky: true"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: headerRimborso;"  ></mat-row>
+
+              </mat-table>
+              @if(datiRimborso.data.length==0){
+                <div class="no-results" [style.background-color]="'white'"
+                     [style.display]="datiRimborso.data.length === 0 ? '' : 'none'">
+                  Nessun Giustifivativo presente
+                </div>
+              }
+            </div>
+          </div>
+        }
+        <div class="row mt-5">
+          <div class="col-xl-2 col-lg-2 col-md-2"></div>
+          <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
+            <div class="card">
+              <div class="header">
+                <h2>Sezione Giustificativi</h2>
+              </div>
+              <div class="body table-responsive">
+                <table class="table custom-table">
+                  <tbody>
+                    @if(impiegatoTimesheet.rimborso){
+                      <tr>
+                        <td class="large-cell"><strong>Modello Auto :</strong></td>
+                        <td>{{ impiegatoTimesheet.modello_auto }}</td>
+                      </tr>
+                      <tr>
+                        <td class="large-cell"><strong>Rimborso Km :</strong></td>
+                        <td>{{impiegatoTimesheet.rimborsoKm}} €</td>
+                      </tr>
+                      <tr>
+                        <td class="large-cell"><strong>Totale Km Percorsi :</strong></td>
+                        <td>{{totKm}}</td>
+                      </tr>
+                    }
+                  <tr>
+                    <td class="large-cell"><strong>Giustificativi :</strong></td>
+                    <td>{{ ngiustiicativi||0 }}</td>
+                  </tr>
+                  <tr>
+                    <td class="large-cell"><strong>Totale Rimborso :</strong></td>
+                    <td>{{totRimborsoKm}} €</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-2 col-lg-2 col-md-2">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-2 col-lg-2 col-md-2"></div>
+          <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
+            <div class="row mb-5">
+              <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                <mat-form-field class="example-full-width" appearance="fill" subscriptSizing="dynamic">
+                  <mat-label>Autorizzato da</mat-label>
+                  <input matInput [(ngModel)]="autore">
+                </mat-form-field>
+              </div>
+              <div class="col-xl-2 col-lg-2 col-md-2">
+                <button mat-flat-button color="primary" style="width: 100%;height: 5vh" [disabled]="autore==''"   type="submit" (click)="autorizza()"> Approva
+                </button>
+              </div>
+              <div class="col-xl-2 col-lg-2 col-md-2">
+                <button mat-flat-button color="accent" style="width: 100%;height: 5vh"  [disabled]="autore==''"  type="submit" (click)="rifiuta()"> Rifiuta
+                </button>
+              </div>
+
+            </div>
+
+
+
+          </div>
+          <div class="col-xl-2 col-lg-2 col-md-2"></div>
+
+        </div>
+      </div>
+    } @else {
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+          </div>
+          <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 align-content-center justify-content-center">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <mat-spinner></mat-spinner>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+          </div>
+        </div>
+      </div>
+
+    }
+
+  </div>
+</section>
