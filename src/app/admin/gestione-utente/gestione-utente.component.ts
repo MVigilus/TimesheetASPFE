@@ -61,7 +61,6 @@ export class GestioneUtenteComponent extends UnsubscribeOnDestroyAdapter
 
   displayedColumns = [
     'select',
-    'id', // added as per interface
     'nominativo',
     'codice_fiscale', // added as per interface
     'data_assunzione', // added as per interface
