@@ -94,10 +94,11 @@ export class HeaderComponent
 
     this.subs.sink=this.notificationService.getNotifications().subscribe(
       (newNotifications ) => {
-        this.notifications = newNotifications;
+        this.notifications = [];
         this.unreaded=0
-        this.notifications.forEach((el)=>{
-          if(el.status==='msg-unread'){
+        newNotifications.forEach((el)=>{
+          if(el.status==='msg-unread' && el.message!=undefined){
+            this.notifications.push(el);
             this.unreaded++
           }
         })
