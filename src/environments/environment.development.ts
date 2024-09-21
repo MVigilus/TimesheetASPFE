@@ -16,6 +16,14 @@ export const environment = {
       checkJWT: "auth/checkJWT",
       getAllNotification:'auth/notificationList',
     },
+    file:{
+      downloadGiustificativi:'file/downloadGiustificativo',
+      downloadAllegati:'file/downloadAllegato',
+      downloadBustePaga:'file/downloadBustaPaga',
+      submitGiustificativoFiles:'operator/insertGiustificativo',
+      submitAllegatoFile:'operator/insertAllegato',
+      submitBustaPagaFile:'admin/insertBustaPaga',
+    },
     impiegato:{
       getAllTimesheetOption:'operator/getTimesheetOptionList',
       getAllTimesheetLogged:'operator/getTimesheetElenco',

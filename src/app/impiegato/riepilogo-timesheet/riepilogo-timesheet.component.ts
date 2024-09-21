@@ -9,7 +9,7 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {TimesheetDettaglioComponent} from "../timesheet-dettaglio/timesheet-dettaglio.component";
 import {AuthService} from "@core";
 import {MatSlideToggle, MatSlideToggleChange} from "@angular/material/slide-toggle";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FormBuilder, FormsModule, ReactiveFormsModule, UntypedFormControl, UntypedFormGroup} from "@angular/forms";
 import {showNotification} from "@core/utils/functions";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import Swal from "sweetalert2";
@@ -19,6 +19,12 @@ import {
   MatExpansionPanelHeader,
   MatExpansionPanelTitle
 } from "@angular/material/expansion";
+import {MatLabel} from "@angular/material/form-field";
+import {FileUploadComponent} from "@shared/components/file-upload/file-upload.component";
+import {MatDialog} from "@angular/material/dialog";
+import {DialogForAttachFilesComponent} from "../dialog-for-attach-files/dialog-for-attach-files.component";
+import {Subscription} from "rxjs";
+import {FileSystemService} from "@core/service/file-system.service";
 
 @Component({
   selector: 'app-riepilogo-timesheet',
@@ -36,7 +42,9 @@ import {
     MatAccordion,
     MatExpansionPanel,
     MatExpansionPanelHeader,
-    MatExpansionPanelTitle
+    MatExpansionPanelTitle,
+    MatLabel,
+    FileUploadComponent
   ],
   templateUrl: './riepilogo-timesheet.component.html',
   styleUrl: './riepilogo-timesheet.component.scss'
@@ -47,6 +55,9 @@ export class RiepilogoTimesheetComponent extends UnsubscribeOnDestroyAdapter imp
 
   data: any[] = [];
   dataTable!:any[];
+  fileUploadForm: UntypedFormGroup;
+
+
 
   @ViewChild(DatatableComponent, { static: false }) table!: DatatableComponent;
 
@@ -62,9 +73,15 @@ export class RiepilogoTimesheetComponent extends UnsubscribeOnDestroyAdapter imp
   ];
 
   constructor(private impiegatoService:ImpiegatoService,
+              private fileSystemService: FileSystemService,
               protected authService:AuthService,
-              private snackBar:MatSnackBar) {
+              private snackBar:MatSnackBar,
+              private dialogModel: MatDialog,
+              private fb:FormBuilder) {
     super();
+    this.fileUploadForm = fb.group({
+      uploadFile: [''],
+    });
   }
 
   ngOnInit(): void {
@@ -227,6 +244,87 @@ export class RiepilogoTimesheetComponent extends UnsubscribeOnDestroyAdapter imp
   }
 
   AllegaGius() {
+    const formData: FormData = new FormData();
+    formData.append('file', this.fileUploadForm.get('uploadFile')?.value);
+    this.loading=true
+    this.subs.sink= this.impiegatoService.submitGiustificativoTimesheet(this.timesheet.id, formData).subscribe({
+      next: (res) => {
+        Swal.fire('Giustificativo Allegato!', 'è stato allegato un giustificativo con successo', 'success');
+      },
+      error: (res) => {
+        Swal.fire('Errore Generico', 'Si prega di contattare l\'amministratore ', 'error');
+      },
+      complete: () => {
+        this.loading=false
 
+        console.log('File upload complete');
+      }
+    });
+
+
+  }
+
+  openModalForAttachFile(id:number) {
+    this.dialogModel.open(DialogForAttachFilesComponent, {
+      width: '1280px',
+      disableClose: false,
+      data: { timesheet: id }
+    });
+  }
+
+  downloadFile(id: number, prop: string, row:any) {
+    switch (prop){
+        case 'idGiustificativo':
+          this.subs.sink = this.fileSystemService.downloadGiustifivativi(id).subscribe({
+            next: (res) => {
+              const url = window.URL.createObjectURL(res);
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = `giustificativo_${id}_${row.periodo.split(' ').join('')}`;
+              a.click();
+              window.URL.revokeObjectURL(url);
+            },
+            error: (res) => {
+              Swal.fire('Errore Generico', 'Si prega di contattare l\'amministratore ', 'error');
+
+            },
+            complete: () => {}
+          })
+        break;
+        case 'idBustaPaga':
+          this.subs.sink = this.fileSystemService.downloadBustePaga(id).subscribe({
+            next: (res) => {
+              const url = window.URL.createObjectURL(res);
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = `bustaPaga_${id}_${row.periodo.split(' ').join('')}`;
+              a.click();
+              window.URL.revokeObjectURL(url);
+            },
+            error: (res) => {
+              Swal.fire('Errore Generico', 'Si prega di contattare l\'amministratore ', 'error');
+
+            },
+            complete: () => {}
+          })
+        break;
+      default:
+        this.subs.sink = this.fileSystemService.downloadAllegato(id).subscribe({
+          next: (res) => {
+            const url = window.URL.createObjectURL(res);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Allegato_${id}_${row.periodo.split(' ').join('')}`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+          },
+          error: (res) => {
+            Swal.fire('Errore Generico', 'Si prega di contattare l\'amministratore ', 'error');
+
+          },
+          complete: () => {}
+        })
+        break;
+    }
   }
 }

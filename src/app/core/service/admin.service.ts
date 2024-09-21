@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {map} from "rxjs/operators";
 
@@ -71,5 +71,13 @@ export class AdminService {
           return result
         })
       );
+  }
+
+  public submitBustaPagaTimesheet(id:number,file:FormData){
+    const headers = new HttpHeaders({
+      // Do not set Content-Type header; Angular will set it to multipart/form-data automatically
+    });
+    return this.http.post(`${environment.apiUrl}/${environment.servizi.file.submitBustaPagaFile}/${id}`, file, { headers });
+
   }
 }

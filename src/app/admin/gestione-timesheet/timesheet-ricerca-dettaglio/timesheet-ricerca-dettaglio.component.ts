@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {MatMiniFabButton} from "@angular/material/button";
+import {MatButton, MatMiniFabButton} from "@angular/material/button";
 import {DatatableComponent, NgxDatatableModule, SortType} from "@swimlane/ngx-datatable";
 import {UnsubscribeOnDestroyAdapter} from "@shared";
 import {MatIconModule} from "@angular/material/icon";
@@ -8,6 +8,15 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatOption} from "@angular/material/autocomplete";
 import {MatSelect} from "@angular/material/select";
+import {
+  DialogForAttachFilesComponent
+} from "../../../impiegato/dialog-for-attach-files/dialog-for-attach-files.component";
+import {MatDialog} from "@angular/material/dialog";
+import {
+  DialogForAttacchBustaPagaComponent
+} from "../dialog-for-attacch-busta-paga/dialog-for-attacch-busta-paga.component";
+import {FileSystemService} from "@core/service/file-system.service";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-timesheet-ricerca-dettaglio',
@@ -22,6 +31,7 @@ import {MatSelect} from "@angular/material/select";
     MatOption,
     MatSelect,
     ReactiveFormsModule,
+    MatButton,
   ],
   templateUrl: './timesheet-ricerca-dettaglio.component.html',
   styleUrl: './timesheet-ricerca-dettaglio.component.scss'
@@ -48,7 +58,10 @@ export class TimesheetRicercaDettaglioComponent extends UnsubscribeOnDestroyAdap
     { name: 'Allegato', prop: "idAllegato" },
   ];
 
-  constructor(private adminService:AdminService) {
+  constructor(private adminService:AdminService,
+              private dialogModel: MatDialog,
+              private fileSystemService: FileSystemService,
+              ) {
     super();
   }
 
@@ -87,5 +100,69 @@ export class TimesheetRicercaDettaglioComponent extends UnsubscribeOnDestroyAdap
 
   openTimesheet(idTimesheet: number) {
     this.eventIdTimesheet.emit({'data':idTimesheet})
+  }
+
+  downloadFile(id: number, prop: string, row:any) {
+    switch (prop){
+      case 'idGiustificativo':
+        this.subs.sink = this.fileSystemService.downloadGiustifivativi(id).subscribe({
+          next: (res) => {
+            const url = window.URL.createObjectURL(res);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `giustificativo_${id}_${row.periodo.split(' ').join('')}`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+          },
+          error: (res) => {
+            Swal.fire('Errore Generico', 'Si prega di contattare l\'amministratore ', 'error');
+
+          },
+          complete: () => {}
+        })
+        break;
+      case 'idBustaPaga':
+        this.subs.sink = this.fileSystemService.downloadBustePaga(id).subscribe({
+          next: (res) => {
+            const url = window.URL.createObjectURL(res);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `bustaPaga_${id}_${row.periodo.split(' ').join('')}`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+          },
+          error: (res) => {
+            Swal.fire('Errore Generico', 'Si prega di contattare l\'amministratore ', 'error');
+
+          },
+          complete: () => {}
+        })
+        break;
+      default:
+        this.subs.sink = this.fileSystemService.downloadAllegato(id).subscribe({
+          next: (res) => {
+            const url = window.URL.createObjectURL(res);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Allegato_${id}_${row.periodo.split(' ').join('')}`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+          },
+          error: (res) => {
+            Swal.fire('Errore Generico', 'Si prega di contattare l\'amministratore ', 'error');
+
+          },
+          complete: () => {}
+        })
+        break;
+    }
+  }
+
+  openModalForAttachFile(row:any) {
+    this.dialogModel.open(DialogForAttacchBustaPagaComponent, {
+      width: '1280px',
+      disableClose: false,
+      data: { timesheet: row }
+    });
   }
 }

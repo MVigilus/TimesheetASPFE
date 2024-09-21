@@ -41,30 +41,32 @@ import Swal from "sweetalert2";
 import {monthsInItalian} from "@core/utils/utils";
 import {showNotification} from "@core/utils/functions";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {FileUploadComponent} from "@shared/components/file-upload/file-upload.component";
 
 @Component({
   selector: 'app-ricerca-timesheet',
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatSelectModule,
-    MatOptionModule,
-    MatCheckboxModule,
-    MatButtonModule,
-    MatDatepickerModule,
-    BreadcrumbComponent,
-    MatProgressSpinner,
-    TimesheetDettaglioComponent,
-    MatSlideToggle,
-    MonthYearPipe,
-    MatExpansionModule,
-    FormsModule,
+    imports: [
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatIconModule,
+        MatSelectModule,
+        MatOptionModule,
+        MatCheckboxModule,
+        MatButtonModule,
+        MatDatepickerModule,
+        BreadcrumbComponent,
+        MatProgressSpinner,
+        TimesheetDettaglioComponent,
+        MatSlideToggle,
+        MonthYearPipe,
+        MatExpansionModule,
+        FormsModule,
+        FileUploadComponent,
 
 
-  ],
+    ],
   providers: [
     // Moment can be provided globally to your app by adding `provideMomentDateAdapter`
     // to your app config. We provide it at the component level here, due to limitations
@@ -81,6 +83,7 @@ export class RicercaTimesheetComponent extends UnsubscribeOnDestroyAdapter imple
   options:any[];
 
   timesheet:any=null;
+  fileUploadForm: UntypedFormGroup;
   laoding:boolean=false;
 
   constructor(private fb:FormBuilder,
@@ -90,6 +93,9 @@ export class RicercaTimesheetComponent extends UnsubscribeOnDestroyAdapter imple
               ) {
     super();
     this.YearMonthSearch=this.createUntypeForm();
+    this.fileUploadForm = fb.group({
+      uploadFile: [''],
+    });
     this.options=[]
   }
 
@@ -265,5 +271,24 @@ export class RicercaTimesheetComponent extends UnsubscribeOnDestroyAdapter imple
 
   minusOreFerie(data:any) {
     this.rimanezaFerie=data.action
+  }
+
+  protected loading:boolean=false;
+
+  caricaGiustificativi() {
+    const formData: FormData = new FormData();
+    formData.append('file', this.fileUploadForm.get('uploadFile')?.value);
+    this.loading=true
+    this.subs.sink= this.impiegatoService.submitGiustificativoTimesheet(this.timesheet.id, formData).subscribe({
+      next: (res) => {
+        Swal.fire('Giustificativi Caricati com successo!', 'sono stati caricati dei giustificativi per questo timesheet', 'success');
+      },
+      error: (res) => {
+        Swal.fire('Ops Qualcosa è andato storto', '', 'error');
+      },
+      complete: () => {
+        this.loading=false
+      }
+    });
   }
 }

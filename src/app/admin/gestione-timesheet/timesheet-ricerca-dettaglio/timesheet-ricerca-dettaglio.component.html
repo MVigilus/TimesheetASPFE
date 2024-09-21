@@ -55,34 +55,27 @@
                       </ng-template>
                     </ngx-datatable-column>
                   } @else if (col.prop!='periodo') {
-                    @if (col.prop!='idBustaPaga'){
-                      <ngx-datatable-column [prop]="col.prop" [name]="col.name" [flexGrow]="3">
-                        <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
-                          @if (value=='' && row.status==='REJECTED'){
-                            In Attesa di revisione
-                          } @else if (value==''){
-                            Non Allegati
-                          } @else {
-                            {{value}}
-                          }
-                        </ng-template>
-                      </ngx-datatable-column>
-                    } @else {
-                      <ngx-datatable-column [prop]="col.prop" [name]="col.name" [flexGrow]="3">
-                        <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
-                          @if(value=='' && row.status==='SENDED'){
-                            In Attesa di Approvazione
-                          } @else if (value=='' && row.status==='REJECTED'){
-                            In Attesa di revisione
-                          } @else if (value==''){
-                            Non Presente
-                          } @else {
-                            {{value}}
-                          }
-                        </ng-template>
-                      </ngx-datatable-column>
-                    }
+                    <ngx-datatable-column [prop]="col.prop" [name]="col.name" [flexGrow]="3">
+                      <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                        @if (row.status!='APPROVED'){
+                          @switch(row.status){
+                            @case ('SENDED'){
+                              <div class="badge badge-solid-orange">Attesa Revisione</div>
+                            }
+                            @case('CREATED'){
 
+                            }
+                            @case('REJECTED'){
+                              <div class="badge badge-solid-red">Attesa Revisione utente</div>
+                            }
+                          }
+                        } @else if (value!='') {
+                          <button mat-button color="accent" (click)="downloadFile(value,col.prop,row)" >Scarica</button>
+                        } @else {
+                          <div class="badge badge-solid-green">Non Allegato</div>
+                        }
+                      </ng-template>
+                    </ngx-datatable-column>
                   } @else {
                     <ngx-datatable-column [prop]="col.prop" [name]="col.name" [flexGrow]="3">
                     </ngx-datatable-column>
@@ -101,7 +94,7 @@
                         <button class="btn tblActnBtn h-auto" (click)="openTimesheet(row.idTimesheet)">
                           <i class="material-icons">remove_red_eye</i>
                         </button>
-                        <button class="btn tblActnBtn h-auto">
+                        <button class="btn tblActnBtn h-auto" (click)="openModalForAttachFile(row)">
                           <i class="material-icons">attach_file</i>
                         </button>
                         <button class="btn tblActnBtn h-auto" >

@@ -1,0 +1,24 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="card">
+      <div class="header">
+        <h2>Busta Paga Timesheet </h2>
+      </div>
+      <div class="body">
+        <div class="example-container">
+          <form [formGroup]="fileUploadForm">
+            <div class="row">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                <mat-label>Carica File</mat-label>
+                <app-file-upload formControlName="uploadFile"></app-file-upload>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <button mat-flat-button color="primary" style="width: 100%;height: 5vh"   type="submit" (click)="AllegaBustaPaga()"
+              [disabled]="!fileUploadForm.valid"> Allega Busta Paga
+      </button>
+    </div>
+  </div>
+</div>
