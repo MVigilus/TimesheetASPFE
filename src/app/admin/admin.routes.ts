@@ -1,10 +1,9 @@
 import {Routes} from "@angular/router";
-import {DashboardComponent} from "../dashboard/dashboard.component";
 import {GestioneTimesheetComponent} from "./gestione-timesheet/gestione-timesheet.component";
 import {GestioneUtenteComponent} from "./gestione-utente/gestione-utente.component";
-import {TimesheetDettaglioComponent} from "./gestione-timesheet/timesheet-dettaglio/timesheet-dettaglio.component";
 import {TimesheetViewComponent} from "./timesheet-view/timesheet-view.component";
 import {UserProfileComponent} from "../user-profile/user-profile.component";
+import {DashboardComponent} from "./dashboard/dashboard.component";
 
 export const AdminRoutes : Routes = [
   {path:'', component:DashboardComponent},

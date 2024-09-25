@@ -1,0 +1,31 @@
+<section class="content">
+  <div class="content-block">
+    <div class="block-header">
+      <!-- breadcrumb -->
+      <app-breadcrumb [title]="'Dashboad'" [items]="['Home']" [active_item]="'Dashboard'"></app-breadcrumb>
+    </div>
+  </div>
+  <app-dashboard-chips-component></app-dashboard-chips-component>
+
+  <div class="row">
+    <div class="col-12">
+      <app-chart-residuo-generale #chartResiduoGeneraleComponent ></app-chart-residuo-generale>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col"></div>
+    <div class="col-5">
+      <app-chart-residuo-annoincorso #chartResiduoAnnoincorsoComponent></app-chart-residuo-annoincorso>
+    </div>
+    <div class="col-5">
+      <app-chart-residuo-anniprecedenti #chartResiduoAnniprecedentiComponent></app-chart-residuo-anniprecedenti>
+    </div>
+    <div class="col"></div>
+  </div>
+
+  <div class="row">
+
+  </div>
+
+</section>

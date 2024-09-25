@@ -1,0 +1,19 @@
+<div class="card">
+  <div class="header">
+    <h2>Residuo Anni Precedenti</h2>
+  </div>
+  <div class="body" >
+    @if(loading){
+      <mat-spinner></mat-spinner>
+    }@else{
+      <div style="text-align:center">
+        <apx-chart #chart  [series]="barChartOptions.series!" [chart]="barChartOptions.chart!"
+                   [dataLabels]="barChartOptions.dataLabels!" [plotOptions]="barChartOptions.plotOptions!"
+                   [yaxis]="barChartOptions.yaxis!" [legend]="barChartOptions.legend!" [fill]="barChartOptions.fill!"
+                   [stroke]="barChartOptions.stroke!" [tooltip]="barChartOptions.tooltip!" [grid]="barChartOptions.grid!"
+                   [xaxis]="barChartOptions.xaxis!">
+        </apx-chart>
+      </div>
+    }
+  </div>
+</div>

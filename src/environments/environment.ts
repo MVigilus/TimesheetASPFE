@@ -10,6 +10,7 @@ export const environment = {
       setPassword:'auth/setPassword',
       editProfile:'auth/editImpiegato/',
       checkJWT: "auth/checkJWT",
+      fetchChipsForDashboard: "auth/fetchChipsForDashboard",
       getAllNotification:'auth/notificationList',
 
     },
@@ -36,6 +37,9 @@ export const environment = {
       approvaTimesheet:'admin/updateStatusApproved/',
       rifiutaTimesheet:'admin/updateStatusRejected/',
       getTImesheetById:'admin/getTimesheet/',
+      getResiduoGenerale:'admin/getResiduoGenerale',
+      getResiduoPrec:'admin/getResiduoPrec',
+      getResiduoAtt:'admin/getResiduoAtt',
       getAllTimesheetOption:'admin/getAdminOptionList/imp',
       getAllImpiegatoFR:'admin/allImpiegatoFR',
       editImpiegato:'admin/editImpiegato',
