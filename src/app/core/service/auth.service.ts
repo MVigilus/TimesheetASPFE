@@ -4,6 +4,7 @@ import { User } from '../models/user';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {environment} from "../../../environments/environment";
 import {map} from 'rxjs/operators';
+import {ChipsDTO} from "@shared/components/ChipsDTO";
 
 
 @Injectable({
@@ -69,6 +70,15 @@ export class AuthService {
     // Use RxJS interval operator to execute the HTTP request every minute
 
   }
+
+  public fetchChipsForDashboard(){
+    return this.http.get<ChipsDTO[]>(`${environment.apiUrl}/${environment.servizi.auth.fetchChipsForDashboard}`).pipe(
+      map((res) => {
+        return res;
+      })
+    );
+  }
+
 
   logout() {
     // remove user from local storage to log user out
