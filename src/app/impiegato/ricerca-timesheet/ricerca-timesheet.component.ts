@@ -42,6 +42,7 @@ import {monthsInItalian} from "@core/utils/utils";
 import {showNotification} from "@core/utils/functions";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {FileUploadComponent} from "@shared/components/file-upload/file-upload.component";
+import {FileSystemService} from "@core/service/file-system.service";
 
 @Component({
   selector: 'app-ricerca-timesheet',
@@ -88,6 +89,7 @@ export class RicercaTimesheetComponent extends UnsubscribeOnDestroyAdapter imple
 
   constructor(private fb:FormBuilder,
               private impiegatoService:ImpiegatoService,
+              private fileService:FileSystemService,
               protected authService:AuthService,
               private snackBar: MatSnackBar,
               ) {
@@ -190,11 +192,11 @@ export class RicercaTimesheetComponent extends UnsubscribeOnDestroyAdapter imple
   }
 
   protected readonly JSON = JSON;
-  checkedFR:boolean=false;
+  checkedFR:boolean=true;
   panelOpenState: boolean=true;
   totKm:number=0
   totRimborsoKm:number=0
-  automaticSave=false;
+  automaticSave=true;
 
   setSlide($event: MatSlideToggleChange) {
     this.checkedFR=$event.checked
@@ -279,7 +281,7 @@ export class RicercaTimesheetComponent extends UnsubscribeOnDestroyAdapter imple
     const formData: FormData = new FormData();
     formData.append('file', this.fileUploadForm.get('uploadFile')?.value);
     this.loading=true
-    this.subs.sink= this.impiegatoService.submitGiustificativoTimesheet(this.timesheet.id, formData).subscribe({
+    this.subs.sink= this.fileService.submitGiustificativoTimesheet(this.timesheet.id, formData).subscribe({
       next: (res) => {
         Swal.fire('Giustificativi Caricati com successo!', 'sono stati caricati dei giustificativi per questo timesheet', 'success');
       },

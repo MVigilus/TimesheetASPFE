@@ -135,9 +135,9 @@ export class RiepilogoTimesheetComponent extends UnsubscribeOnDestroyAdapter imp
   rimanezaPermesso:number=0;
   rimanezaFerie:number=0;
   totKm:number=0
-  automaticSave=false;
+  automaticSave=true;
   totRimborsoKm:number=0
-  checkedFR:boolean=false;
+  checkedFR:boolean=true;
   ngiustificativi: number=0;
 
   updateNgiustificativi($event: any) {
@@ -247,7 +247,7 @@ export class RiepilogoTimesheetComponent extends UnsubscribeOnDestroyAdapter imp
     const formData: FormData = new FormData();
     formData.append('file', this.fileUploadForm.get('uploadFile')?.value);
     this.loading=true
-    this.subs.sink= this.impiegatoService.submitGiustificativoTimesheet(this.timesheet.id, formData).subscribe({
+    this.subs.sink= this.fileSystemService.submitGiustificativoTimesheet(this.timesheet.id, formData).subscribe({
       next: (res) => {
         Swal.fire('Giustificativo Allegato!', 'è stato allegato un giustificativo con successo', 'success');
       },

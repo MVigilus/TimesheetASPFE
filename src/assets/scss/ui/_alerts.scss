@@ -4,7 +4,7 @@
  *  Description: This scss file for alert style classes
  */
 .alert {
-  @include border-radius(0);
+  @include border-radius(1);
   @include box-shadow(none);
   border: none;
   color: #fff !important;
@@ -17,7 +17,7 @@
 }
 
 .alert-success {
-  background-color: rgba(24, 206, 15, 0.8);
+  background-color: rgba(26, 123, 207, 0.8);
 }
 
 .alert-info {

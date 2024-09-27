@@ -1,0 +1,61 @@
+<ngx-datatable #table class="material" [rows]="data" [columns]="columns" [sortType]="SortType.multi"
+               [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="60" [limit]="10">
+
+  <!--@if (!checks[0]){
+    <ngx-datatable-column name="Nominativo" [width]="130"></ngx-datatable-column>
+
+  }-->
+
+  <!--<ngx-datatable-column name="Periodo Timesheet" [width]="130"></ngx-datatable-column>
+  <ngx-datatable-column prop="" name="Stato" [width]="120"></ngx-datatable-column>
+  <ngx-datatable-column name="Busta Paga" [width]="200"></ngx-datatable-column>
+  <ngx-datatable-column name="Giustificativo" [width]="200"></ngx-datatable-column>-->
+  @for(col of columns;track columns){
+    @if(col.prop==='stato'){
+      <ngx-datatable-column [name]="col.name" [prop]="col.prop" [sortable]="false" [flexGrow]="3">
+        <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+          @switch (value){
+            @case ('SENDED'){
+              <div class="badge badge-solid-orange">Attesa Revisione</div>
+            }
+            @case ('APPROVED'){
+              <div class="badge badge-solid-green">Approvato</div>
+            }
+            @case ('REJECTED'){
+              <div class="badge badge-solid-red">Rifiutato</div>
+            }
+            @case ('CREATED') {
+              <div class="badge badge-solid-purple">Non inviato</div>
+            }
+          }
+        </ng-template>
+      </ngx-datatable-column>
+    } @else if (col.prop!='periodo') {
+      <ngx-datatable-column [prop]="col.prop" [name]="col.name" [flexGrow]="3">
+        <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+          @if (row.stato!='APPROVED'){
+            @switch(row.stato){
+              @case ('SENDED'){
+                <div class="badge badge-solid-orange">Attesa di approvazione</div>
+              }
+              @case('CREATED'){
+                <div class="badge badge-solid-red">Attesa Invio</div>
+              }
+              @case('REJECTED'){
+                <div class="badge badge-solid-red">Attesa Revisione utente</div>
+              }
+            }
+          } @else if (value!='') {
+            <button mat-button color="accent" (click)="downloadFile(value,col.prop,row)" >Scarica</button>
+          } @else {
+            <div class="badge badge-solid-green">Non Allegato</div>
+          }
+        </ng-template>
+      </ngx-datatable-column>
+    } @else {
+      <ngx-datatable-column [prop]="col.prop" [name]="col.name" [flexGrow]="3">
+      </ngx-datatable-column>
+    }
+
+  }
+</ngx-datatable>

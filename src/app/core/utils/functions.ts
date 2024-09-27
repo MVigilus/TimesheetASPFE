@@ -1,5 +1,5 @@
 import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from "@angular/material/snack-bar";
-import {FormGroup} from "@angular/forms";
+import {AbstractControl, FormGroup, ValidationErrors, ValidatorFn} from "@angular/forms";
 import Swal from "sweetalert2";
 import {TipoNotifica} from "@core/models/Notifications";
 
@@ -16,6 +16,23 @@ export function showNotification(
     horizontalPosition: placementAlign,
     panelClass: colorName,
   });
+}
+
+
+export function dateAfterTodayValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const inputDate = new Date(control.value);
+    const today = new Date();
+
+    // Reset hours, minutes, seconds, and milliseconds to 0 for comparison
+    today.setHours(0, 0, 0, 0);
+
+    if (inputDate && inputDate <= today) {
+      return { dateInvalid: 'The date must be after today\'s date' };
+    }
+
+    return null;
+  };
 }
 
 export function confirmModal(title:string, text:string){

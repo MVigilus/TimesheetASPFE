@@ -1,0 +1,108 @@
+<section class="content">
+  <div class="content-block">
+    <div class="header">
+      <div class="container-fluid">
+        <div class="row">
+          <app-breadcrumb [title]="'Gestione Buste Paga'" [items]="['Home']" [active_item]="'Buste Paga'"></app-breadcrumb>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xl col-lg col-md"></div>
+        <div [class]="(true)?'col-xl-10 col-lg-10 col-md-10 col-sm-10 justify-content-center':'col-xl-12 col-lg-12 col-md-12 col-sm-12'">
+          <div class="card">
+            <div class="header">
+              <div class="container-fluid " >
+                <div class="row">
+                  <div class="col-xl-12 col-lg-12 col-md-8">
+                    <h3>Ricerca Buste Paga</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="body">
+              <div class="container-fluid">
+                <form [formGroup]="adminFormSearch">
+                  <div class="row">
+                    <div class="col-xl col-lg col-md"></div>
+                    <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10">
+                      <h6>Seleziona Impiegato</h6>
+                      <mat-form-field class="example-full-width" appearance="outline" >
+                        <mat-label>Impiegato</mat-label>
+                        <mat-select formControlName="idImpiegato">
+                          <mat-option [value]="' '">Seleziona Impiegato</mat-option>
+                          @for (option of optionImpiegato ; track optionImpiegato){
+                            <mat-option [value]="option.id">
+                              {{ option.option }}
+                            </mat-option>
+                          }
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-xl col-lg col-md"></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xl-2  col-lg-2  col-md-2 "></div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                      <h6>Seleziona Mese </h6>
+
+                      <mat-form-field class="example-full-width" appearance="outline" >
+                        <mat-label>Mese</mat-label>
+                        <mat-select formControlName="mese">
+                          <mat-option [value]="' '">Seleziona Impiegato</mat-option>
+                          @for (option of opotionMesi ; track opotionMesi){
+                            <mat-option [value]="option.id">
+                              {{ option.option }}
+                            </mat-option>
+                          }
+                        </mat-select>
+                      </mat-form-field>
+
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                      <h6>Anno </h6>
+                      <mat-form-field class="example-full-width" appearance="outline" >
+                        <mat-label>Anno</mat-label>
+                        <mat-select formControlName="anno">
+                          <mat-option [value]="' '">Seleziona Anno</mat-option>
+                          @for (option of optionAnno ; track optionAnno){
+                            <mat-option [value]="option.id">
+                              {{ option.id }}
+                            </mat-option>
+                          }
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-xl-2 col-lg-2  col-md-2 ">
+                      <mat-slide-toggle (change)="setOnlyNotUploadedBustaPaga($event)">Cerca Non Allegati</mat-slide-toggle>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-4">
+                      <button mat-flat-button color="primary" style="width: 100%;height: 5vh"  type="submit" (click)="onSubmit()"
+                              [disabled]="!adminFormSearch.valid || disableButtonForSubmit"> Inoltra Dati Ricerca
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl col-lg col-md"></div>
+      </div>
+      <!-- END Ricerca  -->
+      <div class="row">
+        <div class="col-xl col-lg col-md"></div>
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+          @if(searchResult.length>0){
+            <app-bustapaga-search-result-table [data]="searchResult" (eventAddOrDelete)="onSubmit()"></app-bustapaga-search-result-table>
+          }
+
+        </div>
+        <div class="col-xl col-lg col-md"></div>
+      </div>
+    </div>
+  </div>
+</section>

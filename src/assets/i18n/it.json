@@ -5,6 +5,13 @@
     }
   },
   "MENUITEMS": {
+    "FILEBAG": {
+      "TITLE": "Gestione Documenti",
+      "OPTIONS": {
+        "OP1": "Allegati / Giustificativi",
+        "OP2": "Buste Paga"
+      }
+    },
     "USER": {
       "POST": "Manager",
       "TIMESHEET_MENU": {
@@ -14,7 +21,7 @@
       }
     },
     "ADMIN": {
-      "GESTIONE": "Gestione Impiegato",
+      "GESTIONE": "Gestione Impiegati",
       "GESTIONET": "Gestione Timesheet"
     },
     "MAIN": {
@@ -100,3 +107,4 @@
     }
   }
 }
+

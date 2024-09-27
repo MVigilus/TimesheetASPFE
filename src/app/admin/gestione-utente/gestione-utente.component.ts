@@ -31,6 +31,14 @@ import {
   DeleteImpiegatoFormComponentComponent
 } from "./delete-impiegato-form-component/delete-impiegato-form-component.component";
 import {confirmModal} from "@core/utils/functions";
+import {
+  MatAccordion,
+  MatExpansionPanel,
+  MatExpansionPanelDescription,
+  MatExpansionPanelTitle
+} from "@angular/material/expansion";
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {PeriodicElement} from "@core/utils/utils";
 
 @Component({
   selector: 'app-gestione-utente',
@@ -52,12 +60,25 @@ import {confirmModal} from "@core/utils/functions";
     MatPaginatorModule,
     DatePipe,
     MatSlideToggle,
+    MatAccordion,
+    MatExpansionPanel,
+    MatExpansionPanelTitle,
+    MatExpansionPanelDescription,
+  ],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*', minHeight: "*"})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
   ],
   templateUrl: './gestione-utente.component.html',
   styleUrl: './gestione-utente.component.scss'
 })
 export class GestioneUtenteComponent extends UnsubscribeOnDestroyAdapter
   implements OnInit {
+
+  expandedElement!: PeriodicElement | null;
 
   displayedColumns = [
     'select',
@@ -66,11 +87,12 @@ export class GestioneUtenteComponent extends UnsubscribeOnDestroyAdapter
     'data_assunzione', // added as per interface
     'email',
     'rimborso', // added as per interface
-    'ore_permesso', // added as per interface
+    'telefono', // added as per interface
+    /*'ore_permesso', // added as per interface
     'ore_ferie', // added as per interface
     'ore_permesso_prec', // added as per interface
     'ore_ferie_prec', // added as per interface
-    'ore_lavorative', // commenting out as it was not mentioned in the message
+    'ore_lavorative',*/ // commenting out as it was not mentioned in the message
     'rimborsoKm', // added as per interface
     'actions',
   ];
@@ -117,8 +139,6 @@ export class GestioneUtenteComponent extends UnsubscribeOnDestroyAdapter
     });
     this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
       if (result === 1) {
-        // After dialog is closed we're doing frontend updates
-        // For add we're just pushing a new row inside DataService
         this.exampleDatabase?.dataChange.value.unshift(
           this.advanceTableService.getDialogData()
         );
@@ -220,7 +240,7 @@ export class GestioneUtenteComponent extends UnsubscribeOnDestroyAdapter
           let sub:Subscription;
           if(!this.checkedFR){this.advanceTableService.deleteAdvanceTable(row.id).subscribe({
               next: (data) => {
-                title="TABLES.ADMIN.GESTIONEIMP.SETFR"
+                title="Impiegato spostato in fine rapporto"
               },
               error:(error: HttpErrorResponse) => {
                 title='QUALCOSA è ANdato storto'
@@ -237,7 +257,7 @@ export class GestioneUtenteComponent extends UnsubscribeOnDestroyAdapter
             });
           }else{this.advanceTableService.deleteAdvanceTableImp(row.id).subscribe({
               next: (data) => {
-                title="TABLES.ADMIN.GESTIONEIMP.DELETEFORM"
+                title="Impiegato spostato da fine rapporto"
               },
               error:(error: HttpErrorResponse) => {
                 title='QUALCOSA è ANdato storto'
@@ -377,6 +397,7 @@ export class GestioneUtenteComponent extends UnsubscribeOnDestroyAdapter
     this.loadData()
   }
 
+  protected readonly JSON = JSON;
 }
 export class ExampleDataSource extends DataSource<Impiegatolist> {
   filterChange = new BehaviorSubject('');
@@ -495,3 +516,4 @@ export class ExampleDataSource extends DataSource<Impiegatolist> {
   }
 
 }
+

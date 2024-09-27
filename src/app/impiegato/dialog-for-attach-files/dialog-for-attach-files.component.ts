@@ -8,6 +8,7 @@ import {ImpiegatoService} from "@core/service/impiegato.service";
 import {MatInput} from "@angular/material/input";
 import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import Swal from "sweetalert2";
+import {FileSystemService} from "@core/service/file-system.service";
 
 @Component({
   selector: 'app-dialog-for-attach-files',
@@ -28,7 +29,7 @@ export class DialogForAttachFilesComponent extends UnsubscribeOnDestroyAdapter i
   fileUploadForm: UntypedFormGroup;
   private idTimesheet!:number;
 
-  constructor(private impiegatoService:ImpiegatoService,
+  constructor(private fileService:FileSystemService,
               private fb:FormBuilder,public dialog: MatDialog,
               @Inject(MAT_DIALOG_DATA) public data: any) {
     super();
@@ -45,7 +46,7 @@ export class DialogForAttachFilesComponent extends UnsubscribeOnDestroyAdapter i
   AllegaGius() {
     const formData: FormData = new FormData();
     formData.append('file', this.giustificativofileUploadForm.get('uploadFile')?.value);
-    this.subs.sink= this.impiegatoService.submitGiustificativoTimesheet(this.idTimesheet, formData).subscribe({
+    this.subs.sink= this.fileService.submitGiustificativoTimesheet(this.idTimesheet, formData).subscribe({
       next: (res) => {
         Swal.fire('Giustificiativo Inviato!', 'è stato allegato un giustificativo ', 'success');
 
@@ -67,7 +68,7 @@ export class DialogForAttachFilesComponent extends UnsubscribeOnDestroyAdapter i
   AllegaFile() {
     const formData: FormData = new FormData();
     formData.append('file', this.fileUploadForm.get('uploadFile')?.value);
-    this.subs.sink= this.impiegatoService.submitAllegatoTimesheet(this.idTimesheet, formData, this.fileUploadForm.get('comment')?.value).subscribe({
+    this.subs.sink= this.fileService.submitAllegatoTimesheet(this.idTimesheet, formData, this.fileUploadForm.get('comment')?.value).subscribe({
       next: (res) => {
         Swal.fire('File Inviata!', 'è stato allegato un file con successo ', 'success');
 

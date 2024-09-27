@@ -23,7 +23,11 @@
         <ng-container matColumnDef="clienteOre">
           <mat-header-cell *matHeaderCellDef mat-sticky> Clienti </mat-header-cell>
           <mat-cell *matCellDef="let element; let i=index" [style]="(disableMargin)?'border-right: solid 1px #e0e0e0;':''">
-            <input type="number" min="0" [formControl]="element.get('clienteOre')"  (change)="updateField(i, 'clienteOre')">
+            @if (element.get('altro').value=='FES'){
+              {{element.get('clienteOre').value}}
+            } @else {
+              <input type="number" min="0" [formControl]="element.get('clienteOre')"  (change)="updateField(i, 'clienteOre')">
+            }
           </mat-cell>
         </ng-container>
 
@@ -77,9 +81,14 @@
         <ng-container matColumnDef="tot">
           <mat-header-cell *matHeaderCellDef mat-sticky> Totale ore </mat-header-cell>
           <mat-cell *matCellDef="let element; let i=index" [class]="(element.get('tot').value<8 && (element.get('altro').value!='FES' && element.get('altro').value!='2'))?'blinkingYellowBackground':''" [style]="(disableMargin)?'border-right: solid 1px #e0e0e0;':''">
-            {{element.get('tot').value}}
+            @if (element.get('altro').value=='FES'){
+              0
+            } @else {
+              {{element.get('tot').value}}
+            }
           </mat-cell>
         </ng-container>
+
         @if(currentUser.rimborso){
           <ng-container matColumnDef="clienteDest">
             <mat-header-cell *matHeaderCellDef mat-sticky> Cliente </mat-header-cell>
@@ -103,7 +112,7 @@
             <mat-header-cell *matHeaderCellDef mat-sticky> Km Percorsi </mat-header-cell>
             <mat-cell *matCellDef="let element; let i=index" [style]="(disableMargin)?'border-right: solid 1px #e0e0e0;':''">
               @if (element.get('altro').value=='FES'){
-                {{element.get('destinazione').value}}
+                {{element.get('kmP').value}}
               } @else {
                 <input step="0.01" min="0" type="number" [formControl]="element.get('kmP')"  (change)="updateField(i, 'kmP')">
               }

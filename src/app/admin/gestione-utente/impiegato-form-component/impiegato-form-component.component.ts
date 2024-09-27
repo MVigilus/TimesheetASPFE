@@ -27,6 +27,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import Swal from "sweetalert2";
 import {UnsubscribeOnDestroyAdapter} from "@shared";
 import {RoleFormatPipe} from "@core/utils/pipes/RoleFormatPipe.pipe";
+import {dateAfterTodayValidator} from "@core/utils/functions";
 
 @Component({
   selector: 'app-impiegato-form-component',
@@ -114,12 +115,12 @@ export class ImpiegatoFormComponent extends UnsubscribeOnDestroyAdapter implemen
         [Validators.required, Validators.email, Validators.minLength(5)],
       ],
       role: [this.advanceTable.role, [Validators.required]],
-      codiceFisc: [this.advanceTable.codiceFisc, [Validators.required]],
+      codiceFisc: [this.advanceTable.codiceFisc, [Validators.required,Validators.pattern('^[A-Z]{6}[0-9]{2}[A-EHLMPR-T]{1}[0-9]{2}[A-Z0-9]{4}[A-Z]{1}$')]],
       nominativo: [this.advanceTable.nominativo, [Validators.required]],
       telefono: [this.advanceTable.telefono],
       dataAss: [
         new Date(this.advanceTable.dataAss),
-        [Validators.required],
+        [Validators.required,dateAfterTodayValidator.bind(this)],
       ],
       rimborso: [this.advanceTable.rimborso, [Validators.required]],
       giorni_permesso: [this.advanceTable.giorni_permesso, [Validators.required]],

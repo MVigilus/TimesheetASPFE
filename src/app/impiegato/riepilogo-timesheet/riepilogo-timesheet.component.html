@@ -4,6 +4,7 @@
       <div class="container-fluid">
         <div class="row">
           <app-breadcrumb [title]="'Riepilogo Timesheet'" [items]="['Home']" [active_item]="'Gestione Timesheet'"></app-breadcrumb>
+
         </div>
         <div class="row">
           @if(timesheet!=null){
@@ -14,16 +15,18 @@
               <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 pt-2 align-center align-content-center" >
               </div>
               <div class="col-xl-2 col-lg-2 col-md-2">
-
               </div>
               <div class="col-xl-2 col-lg-2 col-md-2 align-center justify-content-end">
-                <mat-accordion>
-                  <mat-expansion-panel (opened)="panelOpenState=true" (closed)="panelOpenState=false">
+
+                <mat-accordion >
+                  <mat-expansion-panel #accordion [expanded]="panelOpenState" (opened)="panelOpenState=true" (closed)="panelOpenState=false" aria-expanded="true">
                     <mat-expansion-panel-header>
                       <mat-panel-title>
                         Ore permesso e ferie
                       </mat-panel-title>
                     </mat-expansion-panel-header>
+
+
                     <p>Ore permesso anno in corso : {{(authService.currentUserValue.anagraficaLavorativa[0].giorniPermesso)}}</p>
                     <p>Ore ferie anno in corso : {{authService.currentUserValue.anagraficaLavorativa[0].giorniFerie}}</p>
                     <p>Ore permesso rimanenti : {{rimanezaPermesso}}</p>
@@ -160,10 +163,10 @@
               <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 pt-2 align-center align-content-center" >
                 <h3>Scheda TImesheet</h3>
               </div>
-              <div class="col-xl-4 col-lg-4 col-md-4">
+              <!--<div class="col-xl-4 col-lg-4 col-md-4">
                 <mat-slide-toggle (change)="setAutomaticSave($event)">Salvataggio automatico</mat-slide-toggle>
                 <mat-slide-toggle (change)="setSlide($event)">Abilita margini cella</mat-slide-toggle>
-              </div>
+              </div>-->
             </div>
           </div>
         </div>
@@ -178,8 +181,8 @@
       <div class="row">
         @if(authService.currentUserValue.rimborso && timesheet!=null && !loading){
           <div class="row mt-5">
-            <div class="col-xl-2 col-lg-2 col-md-2"></div>
-            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
+            <div class="col-xl col-lg col-md"></div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
               <div class="card">
                 <div class="header">
                   <h2>Sezione Giustificativi</h2>
@@ -214,7 +217,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-xl-2 col-lg-2 col-md-2">
+            <div class="col-xl-4 col-lg-4 col-md-4">
               <div class="row">
                 <div class="card">
                   <div class="header">
@@ -238,19 +241,21 @@
                 </button>
               </div>
             </div>
+            <div class="col-xl col-lg col-md"></div>
           </div>
         }
       </div>
       <div class="row">
-        <div class="col-xl-2 col-lg-2 col-md-2"></div>
-        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
+        <div class="col-xl col-lg col-md"></div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
           @if(timesheet!=null){
             <button mat-flat-button color="primary" style="width: 100%;height: 5vh" class="mb-5"   type="submit" (click)="onSubmitTimesheet()"
                     [disabled]="!checkTimesheetIsValid()"> Invia Richiesta autorizzazione
             </button>
           }
         </div>
-        <div class="col-xl-2 col-lg-2 col-md-2"></div>
+        <div class="col-xl-4 col-lg-4 col-md-4"></div>
+        <div class="col-xl col-lg col-md"></div>
       </div>
     }
 

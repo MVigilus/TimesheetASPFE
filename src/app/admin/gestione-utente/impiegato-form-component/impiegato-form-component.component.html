@@ -31,11 +31,16 @@
           <mat-form-field class="example-full-width" appearance="outline" subscriptSizing="dynamic">
             <mat-label>Codice Fiscale</mat-label>
             <input matInput formControlName="codiceFisc">
-            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>code</mat-icon>
+            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>contact_mail</mat-icon>
             @if (advanceTableForm.get('codiceFisc')?.hasError('required')) {
               <mat-error>
                 Codice fiscale Richiesto
               </mat-error>
+            } @else if (advanceTableForm.get('codiceFisc')?.hasError('pattern')){
+              <mat-error>
+                Codice Fiscale non Valido
+              </mat-error>
+
             }
           </mat-form-field>
         </div>
@@ -58,7 +63,7 @@
           <mat-form-field class="example-full-width" appearance="outline" subscriptSizing="dynamic">
             <mat-label>Ore Lavorative</mat-label>
             <input matInput formControlName="oreLavorative" type="number">
-            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>access_time</mat-icon>
+            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>work_outline</mat-icon>
             @if (advanceTableForm.get('oreLavorative')?.hasError('required')) {
               <mat-error>
                 Inserire Ore lavorative
@@ -74,10 +79,18 @@
           <mat-form-field class="example-full-width" appearance="outline" subscriptSizing="dynamic">
             <mat-label>Email</mat-label>
             <input matInput formControlName="email" type="text">
-            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>contact_mail</mat-icon>
+            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>mail</mat-icon>
             @if (advanceTableForm.get('email')?.hasError('required')) {
               <mat-error>
                 Inserire email
+              </mat-error>
+            }@else if (advanceTableForm.get('email')?.hasError('email')){
+              <mat-error>
+                Mail Non Valida
+              </mat-error>
+            }@else if (advanceTableForm.get('email')?.hasError('minLength')){
+              <mat-error>
+                Inserire minimo 5 caratteri
               </mat-error>
             }
           </mat-form-field>
@@ -107,7 +120,7 @@
                 </mat-option>
               }
             </mat-select>
-            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>work_outline</mat-icon>
+            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>manage_accounts</mat-icon>
           </mat-form-field>
         </div>
       </div>
@@ -115,9 +128,9 @@
       <div class="row">
         <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-4">
           <mat-form-field class="example-full-width" appearance="outline" subscriptSizing="dynamic">
-            <mat-label>Giorni permesso</mat-label>
+            <mat-label>Ore Permessi Anno</mat-label>
             <input matInput formControlName="giorni_permesso" type="number">
-            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>date_range</mat-icon>
+            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>workspace_premium</mat-icon>
             @if (advanceTableForm.get('giorni_permesso')?.hasError('required')) {
               <mat-error>
                 Inserire Ore lavorative
@@ -127,7 +140,7 @@
         </div>
         <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-4">
           <mat-form-field class="example-full-width" appearance="outline" subscriptSizing="dynamic">
-            <mat-label>Giorni Ferie</mat-label>
+            <mat-label>Ore Ferie Anno</mat-label>
             <input matInput formControlName="giorni_ferie" type="number">
             <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>flight_takeoff</mat-icon>
             @if (advanceTableForm.get('giorni_ferie')?.hasError('required')) {
@@ -139,9 +152,9 @@
         </div>
         <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-4">
           <mat-form-field class="example-full-width" appearance="outline" subscriptSizing="dynamic">
-            <mat-label>Giorni Permesso prec</mat-label>
+            <mat-label>Ore Permessi Anni Pre.ti</mat-label>
             <input matInput formControlName="giorni_permesso_pr" type="number">
-            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>date_range</mat-icon>
+            <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>workspace_premium</mat-icon>
             @if (advanceTableForm.get('giorni_permesso_pr')?.hasError('required')) {
               <mat-error>
                 Inserire Ore lavorative
@@ -151,7 +164,7 @@
         </div>
         <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-4">
           <mat-form-field class="example-full-width" appearance="outline" subscriptSizing="dynamic">
-            <mat-label>Giorni ferie prec</mat-label>
+            <mat-label>Ore Ferie Anni Pre.ti</mat-label>
             <input matInput formControlName="giorni_ferie_pr" type="number">
             <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>flight_takeoff</mat-icon>
             @if (advanceTableForm.get('giorni_ferie_pr')?.hasError('required')) {
@@ -192,10 +205,10 @@
             <mat-form-field class="example-full-width" appearance="outline" subscriptSizing="dynamic">
               <mat-label>Modello Auto</mat-label>
               <input matInput formControlName="modello_auto">
-              <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>face</mat-icon>
+              <mat-icon class="material-icons-two-tone color-icon p-3" matSuffix>car_rental</mat-icon>
               @if (advanceTableForm.get('modello_auto')?.hasError('required')) {
                 <mat-error>
-                  Ninserire modello auto
+                  Inserire modello auto
                 </mat-error>
               }
             </mat-form-field>

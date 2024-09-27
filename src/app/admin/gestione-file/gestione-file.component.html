@@ -1,0 +1,127 @@
+<section class="content">
+  <div class="content-block">
+    <div class="header">
+      <div class="container-fluid">
+        <div class="row">
+          <app-breadcrumb [title]="'Gestione Allegati/Giustificativi'" [items]="['Home']" [active_item]="'Allegati/Giustificativi'"></app-breadcrumb>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <!-- Ricerca Timesheet -->
+      <div class="row">
+        <div class="col-xl col-lg col-md"></div>
+        <div [class]="(true)?'col-xl-10 col-lg-10 col-md-10 col-sm-10 justify-content-center':'col-xl-12 col-lg-12 col-md-12 col-sm-12'">
+          <div class="card">
+            <div class="header">
+              <div class="container-fluid " >
+                <div class="row">
+                  <div class="col-xl-12 col-lg-12 col-md-8">
+                    <h3>Ricerca Allegati/Giustificativo</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="body">
+              <div class="container-fluid">
+                <form [formGroup]="adminFormSearch">
+                  <div class="row">
+                    <div class="col-xl col-lg col-md"></div>
+                    <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10">
+                      <h6>Seleziona Impiegato</h6>
+                      <mat-form-field class="example-full-width" appearance="outline" >
+                        <mat-label>Impiegato</mat-label>
+                        <mat-select formControlName="idImpiegato">
+                          <mat-option [value]="' '">Seleziona Impiegato</mat-option>
+                          @for (option of optionImpiegato ; track optionImpiegato){
+                            <mat-option [value]="option.id">
+                              {{ option.option }}
+                            </mat-option>
+                          }
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-xl col-lg col-md"></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xl-2  col-lg-2  col-md-2 "></div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                      <h6>Seleziona Mese </h6>
+
+                      <mat-form-field class="example-full-width" appearance="outline" >
+                        <mat-label>Mese</mat-label>
+                        <mat-select formControlName="mese">
+                          <mat-option [value]="' '">Seleziona Impiegato</mat-option>
+                          @for (option of opotionMesi ; track opotionMesi){
+                            <mat-option [value]="option.id">
+                              {{ option.option }}
+                            </mat-option>
+                          }
+                        </mat-select>
+                      </mat-form-field>
+
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                      <h6>Anno </h6>
+                      <mat-form-field class="example-full-width" appearance="outline" >
+                        <mat-label>Anno</mat-label>
+                        <mat-select formControlName="anno">
+                          <mat-option [value]="' '">Seleziona Anno</mat-option>
+                          @for (option of optionAnno ; track optionAnno){
+                            <mat-option [value]="option.id">
+                              {{ option.id }}
+                            </mat-option>
+                          }
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-xl-2 col-lg-2  col-md-2 "></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-4">
+                      <button mat-flat-button color="primary" style="width: 100%;height: 5vh"  type="submit" (click)="onSubmit()"
+                              [disabled]="!adminFormSearch.valid || disableButtonForSubmit"> Inoltra Ricerca File
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl col-lg col-md"></div>
+      </div>
+      <!-- END Ricerca Timesheet -->
+      <!-- Ricerca Timesheet RESULTS -->
+      <div class="row">
+        <div class="col-xl col-lg col-md"></div>
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+          @if(searchResult.length>0){
+            <app-file-search-result-table [data]="searchResult"></app-file-search-result-table>
+          }
+          <!--@if (results && results.length!=0){
+            <app-timesheet-ricerca-dettaglio (eventIdTimesheet)="ViewTimesheet($event.data)" [data]="results" [checks]="[(this.adminFormSearch.get('impiegato')?.value!=' ' || this.adminFormSearch.get('impiegato')?.value!=0),!!(this.adminFormSearch.get('periodStart')?.value),!!(this.adminFormSearch.get('periodEnd')?.value)]"></app-timesheet-ricerca-dettaglio>
+
+            &lt;!&ndash;<div class="card">
+              <div class="header">
+                <div class="container-fluid " >
+                  <div class="row">
+                    <div class="col-xl-4 col-lg-4 col-md-4">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="body">
+                <div class="container-fluid">
+
+                </div>
+              </div>
+            </div>&ndash;&gt;
+          }-->
+        </div>
+        <div class="col-xl col-lg col-md"></div>
+      </div>
+      <!-- END Ricerca Timesheet RESULTS -->
+    </div>
+  </div>
+</section>

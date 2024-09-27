@@ -1,0 +1,57 @@
+.mat-table {
+  width: 100%;
+}
+
+.example-detail-row {
+  min-height: 0;
+}
+
+.example-element-row .mat-cell {
+  border-bottom-width: 0;
+}
+
+.mat-column-email {
+  word-wrap: break-word !important;
+  white-space: unset !important;
+  flex: 0 0 25% !important;
+  width: 15% !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  word-break: break-word;
+
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+
+.example-element-detail {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+}
+
+.example-element-diagram {
+  width: 100%;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+}
+
+.example-element-symbol {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: normal;
+}
+
+.example-element-description {
+  padding: 16px;
+}
+
+.example-element-description-attribution {
+  opacity: 0.5;
+}

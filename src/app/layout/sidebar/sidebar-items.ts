@@ -29,7 +29,7 @@ export const ROUTES: RouteInfo[] = [
     path: 'admin/gestioneImpiegato',
     title: 'MENUITEMS.ADMIN.GESTIONE',
     iconType: 'feather',
-    icon: 'calendar',
+    icon: 'users',
     class: '',
     groupTitle: false,
     badge: '',
@@ -90,6 +90,68 @@ export const ROUTES: RouteInfo[] = [
   },
 
   {
+    path: 'riepilogoBustePaga',
+    title: 'MENUITEMS.FILEBAG.TITLE',
+    iconType: 'feather',
+    icon: 'file',
+    class: 'menu-toggle',
+    groupTitle: false,
+    badge: '',
+    badgeClass: '',
+    submenu: [
+      {
+        path: 'impiegato/riepilogoBustePaga',
+        title: 'MENUITEMS.FILEBAG.OPTIONS.OP1',
+        iconType: 'feather',
+        icon: 'calendar',
+        class: '',
+        groupTitle: false,
+        badge: 'New',
+        badgeClass: 'badge bg-blue sidebar-badge float-end',
+        submenu: [],
+        role:["ROLE_USER"]
+      },
+      {
+        path: 'admin/riepilogoFile',
+        title: 'MENUITEMS.FILEBAG.OPTIONS.OP1',
+        iconType: 'feather',
+        icon: '',
+        class: '',
+        groupTitle: false,
+        badge: 'New',
+        badgeClass: 'badge bg-blue sidebar-badge float-end',
+        submenu: [],
+        role:["ROLE_ADMIN"]
+      },
+      {
+        path: 'impiegato/riepilogoFile',
+        title: 'MENUITEMS.FILEBAG.OPTIONS.OP2',
+        iconType: 'feather',
+        icon: '',
+        class: '',
+        groupTitle: false,
+        badge: 'New',
+        badgeClass: 'badge bg-blue sidebar-badge float-end',
+        submenu: [],
+        role:["ROLE_USER"]
+      },
+      {
+        path: 'admin/riepilogoBustePaga',
+        title: 'MENUITEMS.FILEBAG.OPTIONS.OP2',
+        iconType: 'feather',
+        icon: '',
+        class: '',
+        groupTitle: false,
+        badge: 'New',
+        badgeClass: 'badge bg-blue sidebar-badge float-end',
+        submenu: [],
+        role:["ROLE_ADMIN"]
+      },
+    ],
+    role:["ROLE_ADMIN"]
+  },
+
+ /* {
     path: '',
     title: 'MENUITEMS.EMAIL.TEXT',
     iconType: 'feather',
@@ -137,5 +199,5 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
     ],
-  },
+  },*/
 ];

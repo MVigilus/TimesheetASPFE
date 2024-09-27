@@ -14,6 +14,7 @@ import {ChartOptions} from "@shared/components/ChartOptions";
 import {AdminService} from "@core/service/admin.service";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import Swal from "sweetalert2";
+import {StatChartService} from "@core/service/stat-chart.service";
 
 @Component({
   selector: 'app-chart-residuo-generale',
@@ -33,7 +34,7 @@ export class ChartResiduoGeneraleComponent extends UnsubscribeOnDestroyAdapter i
   public barChartOptions!: Partial<ChartOptions>;
   public loading:boolean=true;
 
-  constructor(private adminService: AdminService,) {
+  constructor(private adminService: StatChartService,) {
     super();
 
 

@@ -16,8 +16,9 @@ import {
   ChartResiduoAnniprecedentiComponent
 } from "./chart-residuo-anniprecedenti/chart-residuo-anniprecedenti.component";
 import {ChartResiduoAnnoincorsoComponent} from "./chart-residuo-annoincorso/chart-residuo-annoincorso.component";
-import {DashboardChipsComponentComponent} from "./dashboard-chips-component/dashboard-chips-component.component";
+import {DashboardChipsComponentComponent} from "@shared/components/dashboard-chips-component/dashboard-chips-component.component";
 import {DOCUMENT} from "@angular/common";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-dashboard',
@@ -42,7 +43,7 @@ export class DashboardComponent extends UnsubscribeOnDestroyAdapter implements O
   private mutationObserver!: MutationObserver;
   private firstload=true;
 
-  constructor(@Inject(DOCUMENT) private document: Document) {
+  constructor(@Inject(DOCUMENT) private document: Document,private router:Router) {
     super();
   }
 
@@ -68,12 +69,15 @@ export class DashboardComponent extends UnsubscribeOnDestroyAdapter implements O
 
   onBodyClassChange() {
     // Your logic when the body class attribute changes
-    setTimeout(()=>{
-      this.firstload = false;
-      this.chartResiduoGeneraleComponent.chartComponent.updateOptions({});
-      this.chartResiduoAnniprecedentiComponent.chartComponent.updateOptions({});
-      this.chartResiduoAnnoincorsoComponent.chartComponent.updateOptions({});
-    },800)
+    if(this.router.url.includes('home')){
+      setTimeout(()=>{
+        this.firstload = false;
+        this.chartResiduoGeneraleComponent.chartComponent.updateOptions({});
+        this.chartResiduoAnniprecedentiComponent.chartComponent.updateOptions({});
+        this.chartResiduoAnnoincorsoComponent.chartComponent.updateOptions({});
+      },800)
+    }
+
 
 
 

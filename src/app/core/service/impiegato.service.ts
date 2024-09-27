@@ -33,24 +33,6 @@ export class ImpiegatoService {
   public submitNgiustificativi(dato:number,id:number){
     return this.http.put<any>(`${environment.apiUrl}/${environment.servizi.impiegato.updateNgiustificativo}`+id, dato)
   }
-  public submitGiustificativoTimesheet(id:number,file:FormData){
-    const headers = new HttpHeaders({
-      // Do not set Content-Type header; Angular will set it to multipart/form-data automatically
-    });
-    return this.http.post(`${environment.apiUrl}/${environment.servizi.file.submitGiustificativoFiles}/${id}`, file, { headers });
 
-  }
 
-  public submitAllegatoTimesheet(id:number,file:FormData,comment:String){
-    const headers = new HttpHeaders({
-      // Do not set Content-Type header; Angular will set it to multipart/form-data automatically
-    });
-    const allegato = {
-      file : file,
-      comment : comment,
-      idTimesheet : id
-    }
-    return this.http.post(`${environment.apiUrl}/${environment.servizi.file.submitAllegatoFile}`, allegato, { headers });
-
-  }
 }

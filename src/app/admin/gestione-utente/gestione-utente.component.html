@@ -6,6 +6,10 @@
     </div>
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="alert alert-success d-flex align-items-center">
+          <strong class="me-2"><mat-icon>info</mat-icon></strong>
+          <span>Facendo click sulle righe vengono espanse</span>
+        </div>
         <div class="card">
           <div class="materialTableHeader">
             <div class="left">
@@ -53,8 +57,9 @@
             </div>
           </div>
           <div class="body overflow-auto">
+
             <div class="responsive_table">
-              <table mat-table [dataSource]="dataSource" matSort class="mat-cell advance-table">
+              <mat-table  [dataSource]="dataSource" multiTemplateDataRows matSort class="mat-cell advance-table">
                 <!-- Checkbox Column -->
                 <ng-container matColumnDef="select">
                   <mat-header-cell *matHeaderCellDef [ngClass]="'tbl-col-width-per-6'">
@@ -90,10 +95,62 @@
                 </ng-container>
 
                 <!-- Email Column -->
-                <ng-container matColumnDef="email">
+                <ng-container matColumnDef="email" >
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
                   <mat-cell *matCellDef="let row">{{ row.email }}</mat-cell>
                 </ng-container>
+
+                <!-- telefono Column -->
+                <ng-container matColumnDef="telefono" >
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Telefono</mat-header-cell>
+                  <mat-cell *matCellDef="let row">
+                    {{row.telefono}}
+                  </mat-cell>
+                </ng-container>
+
+                <!-- Ore Expansion panel-->
+
+                <ng-container matColumnDef="expandedDetail">
+                  <mat-cell *matCellDef="let element">
+                    <div class="example-element-detail"
+                         [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                      <div class="example-element-diagram justify-content-center" >
+                        <div class="row text-center">
+                          <div class="col-2">
+                            <strong>Ore Permesso : </strong>{{ element.ore_permesso }}
+                          </div>
+                          <div class="col-2">
+                            <strong>Ore Ferie : </strong>{{ element.ore_ferie }}
+                          </div>
+                          <div class="col-2">
+                            <strong>Ore Permesso Prec. : </strong> {{ element.ore_anno_precedente.giorniPermesso }}
+                          </div>
+                          <div class="col-2">
+                            <strong>Ore Ferie Prec. : </strong>{{ element.ore_anno_precedente.giorniFerie }}
+                          </div>
+                          <div class="col-2">
+                            <strong>Ore Lavorative : </strong>{{ element.ore_lavorative }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </mat-cell>
+                </ng-container>
+
+
+                  <!--<mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        Self aware panel
+                      </mat-panel-title>
+                      <mat-panel-description>
+                        Currently I am {{panelOpenState ? 'open' : 'closed'}}
+                      </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <p>I'm visible because I am open</p>
+                  </mat-expansion-panel>
+                </mat-accordion>-->
+
 
                 <!-- Rimborso Column -->
                 <ng-container matColumnDef="rimborso">
@@ -101,35 +158,6 @@
                   <mat-cell *matCellDef="let row">{{ (row.rimborso)?"Si":"No" }}</mat-cell>
                 </ng-container>
 
-                <!-- Ore Permesso Column -->
-                <ng-container matColumnDef="ore_permesso">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Ore Permesso</mat-header-cell>
-                  <mat-cell *matCellDef="let row">{{ row.ore_permesso }}</mat-cell>
-                </ng-container>
-
-                <!-- Ore Feerie Column -->
-                <ng-container matColumnDef="ore_ferie">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Ore Ferie</mat-header-cell>
-                  <mat-cell *matCellDef="let row">{{ row.ore_ferie }}</mat-cell>
-                </ng-container>
-
-                <!-- Ore Permesso_prec Column -->
-                <ng-container matColumnDef="ore_permesso_prec">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Ore Permesso Prec.</mat-header-cell>
-                  <mat-cell *matCellDef="let row">{{ row.ore_anno_precedente.giorniPermesso }}</mat-cell>
-                </ng-container>
-
-                <!-- Ore Feerie_prec Column -->
-                <ng-container matColumnDef="ore_ferie_prec">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Ore Ferie Prec.</mat-header-cell>
-                  <mat-cell *matCellDef="let row">{{ row.ore_anno_precedente.giorniFerie }}</mat-cell>
-                </ng-container>
-
-                <!-- Ore lavorative Column -->
-                <ng-container matColumnDef="ore_lavorative">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Ore Lavorative</mat-header-cell>
-                  <mat-cell *matCellDef="let row">{{ row.ore_lavorative }}</mat-cell>
-                </ng-container>
 
                 <!-- Ribmorso Km Column -->
                 <ng-container matColumnDef="rimborsoKm">
@@ -165,10 +193,13 @@
 
 
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editCall(row)"
-                         [style.cursor]="'pointer'" matRipple>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"
+                         [style.cursor]="'pointer'"
+                         [class.example-expanded-row]="expandedElement === row"
+                         (click)="expandedElement = expandedElement === row ? null : row">
                 </mat-row>
-              </table>
+                <mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></mat-row>
+              </mat-table>
             </div>
             <!-- Loading spinner -->
             @if (exampleDatabase?.isTblLoading) {

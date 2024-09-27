@@ -17,17 +17,19 @@
 
             </div>
             <div class="col-xl-2 col-lg-2 col-md-2 align-center justify-content-end">
-              <mat-accordion>
-                <mat-expansion-panel (opened)="panelOpenState=true" (closed)="panelOpenState=false">
+              <mat-accordion >
+                <mat-expansion-panel #accordion [expanded]="panelOpenState" (opened)="panelOpenState=true" (closed)="panelOpenState=false" aria-expanded="true">
                   <mat-expansion-panel-header>
                     <mat-panel-title>
-                     Ore permesso e ferie
+                      Ore permesso e ferie
                     </mat-panel-title>
                   </mat-expansion-panel-header>
-                  <p>Ore permesso anno in corso : {{(authService.currentUserValue.anagraficaLavorativa[0].giorniPermesso)}}</p>
-                  <p>Ore ferie anno in corso : {{authService.currentUserValue.anagraficaLavorativa[0].giorniFerie}}</p>
-                  <p>Ore permesso rimanenti : {{rimanezaPermesso}}</p>
-                  <p>Ore ferie anno rimanenti : {{rimanezaFerie}}</p>
+
+
+                  <p>Ore Permesso Anno : {{(authService.currentUserValue.anagraficaLavorativa[0].giorniPermesso)}}</p>
+                  <p>Ore Ferie Anno : {{authService.currentUserValue.anagraficaLavorativa[0].giorniFerie}}</p>
+                  <p style="font-weight: bold;color: red">Ore Permesso Anni Precedenti : {{(authService.currentUserValue.anagraficaLavorativa[1].giorniPermesso)}}</p>
+                  <p style="font-weight: bold;color: red">Ore Ferie Anni Precedenti : {{(authService.currentUserValue.anagraficaLavorativa[1].giorniFerie)}}</p>
                 </mat-expansion-panel>
               </mat-accordion>
             </div>
@@ -54,15 +56,15 @@
                     </button>
                   }
                 </div>
-                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 pt-2 align-center align-content-center" >
-                  <h3>{{ (timesheet==null)?'Seleziona Periodo Timesheet':'Scheda TImesheet' }}</h3>
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 pt-2 text-center" >
+                  <h4>{{ (timesheet==null)?'Creazione Nuovo Timesheet':'Scheda TImesheet' }}</h4>
                 </div>
-                <div class="col-xl-4 col-lg-4 col-md-4">
+                <!--<div class="col-xl-4 col-lg-4 col-md-4">
                   @if(timesheet!=null){
                     <mat-slide-toggle (change)="setAutomaticSave($event)">Salvataggio automatico</mat-slide-toggle>
                     <mat-slide-toggle (change)="setSlide($event)">Abilita margini cella</mat-slide-toggle>
                   }
-                </div>
+                </div>-->
               </div>
             </div>
           </div>
@@ -90,7 +92,7 @@
                   </div>
                   <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-4">
-                      <h6>Seleziona nuovo periodo Timesheet</h6>
+                      <h6>Seleziona il Mese del Timesheet da creare</h6>
                       <mat-form-field style="width: 100%" >
                         <mat-label>Mese e anno</mat-label>
                         <input matInput [matDatepicker]="dp" formControlName="selectPeriod">
@@ -106,7 +108,7 @@
                 </form>
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-4">
                   <button mat-flat-button color="primary" style="width: 100%;height: 5vh"  type="submit" (click)="onSubmit()"
-                          [disabled]="!YearMonthSearch.valid"> Inoltra Periodo Timesheet
+                          [disabled]="!YearMonthSearch.valid"> Crea Nuovo Timesheet
                   </button>
                 </div>
               </div>
@@ -138,9 +140,9 @@
   <div class="row">
     @if(authService.currentUserValue.rimborso && timesheet!=null && !laoding){
       <div class="row mt-5">
-        <div class="col-xl-2 col-lg-2 col-md-2"></div>
-        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
-          <div class="card">
+        <div class="col-xl col-lg col-md"></div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+        <div class="card">
             <div class="header">
               <h2>Sezione Giustificativi</h2>
             </div>
@@ -174,7 +176,7 @@
             </div>
           </div>
         </div>
-        <div class="col-xl-2 col-lg-2 col-md-2">
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
           @if(loading){
             <div class="row">
               <mat-spinner></mat-spinner>
@@ -205,19 +207,22 @@
 
           }
         </div>
+        <div class="col-xl col-lg col-md"></div>
       </div>
     }
   </div>
   <div class="row">
-    <div class="col-xl-2 col-lg-2 col-md-2"></div>
-    <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
+    <div class="col-xl col-lg col-md"></div>
+    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
       @if(timesheet!=null){
         <button mat-flat-button color="primary" style="width: 100%;height: 5vh" class="mb-5"   type="submit" (click)="onSubmitTimesheet()"
                 [disabled]="!checkTimesheetIsValid()"> Invia Richiesta autorizzazione
         </button>
       }
     </div>
-    <div class="col-xl-2 col-lg-2 col-md-2"></div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4"></div>
+    <div class="col-xl col-lg col-md"></div>
+
   </div>
 
 </section>

@@ -64,32 +64,11 @@ export class AdminService {
       );
   }
 
-  public fetchAdminResiduoGeneraleChart(){
-    return this.http.get<any[]>(`${environment.apiUrl}/${environment.servizi.admin.getResiduoGenerale}`)
-      .pipe(
-        map((result) => {
-          return result
-        })
-      );
-  }
 
-  public fetchAdminResiduoPrecChart(){
-    return this.http.get<any[]>(`${environment.apiUrl}/${environment.servizi.admin.getResiduoPrec}`)
-      .pipe(
-        map((result) => {
-          return result
-        })
-      );
-  }
 
-  public fetchAdminResiduoAttChart(){
-    return this.http.get<any[]>(`${environment.apiUrl}/${environment.servizi.admin.getResiduoAtt}`)
-      .pipe(
-        map((result) => {
-          return result
-        })
-      );
-  }
+
+
+
 
   public submitSearchTImesheet(data:any){
     return this.http.post<any[]>(`${environment.apiUrl}/${environment.servizi.admin.submitSearchTImesheet}`, data)
@@ -100,11 +79,5 @@ export class AdminService {
       );
   }
 
-  public submitBustaPagaTimesheet(id:number,file:FormData){
-    const headers = new HttpHeaders({
-      // Do not set Content-Type header; Angular will set it to multipart/form-data automatically
-    });
-    return this.http.post(`${environment.apiUrl}/${environment.servizi.file.submitBustaPagaFile}/${id}`, file, { headers });
 
-  }
 }

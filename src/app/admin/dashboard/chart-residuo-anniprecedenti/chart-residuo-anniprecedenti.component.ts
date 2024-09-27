@@ -5,6 +5,7 @@ import {AdminService} from "@core/service/admin.service";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {ChartComponent, NgApexchartsModule} from "ng-apexcharts";
 import Swal from "sweetalert2";
+import {StatChartService} from "@core/service/stat-chart.service";
 
 @Component({
   selector: 'app-chart-residuo-anniprecedenti',
@@ -24,7 +25,7 @@ export class ChartResiduoAnniprecedentiComponent extends UnsubscribeOnDestroyAda
   public barChartOptions!: Partial<ChartOptions>;
   public loading:boolean=true;
 
-  constructor(private adminService: AdminService,) {
+  constructor(private adminService: StatChartService,) {
     super();
 
 

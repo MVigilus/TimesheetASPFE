@@ -20,10 +20,14 @@ export const environment = {
     file:{
       downloadGiustificativi:'file/downloadGiustificativo',
       downloadAllegati:'file/downloadAllegato',
+      deleteBustaPaga:'file/deleteBustaPaga',
       downloadBustePaga:'file/downloadBustaPaga',
-      submitGiustificativoFiles:'operator/insertGiustificativo',
-      submitAllegatoFile:'operator/insertAllegato',
-      submitBustaPagaFile:'admin/insertBustaPaga',
+      submitGiustificativoFiles:'file/insertGiustificativo',
+      submitAllegatoFile:'file/insertAllegato',
+      submitBustaPagaFile:'file/insertBustaPaga',
+      getAllegatiAndGiustificativi:'file/getGiustificativiAndAllegati',
+      getBustePagaAdmin:'file/getBustePaga',
+      getBustePaga:'file/getBustePaga',
     },
     impiegato:{
       getAllTimesheetOption:'operator/getTimesheetOptionList',
@@ -34,7 +38,8 @@ export const environment = {
       submitTimesheet:'operator/sendTimesheet',
       submitTimesheetNoSave:'operator/sendTimesheet/',
       updateNgiustificativo:'operator/updateNumeroGiustificativo/',
-
+      fetchBarChart:'operator/fetchBarChart',
+      fetchPieChart:'operator/fetchPieChart',
     },
     admin:{
       getAllImpiegato:'admin/allImpiegato',
@@ -48,7 +53,7 @@ export const environment = {
       getResiduoPrec:'admin/getResiduoPrec',
       getResiduoAtt:'admin/getResiduoAtt',
       insertImpiegato:'admin/insertImpiegato',
-      setFR:'admin/setFR',
+      setFR:'admin/setFR/',
       deleteImp:'admin/deleteImpiegato',
       getAllRole:'admin/getAllRoles',
       submitSearchTImesheet:'admin/getTimesheetResultList'

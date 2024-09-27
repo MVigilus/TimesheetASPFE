@@ -1,0 +1,15 @@
+<div class="card">
+  <div class="header">
+    <h2>Statistiche Timesheet</h2>
+  </div>
+  <div class="body" >
+    @if(loading){
+      <mat-spinner></mat-spinner>
+    }@else{
+      <div style="text-align:center">
+        <canvas baseChart #piechart class="chart" [data]="pieChartData" [type]="pieChartType" [options]="pieChartOptions">
+              </canvas>
+      </div>
+    }
+  </div>
+</div>

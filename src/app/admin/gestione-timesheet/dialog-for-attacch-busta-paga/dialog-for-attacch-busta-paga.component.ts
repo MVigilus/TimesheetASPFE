@@ -8,6 +8,7 @@ import {ImpiegatoService} from "@core/service/impiegato.service";
 import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {AdminService} from "@core/service/admin.service";
 import Swal from "sweetalert2";
+import {FileSystemService} from "@core/service/file-system.service";
 
 @Component({
   selector: 'app-dialog-for-attacch-busta-paga',
@@ -27,7 +28,8 @@ export class DialogForAttacchBustaPagaComponent extends UnsubscribeOnDestroyAdap
 
   fileUploadForm: UntypedFormGroup;
 
-  constructor(private adminService:AdminService,
+  constructor(
+              private fileService:FileSystemService,
               private fb:FormBuilder,public dialog: MatDialog,
               @Inject(MAT_DIALOG_DATA) public data: any) {
     super();
@@ -40,7 +42,7 @@ export class DialogForAttacchBustaPagaComponent extends UnsubscribeOnDestroyAdap
   AllegaBustaPaga(){
     const formData: FormData = new FormData();
     formData.append('file', this.fileUploadForm.get('uploadFile')?.value);
-    this.subs.sink= this.adminService.submitBustaPagaTimesheet(this.timesheet.id, formData).subscribe({
+    this.subs.sink= this.fileService.submitBustaPagaTimesheet(this.timesheet.idTimesheet, formData).subscribe({
       next:(res)=>{
         Swal.fire('Busta Paga Inviata!', 'è stato allegato una busta paga ', 'success');
       },

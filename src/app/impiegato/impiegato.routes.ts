@@ -6,10 +6,13 @@ import {
 } from "./timesheet-dettaglio/timesheet-dettaglio.component";
 import {UserProfileComponent} from "../user-profile/user-profile.component";
 import {DashboardImpComponent} from "./dashboard-imp/dashboard-imp.component";
+import {RiepilogoBustePagaComponent} from "./riepilogo-buste-paga/riepilogo-buste-paga.component";
 
 
 export const ImpiegatoRoutes : Routes = [
-  {path:'', component:DashboardImpComponent},
+  {path:'', redirectTo: 'home', pathMatch:'full'},
+  {path:'riepilogoFile', component:RiepilogoTimesheetComponent},
+  {path:'riepilogoBustePaga', component:RiepilogoBustePagaComponent},
   {path:'home', component:DashboardImpComponent},
   {path:'timesheet', component:RicercaTimesheetComponent},
   {path:'riepilogoTimesheet', component:RiepilogoTimesheetComponent},

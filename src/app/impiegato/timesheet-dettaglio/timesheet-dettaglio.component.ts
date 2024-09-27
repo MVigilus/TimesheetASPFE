@@ -238,7 +238,7 @@ export class TimesheetDettaglioComponent extends UnsubscribeOnDestroyAdapter imp
       if(fieldName=='altro'){
         const altroControl = rowFormGroup.controls['altro'];
         if (altroControl && altroControl.value === '2') {
-          ['sede','ferie','permessi','clienteDest', 'destinazione', 'kmP'].forEach(name => {
+          ['sede','clienteOre','ferie','permessi','clienteDest', 'destinazione', 'kmP'].forEach(name => {
             const control = rowFormGroup.controls[name];
             if (control) {
               control.setValue('');
@@ -335,7 +335,7 @@ export class TimesheetDettaglioComponent extends UnsubscribeOnDestroyAdapter imp
       if(['exceededPermessi','exceededFerie'].includes(Object.keys(rowFormGroup.controls[fieldName].errors||{})[0])){
         showNotification('red','Ore Permesso/Ferie Superate','top','center',this.snackBar)
       }else{
-        showNotification('red','Ore Lavorative Superate','top','center',this.snackBar)
+        showNotification('red','Raggiunto Limite Ore Lavorative Giornaliere','top','center',this.snackBar)
       }
       rowFormGroup.controls[fieldName].setValue('');
     }

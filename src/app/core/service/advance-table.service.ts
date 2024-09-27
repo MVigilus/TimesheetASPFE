@@ -93,7 +93,7 @@ export class AdvanceTableService extends UnsubscribeOnDestroyAdapter {
   }
   deleteAdvanceTable(id: number): Observable<any> {
 
-    return this.httpClient.put(this.API_URL_SETFR,id).pipe(
+    return this.httpClient.delete(this.API_URL_SETFR+id).pipe(
       map((result) => {
         return result
       })
