@@ -1,5 +1,5 @@
 import {computed, Injectable, signal, WritableSignal} from '@angular/core';
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import {BehaviorSubject, finalize, Observable, of, throwError} from 'rxjs';
 import { User } from '../models/user';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {environment} from "../../../environments/environment";
@@ -85,10 +85,12 @@ export class AuthService {
 
   logout() {
     localStorage.clear();
-    this.currentUserSubject.next({} as User); // This will trigger the signal update
     return this.http.get<string>(`${environment.apiUrl}/${environment.servizi.auth.logout}`).pipe(
       map((res) => {
         return res;
+      }),
+      finalize(() => {
+        this.currentUserSubject.next({} as User); // This will trigger the signal update
       })
     );
   }

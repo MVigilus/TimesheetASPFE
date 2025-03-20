@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import {AuthLayoutComponent} from "./layout/app-layout/auth-layout/auth-layout.component";
 import {MainLayoutComponent} from "./layout/app-layout/main-layout/main-layout.component";
-import {AuthGuard} from "@core/guard/auth.guard";
+import {authGuard} from "@core/guard/auth.guard";
 import {LockedComponent} from "./authentication/locked/locked.component";
 import {Page404Component} from "@config/wildcard/page404/page404.component";
 import {Page500Component} from "@config/wildcard/page500/page500.component";
@@ -12,7 +12,7 @@ export const routes: Routes = [
   {
     path:'',
     component: MainLayoutComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
     children: [
       { path: '', redirectTo: '/authentication/signin', pathMatch: 'full' },
       { path: 'admin', loadChildren: ()=> import('./admin/admin.routes').then((m)=> m.AdminRoutes),  canActivate:[AdminGuard]},

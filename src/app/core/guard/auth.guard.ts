@@ -1,20 +1,18 @@
-import { Injectable } from '@angular/core';
-import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import {effect, inject, Injectable} from '@angular/core';
+import {Router, ActivatedRouteSnapshot, RouterStateSnapshot, CanActivateFn} from '@angular/router';
 
 import { AuthService } from '../service/auth.service';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class AuthGuard  {
-  constructor(private authService: AuthService, private router: Router) {}
+export const authGuard: CanActivateFn = (route, state) => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (this.authService.currentUserValue) {
-      return true;
+  effect(() => {
+    const isAuthenticated = authService.currentUserValue;
+    if (!isAuthenticated) {
+      router.navigate(['/authentication/signin']);
     }
-    this.router.navigate(['/authentication/signin']);
-    return false;
-  }
-}
+  });
+
+  return !!authService.currentUserValue;
+};
