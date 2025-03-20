@@ -27,7 +27,6 @@
       flex-direction: unset;
 
       .user_profile {
-        margin: 0px 0px 0px 6px;
         .user_img {
           border-radius: 50%;
         }
@@ -372,6 +371,10 @@
     left: 0px;
     right: unset;
   }
+  .mat-mdc-card-header .header-dropdown {
+    left: 0px;
+    right: unset;
+  }
   .dropdown-menu ul.menu {
     .msg-user {
       float: right;
@@ -636,10 +639,11 @@
   .sl-item {
     border-right: 1px solid #13b1e0;
     border-left: unset;
-    padding-right: 15px;
+    padding-right: 25px;
     padding-left: unset;
+    margin-right: 10px;
     &::before {
-      right: -6.5px;
+      right: -7px;
       left: unset;
     }
   }
@@ -770,7 +774,8 @@
     }
   }
   .user_img {
-    margin: 0px 0px 0px 5px;
+    margin-left: unset;
+    margin-right: 5px;
   }
   &.side-closed .sidebar .menu .list li a {
     padding-right: 9px;
@@ -823,12 +828,16 @@
   .ng-scroll-viewport {
     --native-scrollbar-size: 1px !important;
   }
+  .pill-style {
+    padding-right: unset;
+    padding-left: 15px;
+  }
+  .table-img {
+    margin-right: 0px;
+    margin-left: 10px;
+  }
+  .event-card .event-status {
+    left: 0;
+    right: unset !important;
+  }
 }
-
-// @media (max-width: 1169px) {
-//   .rtl {
-//      .sidemenu-collapse {
-//        display: none !important;
-//      }
-//   }
-// }

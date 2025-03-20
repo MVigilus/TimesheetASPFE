@@ -1,3 +1,6 @@
+@use "../common/mixins";
+@use "../common/variables";
+
 /*
  *  Document   : _leftsidebaroverlay.scss
  *  Author     : RedStar Template
@@ -22,8 +25,8 @@
 }
 
 .sidebar {
-  @include transition(all 0.5s);
-  font-family: $sidebar-font-family;
+  @include mixins.transition(all 0.5s);
+  font-family: variables.$sidebar-font-family;
   background: #ffffff;
   width: 260px;
   overflow: hidden;
@@ -49,7 +52,7 @@
       display: inline-block;
 
       img {
-        @include border-radius(50%);
+        @include mixins.border-radius(50%);
         vertical-align: bottom !important;
       }
     }
@@ -61,14 +64,14 @@
       top: 25px;
 
       .name {
-        @include three-dots-overflow();
+        @include mixins.three-dots-overflow();
         font-size: 14px;
         max-width: 200px;
         color: #fff;
       }
 
       .email {
-        @include three-dots-overflow();
+        @include mixins.three-dots-overflow();
         font-size: 12px;
         max-width: 200px;
         color: #fff;
@@ -78,7 +81,7 @@
         position: absolute;
         right: -3px;
         bottom: -12px;
-        @include box-shadow(none);
+        @include mixins.box-shadow(none);
         cursor: pointer;
         color: #fff;
       }
@@ -173,8 +176,8 @@
           top: calc(50% - 13px);
           right: 17px;
           font-size: 19px;
-          @include transform(scale(0));
-          @include transition(all 0.3s);
+          @include mixins.transform(scale(0));
+          @include mixins.transition(all 0.3s);
         }
 
         &:before {
@@ -184,7 +187,7 @@
           font-weight: 600;
           font-size: 12px;
           color: gray;
-          @include transform(scale(1));
+          @include mixins.transform(scale(1));
         }
 
         &:after {
@@ -194,7 +197,7 @@
           font-weight: 600;
           font-size: 12px;
           color: gray;
-          @include transform(scale(0));
+          @include mixins.transform(scale(0));
         }
       }
 
@@ -206,11 +209,11 @@
 
       .active .menu-toggle {
         &:before {
-          @include transform(scale(0));
+          @include mixins.transform(scale(0));
         }
 
         &:after {
-          @include transform(scale(1));
+          @include mixins.transform(scale(1));
         }
       }
 
@@ -221,7 +224,7 @@
           top: calc(50% - 13px);
           right: 17px;
           font-size: 19px;
-          @include transition(all 0.3s);
+          @include mixins.transition(all 0.3s);
         }
 
         &:before {
@@ -251,7 +254,7 @@
           right: 17px;
           font-size: 19px;
           // @include transform(scale(0));
-          @include transition(all 0.3s);
+          @include mixins.transition(all 0.3s);
         }
 
         &:before {
@@ -280,7 +283,7 @@
           right: 17px;
           font-size: 19px;
           // @include transform(scale(0));
-          @include transition(all 0.3s);
+          @include mixins.transition(all 0.3s);
         }
 
         &:before {
@@ -528,49 +531,49 @@
 .ml-menu {
   .ml-sub-menu {
     &:before {
-      @include transform(scale(1));
+      @include mixins.transform(scale(1));
     }
     &:after {
-      @include transform(scale(0));
+      @include mixins.transform(scale(0));
     }
   }
 
   .ml-sub-menu2 {
     &:before {
-      @include transform(scale(1));
+      @include mixins.transform(scale(1));
     }
     &:after {
-      @include transform(scale(0));
+      @include mixins.transform(scale(0));
     }
   }
 
   .ml-sub-menu3 {
     &:before {
-      @include transform(scale(1));
+      @include mixins.transform(scale(1));
     }
     &:after {
-      @include transform(scale(0));
+      @include mixins.transform(scale(0));
     }
   }
 
   .active .ml-sub-menu {
     &:after {
-      @include transform(scale(1));
+      @include mixins.transform(scale(1));
     }
 
     &:before {
-      @include transform(scale(0));
+      @include mixins.transform(scale(0));
     }
   }
 
   .ml-menu-2 {
     li.active .ml-sub-menu2 {
       &:after {
-        @include transform(scale(1));
+        @include mixins.transform(scale(1));
       }
 
       &:before {
-        @include transform(scale(0));
+        @include mixins.transform(scale(0));
       }
     }
   }
@@ -578,11 +581,11 @@
   .ml-menu-3 {
     li.active .ml-sub-menu3 {
       &:after {
-        @include transform(scale(1));
+        @include mixins.transform(scale(1));
       }
 
       &:before {
-        @include transform(scale(0));
+        @include mixins.transform(scale(0));
       }
     }
   }
@@ -595,9 +598,9 @@
   top: 60px;
   background: #fdfdfd;
   z-index: 999 !important;
-  @include box-shadow(-2px 2px 5px rgba(0, 0, 0, 0.1));
+  @include mixins.box-shadow(-2px 2px 5px rgba(0, 0, 0, 0.1));
   overflow: hidden;
-  @include transition(0.5s);
+  @include mixins.transition(0.5s);
 
   &.open {
     right: 0;
@@ -939,6 +942,9 @@
   height: 18px !important;
   width: 18px !important;
   text-align: center;
+  display: inline-grid !important;
+  top: 3px;
+  position: relative;
   fill: rgba(75, 75, 90, 0.12) !important;
 }
 .headerShadow {

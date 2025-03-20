@@ -14,10 +14,9 @@ import { NgScrollbar } from 'ngx-scrollbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { FeatherIconsComponent } from '../../shared/components/feather-icons/feather-icons.component';
 import { MatButtonModule } from '@angular/material/button';
-import {interval, Subscription} from "rxjs";
+import { MatIconModule } from '@angular/material/icon';
+import {NotificationPlaceHolder} from "@core/models/Notifications";
 import {NotificationService} from "@core/service/notification.service";
-import {NotificationPlaceHolder, Notifications} from "@core/models/Notifications";
-import {HttpErrorResponse} from "@angular/common/http";
 import {MatBadge} from "@angular/material/badge";
 
 
@@ -25,7 +24,6 @@ import {MatBadge} from "@angular/material/badge";
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  standalone: true,
   imports: [
     MatButtonModule,
     FeatherIconsComponent,
@@ -33,14 +31,17 @@ import {MatBadge} from "@angular/material/badge";
     RouterLink,
     NgClass,
     NgScrollbar,
+    MatIconModule,
     MatBadge,
   ],
   providers: [LanguageService],
+  standalone: true
 })
 export class HeaderComponent
   extends UnsubscribeOnDestroyAdapter
   implements OnInit {
   public config!: InConfiguration;
+  userImg?: string;
   homePage?: string;
   isNavbarCollapsed = true;
   flagvalue: string | string[] | undefined;
@@ -50,6 +51,7 @@ export class HeaderComponent
   isOpenSidebar?: boolean;
   docElement?: HTMLElement;
   isFullScreen = false;
+  protected unreaded: number =0;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -73,8 +75,6 @@ export class HeaderComponent
   notifications: NotificationPlaceHolder[] = [
 
   ];
-  unreaded:number=0;
-
   ngOnInit() {
     this.config = this.configService.configData;
     this.docElement = document.documentElement;
@@ -86,30 +86,11 @@ export class HeaderComponent
     this.countryName = val.map((element) => element.text);
     if (val.length === 0) {
       if (this.flagvalue === undefined) {
-        this.defaultFlag = 'assets/images/flags/italy.jpg';
+        this.defaultFlag = 'assets/images/flags/us.jpg';
       }
     } else {
       this.flagvalue = val.map((element) => element.flag);
     }
-
-    this.subs.sink=this.notificationService.getNotifications().subscribe(
-      (newNotifications ) => {
-        this.notifications = [];
-        this.unreaded=0
-        newNotifications.forEach((el)=>{
-          if(el.status==='msg-unread' && el.message!=undefined){
-            this.notifications.push(el);
-            this.unreaded++
-          }
-        })
-      },
-      (error) => {
-        console.error('Error loading notifications:', error);
-      }
-    );;
-
-    this.notificationService.fetchInitialNotifications();
-
   }
 
   callFullscreen() {
@@ -159,16 +140,11 @@ export class HeaderComponent
       localStorage.setItem('collapsed_menu', 'true');
     }
   }
-  gotToAccountPage(){
-    console.log('/'+this.router.url.split('/')[1]+'/account')
-    this.router.navigate(['/'+this.router.url.split('/')[1]+'/account']);
-  }
   logout() {
     this.subs.sink = this.authService.logout().subscribe({
       next: (res:any) => {
     }
     });
-    this.router.navigate(['/authentication/signin']);
 
   }
 
@@ -178,5 +154,4 @@ export class HeaderComponent
     this.unreaded=0
     this.notificationService.fetchInitialNotifications()
   }
-
 }

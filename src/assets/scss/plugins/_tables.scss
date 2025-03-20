@@ -1,9 +1,18 @@
-﻿/*
+@use "../pages/pricing";
+
+/*
  *  Document   : _tables.scss
  *  Author     : RedStar Template
  *  Description: This scss file for tables style classes
  */
-
+.light .mat-mdc-table {
+  background: #ffffff;
+}
+.advance-table {
+  .mat-column-select {
+    max-width: 80px;
+  }
+}
 .table {
   tbody {
     border-top: none !important;
@@ -119,12 +128,23 @@
 }
 
 .table-img {
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  background: #fff;
+  position: inherit;
+  margin-right: 10px;
   img {
-    border-radius: 5px;
-    height: 33px;
-    width: 33px;
-    background: #fff;
-    position: inherit;
+    border-radius: 50%;
+  }
+}
+.tbl-icon {
+  min-width: 24px;
+  &.mat-icon {
+    font-size: 20px;
+    height: 20px;
+    width: 20px;
+    line-height: 20px;
   }
 }
 
@@ -143,7 +163,7 @@
 
   &:hover {
     background-color: #888;
-    color: $white;
+    color: pricing.$white;
   }
 
   &:focus {
@@ -166,7 +186,7 @@
 
   &:hover {
     background-color: #ff9600;
-    color: $white;
+    color: pricing.$white;
   }
 
   &:focus {
@@ -188,7 +208,7 @@
 
   &:hover {
     background-color: #62b5f8;
-    color: $white;
+    color: pricing.$white;
   }
 
   &:focus {
@@ -210,7 +230,7 @@
 
   &:hover {
     background-color: #f87346;
-    color: $white;
+    color: pricing.$white;
   }
 
   &:focus {
@@ -273,20 +293,28 @@
   display: inline-block;
 }
 
-.order-list li {
-  img {
-    border: 2px solid #ffffff;
-    box-shadow: 0 2px 10px 0 rgba(107, 111, 130, 0.3);
-  }
+.order-list {
+  margin: 0px;
+  li {
+    img {
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 10px 0 rgba(107, 111, 130, 0.3);
+    }
 
-  + li {
-    margin-left: -14px;
-  }
+    + li {
+      margin-left: -14px;
+    }
 
-  .badge {
-    background: rgba(255, 255, 255, 0.8);
-    color: #6b6f82;
-    margin-bottom: 6px;
+    .badge {
+      background: rgba(108, 137, 228, 0.7);
+      color: #ffffff;
+      margin-bottom: 6px;
+      width: 30px;
+      height: 20px;
+      padding: 0px;
+      line-height: 20px;
+      border: none;
+    }
   }
 }
 
@@ -570,6 +598,7 @@ tr.group:hover {
   display: flex;
   flex-wrap: wrap;
   text-align: center;
+  padding: 0px 5px;
   // min-width: 800px;
 
   .left {
@@ -657,7 +686,7 @@ tr.group:hover {
       border: 0;
       height: 45px;
       padding: 8px 8px 8px 50px;
-      width: 250px;
+      width: 100%;
       background: #ffffff;
 
       &:hover {
@@ -749,7 +778,7 @@ tr.group:hover {
   vertical-align: middle;
   padding: 10px;
   margin-bottom: 10px;
-  background: #f6f4ff;
+  background: #eaeef8;
 }
 .report-list {
   display: flex;
@@ -909,7 +938,47 @@ mat-cell > span.truncate-text {
     max-width: 100%;
   }
 }
+.mat-mdc-table {
+  box-shadow: none !important;
+  .favourite-star {
+    height: 20px;
+    width: 20px;
+    margin: 0px 5px;
+  }
+  .action-btn-img {
+    height: 18px;
+    width: 18px;
+    margin: 10px;
+  }
 
+  .mat-mdc-row:hover {
+    background-color: rgba(18, 25, 41, 0.04);
+    cursor: pointer;
+  }
+  &.customHeader {
+    .mat-mdc-header-row {
+      padding: 0 10px;
+      height: 50px;
+      vertical-align: middle;
+      background-color: #f5f5f5;
+      color: #666;
+      font-weight: 500;
+      border: none;
+    }
+  }
+  .mat-mdc-cell {
+    border-bottom-color: #efefef;
+  }
+  .mat-mdc-header-cell {
+    border-bottom-color: #efefef;
+  }
+}
+.table-column-label {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 25px;
+  line-height: 40px;
+}
 @media (max-width: 380px) {
   .materialTableHeader .header-buttons-left input.search-field {
     width: 140px;
@@ -918,5 +987,12 @@ mat-cell > span.truncate-text {
 @media (max-width: 300px) {
   .materialTableHeader .header-buttons-left input.search-field {
     width: 100px;
+  }
+}
+@media (max-width: 600px) {
+  .advance-table {
+    .mat-column-select {
+      max-width: 100%;
+    }
   }
 }

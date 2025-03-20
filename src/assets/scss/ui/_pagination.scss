@@ -1,4 +1,6 @@
-﻿/*
+@use "../common/mixins";
+
+/*
  *  Document   : _pagination.scss
  *  Author     : RedStar Template
  *  Description: This scss file for pagination style classes
@@ -13,7 +15,7 @@
     display: inline;
 
     > a {
-      @include border-radius(0);
+      @include mixins.border-radius(0);
       border: none;
       background-color: transparent;
       color: #222;
@@ -65,7 +67,7 @@
   }
 
   li {
-    @include border-radius(0);
+    @include mixins.border-radius(0);
 
     // a:focus,
     // a:active {
@@ -106,7 +108,7 @@
     > a {
       width: auto;
       height: 32px;
-      @include border-radius(0);
+      @include mixins.border-radius(0);
 
       .material-icons {
         position: relative;

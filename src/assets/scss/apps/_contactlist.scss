@@ -102,7 +102,6 @@
 
 .contact-details-field {
   display: flex;
-  margin-top: 30px;
 
   .material-icons-two-tone {
     margin: 0 20px 0 10px;
@@ -113,7 +112,8 @@
   }
 
   .color-icon {
-    filter: invert(14%) sepia(0%) saturate(5141%) hue-rotate(101deg) brightness(95%) contrast(97%);
+    filter: invert(14%) sepia(0%) saturate(5141%) hue-rotate(101deg)
+      brightness(95%) contrast(97%);
   }
 }
 

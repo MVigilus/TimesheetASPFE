@@ -1,11 +1,14 @@
+@use "../common/mixins";
+@use "../common/variables";
+
 /*
  *  Document   : _navbar.scss
  *  Author     : RedStar Template
  *  Description: This scss file for navbar style classes
  */
 .navbar {
-  font-family: $navbar-font-family;
-  @include border-radius(0);
+  font-family: variables.$navbar-font-family;
+  @include mixins.border-radius(0);
   box-shadow: none;
   //    @include box-shadow(0px 0px 20px 0px rgba(0,0,0,0.15));
   border: none;
@@ -16,7 +19,7 @@
   padding: 0;
 
   .navbar-brand {
-    @include three-dots-overflow();
+    @include mixins.three-dots-overflow();
   }
 
   .navbar-custom-right-menu {
@@ -67,10 +70,12 @@
     margin-bottom: 0px;
     display: none;
     position: relative;
-    top: 7px;
+    top: 10px;
   }
   .header-icon {
     vertical-align: top !important;
+    height: 20px;
+    width: 20px;
     .feather {
       height: 20px;
       width: 20px;
@@ -96,13 +101,13 @@
       top: 0px;
       line-height: 60px;
       margin-right: 10px;
-      @include transform(scale(0));
-      @include transition(all 0.3s);
+      @include mixins.transform(scale(0));
+      @include mixins.transition(all 0.3s);
     }
 
     &:before {
       content: "\E5D2";
-      @include transform(scale(1));
+      @include mixins.transform(scale(1));
     }
 
     // &:after {
@@ -119,11 +124,11 @@
 .overlay-open {
   .bars {
     &:before {
-      @include transform(scale(0));
+      @include mixins.transform(scale(0));
     }
 
     &:after {
-      @include transform(scale(1));
+      @include mixins.transform(scale(1));
     }
   }
   &.ls-closed {
@@ -138,7 +143,7 @@
   background-color: #000;
   width: 260px;
   float: left;
-  @include transition(all 0.5s);
+  @include mixins.transition(all 0.5s);
 
   .bars {
     float: left;
@@ -166,25 +171,26 @@
   &.navbar-left {
     margin-right: 10px;
     position: relative;
-    top: 7px;
+    height: 60px;
+    .btnAppList {
+      height: 60px;
+      align-items: center;
+      display: flex;
+    }
   }
 
   &.navbar-right {
     float: right !important;
-    margin-right: 10px;
     position: relative;
-    top: 6px;
     // .nav-item {
     //   margin: 0px 4px;
     // }
 
     .user_profile {
-      top: 5px;
       .dropdown-toggle {
         cursor: pointer;
       }
       .user_img {
-        float: right;
         border-radius: 50%;
         margin-left: 5px;
       }
@@ -322,7 +328,6 @@
   }
 }
 .lang-dropdown {
-  top: -2px;
   cursor: pointer;
   // margin: 14px 20px 0px 10px;
   .country-name {
@@ -388,7 +393,6 @@
   // padding-right: 15px;
   // padding-left: 15px;
   overflow-x: visible;
-  border-top: 1px solid transparent;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 .collapse {
@@ -406,9 +410,12 @@
   padding-left: 0;
   margin-bottom: 0;
   list-style: none;
+  height: 60px;
   > li {
     position: relative;
-    display: block;
+    height: 60px;
+    align-items: center;
+    display: flex;
     > a {
       position: relative;
       display: block;
@@ -446,6 +453,8 @@
     line-height: 20px !important;
     height: 20px;
     font-size: 20px;
+    top: 2px;
+    position: relative;
   }
   .logo {
     margin-right: auto;
@@ -464,10 +473,10 @@ nav.navbar {
   top: 0;
 }
 
-@each $key, $val in $colors {
+@each $key, $val in variables.$colors {
   .col-#{$key} {
     .navbar {
-      @include navbar-link-color(#fff, #000, 0.95);
+      @include mixins.navbar-link-color(#fff, #000, 0.95);
       // @include navbar-link-color(rgba(0,0,0,0.85), #000, .95);
     }
   }
@@ -525,6 +534,9 @@ nav.navbar {
     .sidebar-user-panel {
       display: none;
     }
+    .sidebarIcon {
+      top: 0px;
+    }
   }
 
   section.content {
@@ -556,7 +568,7 @@ nav.navbar {
                 font-size: 12px;
                 color: gray;
                 top: calc(50% - 7px);
-                @include transform(scale(1));
+                @include mixins.transform(scale(1));
               }
               &:after {
                 content: "\f078";
@@ -565,7 +577,7 @@ nav.navbar {
                 font-weight: 600;
                 font-size: 12px;
                 color: gray;
-                @include transform(scale(0));
+                @include mixins.transform(scale(0));
               }
             }
             span {
@@ -614,11 +626,11 @@ nav.navbar {
           }
           .active .menu-toggle {
             &:before {
-              @include transform(scale(0));
+              @include mixins.transform(scale(0));
             }
 
             &:after {
-              @include transform(scale(1));
+              @include mixins.transform(scale(1));
             }
           }
         }

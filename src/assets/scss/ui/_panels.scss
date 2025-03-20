@@ -1,10 +1,13 @@
-﻿/*
+@use "../common/mixins";
+@use "../common/variables";
+
+/*
  *  Document   : _panels.scss
  *  Author     : RedStar Template
  *  Description: This scss file for panels style classes
  */
 .panel-group {
-  @each $key, $val in $colors {
+  @each $key, $val in variables.$colors {
     .panel-col-#{$key} {
       border: 1px solid $val;
 
@@ -20,7 +23,7 @@
   }
 
   .panel {
-    @include border-radius(0);
+    @include mixins.border-radius(0);
     margin-top: 5px;
 
     .panel-title {
@@ -42,7 +45,7 @@
 
     .panel-heading {
       padding: 0;
-      @include border-radius(0);
+      @include mixins.border-radius(0);
 
       a {
         display: block;
@@ -105,7 +108,7 @@
 }
 
 .full-body {
-  @each $key, $val in $colors {
+  @each $key, $val in variables.$colors {
     .panel-col-#{$key} {
       .panel-body {
         border-top-color: #fff !important;

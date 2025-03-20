@@ -1,5 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Router, NavigationEnd, RouterLink, RouterLinkActive } from '@angular/router';
+import {
+  Router,
+  NavigationEnd,
+  RouterLink,
+  RouterLinkActive,
+} from '@angular/router';
 import { DOCUMENT, NgStyle, NgClass } from '@angular/common';
 import {
   Component,
@@ -10,7 +15,6 @@ import {
   HostListener,
   OnDestroy,
 } from '@angular/core';
-import { ROUTES } from './sidebar-items';
 import { AuthService } from '@core';
 import { RouteInfo } from './sidebar.metadata';
 import { TranslateModule } from '@ngx-translate/core';
@@ -18,11 +22,12 @@ import { FeatherModule } from 'angular-feather';
 import { NgScrollbar } from 'ngx-scrollbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { SidebarService } from './sidebar.service';
+import {ROUTES} from "./sidebar-items";
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
-  standalone: true,
   imports: [
     RouterLink,
     MatButtonModule,
@@ -32,8 +37,9 @@ import { MatButtonModule } from '@angular/material/button';
     RouterLinkActive,
     NgClass,
     TranslateModule,
-    FeatherModule
+    FeatherModule,
   ],
+  standalone: true
 })
 export class SidebarComponent implements OnInit, OnDestroy {
   public sidebarItems!: RouteInfo[];
@@ -53,7 +59,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
     private renderer: Renderer2,
     public elementRef: ElementRef,
     protected authService: AuthService,
-    private router: Router
+    private router: Router,
+    private sidebarService: SidebarService
   ) {
     this.elementRef.nativeElement.closest('body');
     this.routerObj = this.router.events.subscribe((event) => {

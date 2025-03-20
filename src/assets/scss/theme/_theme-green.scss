@@ -3,7 +3,7 @@
  *  Author     : RedStar Template
  *  Description: This scss file for green theme style classes
  */
-@import "_theme-color-variables";
+@use "theme-color-variables" as themeColVar;
 
 .theme-green {
   .navbar {
@@ -16,7 +16,7 @@
     }
   }
   .navbar.active {
-    // background-color: $theme-green !important;
+    // background-color: themeColVar.$theme-green !important;
     background: #11998e; /* fallback for old browsers */
     background: -webkit-linear-gradient(
       to right,
@@ -49,12 +49,12 @@
     > li {
       > a {
         &:hover {
-          background-color: $theme-green-nav-anchor_hover;
+          background-color: themeColVar.$theme-green-nav-anchor_hover;
           text-decoration: none;
         }
 
         &:focus {
-          background-color: $theme-green-nav-anchor_focus;
+          background-color: themeColVar.$theme-green-nav-anchor_focus;
           text-decoration: none;
         }
       }
@@ -62,7 +62,7 @@
   }
 
   .bars {
-    color: $theme-green-bar;
+    color: themeColVar.$theme-green-bar;
   }
 
   .sidebar {
@@ -70,7 +70,7 @@
       .list {
         li {
           &.active {
-            background-color: $theme-green-menu-list-active;
+            background-color: themeColVar.$theme-green-menu-list-active;
           }
           a {
             -moz-transition: all 0.3s;
@@ -88,74 +88,74 @@
         }
 
         .ml-menu {
-          background-color: $theme-green-menu-list-submenu;
+          background-color: themeColVar.$theme-green-menu-list-submenu;
         }
       }
     }
 
     .legal {
-      background-color: $theme-green-legal-bg;
+      background-color: themeColVar.$theme-green-legal-bg;
 
       .copyright {
         a {
-          color: $theme-green !important;
+          color: themeColVar.$theme-green !important;
         }
       }
     }
   }
 
   .breadcrumb li a {
-    color: $theme-green !important;
+    color: themeColVar.$theme-green !important;
   }
 
   .page-item.active .page-link {
-    background-color: $theme-green;
-    border-color: $theme-green;
+    background-color: themeColVar.$theme-green;
+    border-color: themeColVar.$theme-green;
     color: #ffffff;
     border-radius: 50%;
     box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
   }
 
   .btn-primary {
-    background-color: $theme-green !important;
+    background-color: themeColVar.$theme-green !important;
     color: #fff !important;
-    border-color: $theme-green !important;
+    border-color: themeColVar.$theme-green !important;
     &:hover {
-      background-color: $theme-green !important;
+      background-color: themeColVar.$theme-green !important;
       color: #fff !important;
     }
     &:active {
-      background-color: $theme-green !important;
+      background-color: themeColVar.$theme-green !important;
       color: #fff !important;
     }
     &:focus {
-      background-color: $theme-green !important;
+      background-color: themeColVar.$theme-green !important;
       color: #fff !important;
     }
     &:disabled {
-      background-color: $theme-green !important;
+      background-color: themeColVar.$theme-green !important;
       color: #fff !important;
     }
   }
   .btn-outline-primary {
     background: 0 0 !important;
-    color: $theme-green !important;
-    border: 1px solid $theme-green !important;
+    color: themeColVar.$theme-green !important;
+    border: 1px solid themeColVar.$theme-green !important;
     &:hover {
-      background: $theme-green !important;
+      background: themeColVar.$theme-green !important;
       color: #fff !important;
-      border: 1px solid $theme-green !important;
+      border: 1px solid themeColVar.$theme-green !important;
     }
   }
   .timelineLabelColor strong {
-    color: $theme-green !important;
+    color: themeColVar.$theme-green !important;
   }
   .top-sidebar {
     .horizontal-menu {
       li {
         &.active {
           > a {
-            color: $theme-green;
+            color: themeColVar.$theme-green;
           }
         }
         a {
@@ -164,7 +164,7 @@
           -webkit-transition: all 0.3s;
           transition: all 0.3s;
           &:hover {
-            color: $theme-green;
+            color: themeColVar.$theme-green;
           }
         }
       }
@@ -172,12 +172,12 @@
   }
 
   .nav-tabs > li > a:before {
-    border-bottom: 2px solid $theme-green;
+    border-bottom: 2px solid themeColVar.$theme-green;
   }
 }
 /*Logo Header Background Color*/
 .logo-green {
   .navbar-header {
-    background-color: $theme-green;
+    background-color: themeColVar.$theme-green;
   }
 }

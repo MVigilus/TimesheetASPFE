@@ -1,10 +1,12 @@
-﻿/*
+@use "../common/variables";
+
+/*
  *  Document   : _preloaders.scss
  *  Author     : RedStar Template
  *  Description: This scss file for preloaders style classes
  */
 .md-preloader {
-  @each $key, $val in $colors {
+  @each $key, $val in variables.$colors {
     .pl-#{$key} {
       stroke: $val;
     }
@@ -63,7 +65,7 @@
   animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite
     both;
 
-  @each $key, $val in $colors {
+  @each $key, $val in variables.$colors {
     &.pl-#{$key} {
       border-color: $val;
     }

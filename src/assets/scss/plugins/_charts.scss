@@ -1,4 +1,6 @@
-﻿/*
+@use "../common/mixins";
+
+/*
  *  Document   : _charts.scss
  *  Author     : RedStar Template
  *  Description: This scss file for all charts style classes
@@ -6,7 +8,7 @@
 /* Morris */
 .morris-hover {
   &.morris-default-style {
-    @include border-radius(0);
+    @include mixins.border-radius(0);
   }
 }
 

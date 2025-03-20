@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, Observable, throwError} from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { UnsubscribeOnDestroyAdapter } from '@shared';
 import {Impiegatolist} from "@core/models/admin/impiegatolist.model";
@@ -10,7 +10,7 @@ import {
   convertImpiegatolistToImpiegatoDto
 } from "@core/converters/ImpiegatoDtoConverter.converter";
 import Swal from "sweetalert2";
-import {map} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root',
@@ -41,35 +41,29 @@ export class AdvanceTableService extends UnsubscribeOnDestroyAdapter {
   getDialogData() {
     return convertImpiegatoDtoToImpiegatolist(this.dialogData);
   }
-  /** CRUD METHODS */
-  getAllAdvanceTables(): void {
-    this.subs.sink = this.httpClient
-      .get<Impiegatolist[]>(this.API_URL)
-      .subscribe({
-        next: (data) => {
-          this.isTblLoading = false;
-          this.dataChange.next(data);
-        },
-        error: (error: HttpErrorResponse) => {
-          this.isTblLoading = false;
-          console.log(error.name + ' ' + error.message);
-        },
-      });
+
+
+  private handleError(error: HttpErrorResponse) {
+    // Customize this method based on your needs
+    return throwError(
+      () => {
+        this.isTblLoading = false;
+        console.log(error.name + ' ' + error.message);
+      }
+    );
   }
 
-  getAllAdvanceTablesFR(): void {
-    this.subs.sink = this.httpClient
+  /** GET: Fetch all advance tables */
+  getAllAdvanceTables(): Observable<Impiegatolist[]> {
+    return this.httpClient
+      .get<Impiegatolist[]>(this.API_URL)
+      .pipe(catchError(this.handleError));
+  }
+
+  getAllAdvanceTablesFR(): Observable<Impiegatolist[]> {
+    return this.httpClient
       .get<Impiegatolist[]>(this.API_URL_FR)
-      .subscribe({
-        next: (data) => {
-          this.isTblLoading = false;
-          this.dataChange.next(data);
-        },
-        error: (error: HttpErrorResponse) => {
-          this.isTblLoading = false;
-          console.log(error.name + ' ' + error.message);
-        },
-      });
+      .pipe(catchError(this.handleError));
   }
   addAdvanceTable(advanceTable: Impiegatolist) {
 
@@ -81,24 +75,24 @@ export class AdvanceTableService extends UnsubscribeOnDestroyAdapter {
        })
      );
   }
-  updateAdvanceTable(advanceTable: Impiegatolist) {
-    this.dialogData = convertImpiegatolistToImpiegatoDto(advanceTable);
-
+  updateAdvanceTable(advanceTable: Impiegatolist): Observable<any> {
     return this.httpClient.post(this.API_URL_EDIT + advanceTable.id, advanceTable).pipe(
-      map((result) => {
-        return result
-      })
-    );
-
-  }
-  deleteAdvanceTable(id: number): Observable<any> {
-
-    return this.httpClient.put(this.API_URL_SETFR,id).pipe(
-      map((result) => {
-        return result
-      })
+      map((response) => {
+        return advanceTable; // return response from API
+      }),
+      catchError(this.handleError)
     );
   }
+
+  deleteAdvanceTable(id: number): Observable<number> {
+    return this.httpClient.put(`${this.API_URL_SETFR}`,id).pipe(
+      map((response) => {
+        return id; // return response from API
+      }),
+      catchError(this.handleError)
+    );
+  }
+
 
   deleteAdvanceTableImp(id: number): Observable<any> {
 

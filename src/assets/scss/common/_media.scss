@@ -113,7 +113,7 @@
     }
     .nav {
       > li {
-        display: inline-block;
+        display: inline-grid;
         top: 0px !important;
         > a {
           // padding: 13px 15px 8px 15px;
@@ -179,7 +179,7 @@
     }
     .nav {
       > li {
-        display: inline-block;
+        display: inline-grid;
         > a {
           // padding: 13px 15px 8px 15px;
           &.js-right-sidebar {
@@ -240,7 +240,7 @@
     }
     .nav {
       > li {
-        display: inline-block;
+        display: inline-grid;
         > a {
           // padding: 13px 15px 8px 15px;
           &.js-right-sidebar {

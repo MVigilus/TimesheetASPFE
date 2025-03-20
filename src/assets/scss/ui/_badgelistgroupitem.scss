@@ -1,4 +1,7 @@
-﻿/*
+@use "../common/mixins";
+@use "../common/variables";
+
+/*
  *  Document   : badgelistgroupitem.scss
  *  Author     : RedStar Template
  *  Description: This scss file for badge style classes
@@ -12,8 +15,8 @@
 }
 
 .list-group-item {
-  @include border-radius(0);
-  @include transition(0.5s);
+  @include mixins.border-radius(0);
+  @include mixins.transition(0.5s);
 }
 
 .list-group {
@@ -63,7 +66,7 @@
   .list-group-item {
     &:first-child,
     &:last-child {
-      @include border-radius(0);
+      @include mixins.border-radius(0);
     }
 
     .list-group-item-heading {
@@ -129,7 +132,7 @@
     }
   }
 
-  @each $key, $val in $colors {
+  @each $key, $val in variables.$colors {
     .pl-#{$key} {
       stroke: $val;
     }

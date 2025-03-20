@@ -1,3 +1,6 @@
+@use "mixins";
+@use "variables";
+
 /*
  *  Document   : _demo.scss
  *  Author     : RedStar Template
@@ -160,7 +163,7 @@
   padding: 15px 0;
   text-align: center;
   margin-bottom: 20px;
-  @include border-radius(3px);
+  @include mixins.border-radius(3px);
 
   .color-name {
     font-size: 16px;
@@ -321,7 +324,7 @@
       width: 24px;
       height: 24px;
       display: inline-block;
-      @include border-radius(3px);
+      @include mixins.border-radius(3px);
     }
 
     span {
@@ -352,7 +355,7 @@
     background-color: #f06533;
   }
 
-  @each $key, $val in $colors {
+  @each $key, $val in variables.$colors {
     .#{$key} {
       background-color: $val;
     }

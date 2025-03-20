@@ -97,8 +97,9 @@
 .sl-item {
   border-left: 1px solid #13b1e0;
   padding-bottom: 1px;
-  padding-left: 15px;
+  padding-left: 25px;
   position: relative;
+  margin-left: 5px;
 
   &:last-child::after {
     //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
@@ -106,7 +107,7 @@
     bottom: 0;
     content: "";
     height: 6px;
-    left: -3px;
+    left: -6px;
     position: absolute;
     width: 6px;
   }

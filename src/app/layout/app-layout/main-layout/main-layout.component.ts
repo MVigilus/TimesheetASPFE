@@ -35,6 +35,7 @@ export class MainLayoutComponent extends UnsubscribeOnDestroyAdapter implements 
   constructor(
     private directoryService: DirectionService,
     private configService: ConfigService,
+    protected authservice: AuthService,
     @Inject(DOCUMENT) private document: Document,
     private renderer: Renderer2,
     private router: Router,
@@ -79,7 +80,6 @@ export class MainLayoutComponent extends UnsubscribeOnDestroyAdapter implements 
         },
         error: res => {
           this.authService.logout().subscribe((res) => {
-            this.router.navigate(['/authentication/signin']);
           });
         }
       })
@@ -226,4 +226,6 @@ export class MainLayoutComponent extends UnsubscribeOnDestroyAdapter implements 
 
     localStorage.setItem('isRtl', 'false');
   }
+
+  protected readonly JSON = JSON;
 }

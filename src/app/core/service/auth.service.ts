@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {computed, Injectable, signal, WritableSignal} from '@angular/core';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { User } from '../models/user';
 import {HttpClient, HttpResponse} from '@angular/common/http';
@@ -12,17 +12,20 @@ import {ChipsDTO} from "@shared/components/ChipsDTO";
 })
 export class AuthService {
   private currentUserSubject: BehaviorSubject<User>;
-  public currentUser: Observable<User>;
+  private currentUserSignal: WritableSignal<User>; // Use WritableSignal for manual updates
 
-  constructor(private http:HttpClient) {
-    this.currentUserSubject = new BehaviorSubject<User>(
-      JSON.parse(localStorage.getItem('currentUser') || '{}')
-    );
-    this.currentUser = this.currentUserSubject.asObservable();
+  constructor(private http: HttpClient) {
+    const initialUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    this.currentUserSubject = new BehaviorSubject<User>(initialUser);
+    this.currentUserSignal = signal(initialUser);
+
+    this.currentUserSubject.subscribe((user) => {
+      this.currentUserSignal.set(user);
+    });
   }
 
   public get currentUserValue(): User {
-    return this.currentUserSubject.value;
+    return this.currentUserSignal();
   }
 
   public retriveAllNotification(){
@@ -38,7 +41,7 @@ export class AuthService {
       .pipe(
         map((user) => {
           localStorage.setItem('currentUser', JSON.stringify(user));
-          this.currentUserSubject.next(user);
+          this.currentUserSubject.next(user); // This will trigger the signal update
           return user;
         })
       );
@@ -81,9 +84,8 @@ export class AuthService {
 
 
   logout() {
-    // remove user from local storage to log user out
     localStorage.clear();
-    this.currentUserSubject.next(this.currentUserValue);
+    this.currentUserSubject.next({} as User); // This will trigger the signal update
     return this.http.get<string>(`${environment.apiUrl}/${environment.servizi.auth.logout}`).pipe(
       map((res) => {
         return res;

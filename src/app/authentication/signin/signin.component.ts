@@ -57,7 +57,7 @@ export class SigninComponent
       .subscribe({
         next: (res) => {
           if (res) {
-            const token = this.authService.currentUserValue.token;
+            const token = res.token;
             if (token) {
               switch (res.role){
                 case "ROLE_ADMIN":
@@ -82,4 +82,6 @@ export class SigninComponent
     this.loading = false;
 
   }
+
+  protected readonly JSON = JSON;
 }

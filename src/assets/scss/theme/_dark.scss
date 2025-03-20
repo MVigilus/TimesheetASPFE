@@ -6,7 +6,6 @@
 .dark {
   background-color: #232b3e;
   color: #96a2b4;
-  padding-top: 1px;
 
   body,
   html {
@@ -965,11 +964,11 @@
 
   .mat-datepicker-content {
     .mat-calendar-next-button {
-      color: #96a2b4;
+      color: #96a2b4 !important;
     }
 
     .mat-calendar-previous-button {
-      color: #96a2b4;
+      color: #96a2b4 !important;
     }
 
     .time-container {
@@ -988,6 +987,9 @@
       .mat-stroked-button:not([disabled]) {
         border-color: rgba(255, 255, 255, 0.37);
       }
+    }
+    .mat-calendar-table-header th {
+      color: #ffca4c;
     }
   }
 
@@ -1449,11 +1451,12 @@
 
   .mat-mdc-dialog-container {
     .mdc-dialog__surface {
-      background: #1a202e;
+      background: #0c0f18;
       color: #96a2b4;
+      border: 1px solid rgba(102, 105, 116, 0.4);
     }
     .mdc-dialog__content {
-      background: #1a202e;
+      background: #0c0f18;
       color: #96a2b4 !important;
     }
   }
@@ -1517,7 +1520,7 @@
   }
 
   .mdc-text-field:not(.mdc-text-field--disabled) .mdc-floating-label {
-    color: #96a2b4;
+    color: #96a2b4 !important;
   }
   .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input {
     color: #96a2b4;
@@ -1567,7 +1570,7 @@
     fill: rgba(255, 255, 255, 0.15);
   }
   .mat-mdc-tab:not(.mat-mdc-tab-disabled) .mdc-tab__text-label {
-    color: #96a2b4;
+    color: #96a2b4 !important;
   }
   .order-list li {
     .badge {
@@ -1783,5 +1786,52 @@
       background-color: #1a202e;
       color: #96a2b4;
     }
+  }
+  .mat-icon {
+    color: #96a2b4;
+  }
+  .mdc-icon-button:disabled,
+  .mat-mdc-raised-button:disabled,
+  .mat-mdc-unelevated-button:disabled {
+    background-color: #2e373e;
+    color: #96a2b4;
+  }
+  .mat-mdc-outlined-button:disabled {
+    border: 1px solid #e9e0e41f;
+  }
+  .mat-mdc-fab,
+  .mat-mdc-mini-fab {
+    background-color: #10131c;
+  }
+  .btn-outline-default {
+    border: 1px solid #005cbb;
+    color: #96a2b4;
+  }
+  .header-menu .header-form-field {
+    background: #000000;
+  }
+  .event-list {
+    .event-card {
+      border: 1px solid #11131c;
+      background: #11131c;
+    }
+  }
+  .schedule-list {
+    border: 1px solid #11131c !important;
+    background: #11131c;
+  }
+  .notice-card {
+    background: #11131c !important;
+  }
+  .timetable-grid {
+    .day-card {
+      background-color: #11131c !important;
+      .header-style {
+        background-color: #000000 !important;
+      }
+    }
+  }
+  .light-bg {
+    background: #171921;
   }
 }
